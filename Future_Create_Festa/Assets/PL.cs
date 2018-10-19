@@ -10,6 +10,9 @@ public class PL : MonoBehaviour {
     public GameObject Coll_Point;
     public GameObject Trap_Point;
     public GameObject Couple;
+    public float Move_Speed=1;
+    int Make_Trap_Time = 0;
+    
     [SerializeField]
     [Range(1, 10)]
     int max_trap = 1;
@@ -35,32 +38,55 @@ public class PL : MonoBehaviour {
     void Move_B()
 	{
 		Vector3 Move_Transform = this.transform.position;
-		Vector3 Move_LR = new Vector3 (0.05f, 0.0f, 0.0f);//
-		Vector3 Move_UD = new Vector3 (0.0f, 0.0f, 0.05f);//
-        
-        //左右移動
-		if (Input.GetKey (KeyCode.RightArrow)) {
-			Move_Transform += Move_LR;
-		} else if (Input.GetKey (KeyCode.LeftArrow)) 
-		{
-			Move_Transform -= Move_LR;
-		}//end_if
-
-        //上下移動
-		if (Input.GetKey (KeyCode.UpArrow)) {
-			Move_Transform += Move_UD;
-		} else if (Input.GetKey (KeyCode.DownArrow)) 
-		{
-			Move_Transform -= Move_UD;
-		}//end_if
-
-		this.transform.position = Move_Transform;
+		Vector3 Move_LR = new Vector3 (Move_Speed/20, 0.0f, 0.0f);//
+		Vector3 Move_UD = new Vector3 (0.0f, 0.0f, Move_Speed / 20);//
 
         //罠を仕掛ける
-        if (Input.GetKeyDown(KeyCode.RightControl)&&trap_count<max_trap)
+        if (Input.GetKeyDown(KeyCode.RightControl) && trap_count < max_trap && Make_Trap_Time <= 60)
         {
-            Set_Trap();
+            //敵に見える
+            transform.GetChild(0).GetComponent<Hint>().Set_Active();
         }
+        if (Input.GetKey(KeyCode.RightControl) && trap_count < max_trap&&Make_Trap_Time<=60)
+        {
+            if (Make_Trap_Time == 60)
+            {
+                Set_Trap();
+            }
+            else
+            {
+                Make_Trap_Time++;
+            }
+        }
+        else
+        {
+            if (Input.GetKeyUp(KeyCode.RightControl))
+            {
+                Make_Trap_Time = 0;
+            }
+            //左右移動
+            if (Input.GetKey(KeyCode.RightArrow))
+            {
+                Move_Transform += Move_LR;
+            }
+            else if (Input.GetKey(KeyCode.LeftArrow))
+            {
+                Move_Transform -= Move_LR;
+            }//end_if
+
+            //上下移動
+            if (Input.GetKey(KeyCode.UpArrow))
+            {
+                Move_Transform += Move_UD;
+            }
+            else if (Input.GetKey(KeyCode.DownArrow))
+            {
+                Move_Transform -= Move_UD;
+            }//end_if
+
+            this.transform.position = Move_Transform;
+        }
+
 
         //カップルを呼ぶ
         if (Input.GetKeyDown(KeyCode.RightShift))
@@ -72,28 +98,53 @@ public class PL : MonoBehaviour {
 	void Move_R()
 	{
 		Vector3 Move_Transform = this.transform.position;
-		Vector3 Move_LR = new Vector3 (0.05f, 0.0f, 0.0f);
-		Vector3 Move_UD = new Vector3 (0.0f, 0.0f, 0.05f);
-
-		if (Input.GetKey (KeyCode.D)) {
-			Move_Transform += Move_LR;
-		} else if (Input.GetKey (KeyCode.A)) 
-		{
-			Move_Transform -= Move_LR;
-		}
-
-		if (Input.GetKey (KeyCode.W)) {
-			Move_Transform += Move_UD;
-		} else if (Input.GetKey (KeyCode.S)) 
-		{
-			Move_Transform -= Move_UD;
-		}
-		this.transform.position = Move_Transform;
-
+		Vector3 Move_LR = new Vector3 (Move_Speed / 20, 0.0f, 0.0f);
+		Vector3 Move_UD = new Vector3 (0.0f, 0.0f, Move_Speed / 20);
         //罠を仕掛ける
-        if (Input.GetKeyDown(KeyCode.E) && trap_count < max_trap)
+        if (Input.GetKeyDown(KeyCode.E) && trap_count < max_trap && Make_Trap_Time <= 60)
         {
-            Set_Trap();
+            //敵に見える
+            transform.GetChild(0).GetComponent<Hint>().Set_Active();
+        }
+        if (Input.GetKey(KeyCode.E) && trap_count < max_trap&&Make_Trap_Time<=60)
+        {
+            if (Make_Trap_Time == 60)
+            {
+                Set_Trap();
+            }
+            else
+            {
+                Make_Trap_Time++;
+            }
+        }
+        else
+        {
+            if (Input.GetKeyUp(KeyCode.E))
+            {
+                Make_Trap_Time = 0;
+            }
+            //左右移動
+            if (Input.GetKey(KeyCode.D))
+            {
+                Move_Transform += Move_LR;
+            }
+            else if (Input.GetKey(KeyCode.A))
+            {
+                Move_Transform -= Move_LR;
+            }//左右移動ここまで
+
+            //上下移動
+            if (Input.GetKey(KeyCode.W))
+            {
+                Move_Transform += Move_UD;
+            }
+            else if (Input.GetKey(KeyCode.S))
+            {
+                Move_Transform -= Move_UD;
+            }//上下移動ここまで
+
+            this.transform.position = Move_Transform;
+
         }
 
         //カップルを呼ぶ
@@ -123,12 +174,12 @@ public class PL : MonoBehaviour {
 
     void Set_Trap()
     {
+        Make_Trap_Time++;
         trap_count++;
         //落とし穴作成
         GameObject trap= Instantiate(Trap_Point, this.transform.position, Quaternion.identity);
         trap.GetComponent<Trap>().Set_Creater(this.gameObject);
-        //敵に見える
-        transform.GetChild(0).GetComponent<Hint>().Set_Active();
+
     }
 
     //何かにぶつかったとき
@@ -146,6 +197,23 @@ public class PL : MonoBehaviour {
             it.GetComponent<Trap>().Delete_Function();
             Destroy(it.gameObject);
         }
+        if (it.transform.tag == "Player")
+        {
+            //敵に見える
+            transform.GetChild(0).GetComponent<Hint>().Set_Active();
+        }
+
+    }
+
+    //何かにぶつかったとき
+    void OnCollisionEnter(Collision it)
+    {
+        if (it.transform.tag == "Player")
+        {
+            //敵に見える
+            transform.GetChild(0).GetComponent<Hint>().Set_Active();
+        }
+
     }
 
     //罠の使用回数を回復

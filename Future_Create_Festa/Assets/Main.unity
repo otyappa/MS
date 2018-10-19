@@ -1237,7 +1237,7 @@ GameObject:
   - component: {fileID: 777362118}
   m_Layer: 8
   m_Name: Blue_Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1258,6 +1258,7 @@ MonoBehaviour:
   Coll_Point: {fileID: 1485172095}
   Trap_Point: {fileID: 1092706621948220, guid: 75d820dc37fcfd3498daabf8d09807eb, type: 2}
   Couple: {fileID: 1290483902}
+  Move_Speed: 1.5
   max_trap: 3
 --- !u!65 &777362114
 BoxCollider:
@@ -1320,7 +1321,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 777362112}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12, y: 0.55, z: -4.5}
+  m_LocalPosition: {x: 13.5, y: 0.55, z: -7.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1524855315}
@@ -1723,6 +1724,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Red_Player: 1
   Goal_Point: {fileID: 427310978}
+  move_speed: 0.7
 --- !u!54 &1199019340
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1898,6 +1900,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Red_Player: 0
   Goal_Point: {fileID: 1189789518}
+  move_speed: 0.7
 --- !u!54 &1290483908
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2102,7 +2105,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e3aaa2562782e5409c980f9035bb697, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Translucent_time: 100
+  Translucent_time: 60
 --- !u!65 &1524855317
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2403,7 +2406,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e3aaa2562782e5409c980f9035bb697, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Translucent_time: 100
+  Translucent_time: 60
 --- !u!65 &1650624089
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2951,7 +2954,7 @@ GameObject:
   - component: {fileID: 2002349777}
   m_Layer: 9
   m_Name: Red_Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2972,6 +2975,7 @@ MonoBehaviour:
   Coll_Point: {fileID: 1518188794}
   Trap_Point: {fileID: 1815898905225076, guid: f2023459750d9d24ebf8feb8d49344c1, type: 2}
   Couple: {fileID: 1199019334}
+  Move_Speed: 1.5
   max_trap: 3
 --- !u!65 &2002349773
 BoxCollider:

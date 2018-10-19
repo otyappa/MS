@@ -12,6 +12,7 @@ public class Couple : MonoBehaviour {
     Vector3 target;
     public bool Red_Player=false;
     public GameObject Goal_Point;
+    public float move_speed=1;
 
     struct stage
     {
@@ -36,10 +37,10 @@ public class Couple : MonoBehaviour {
 	void Update () {
         if (!GameSystemManager.Get_GameSet())
         {
-            if (Stan_flg)
+            if (Stan_flg==true)
             {
 
-            }else if (coal_flg == false)
+            }else if (coal_flg == true)
             {
                 Move();
             }
@@ -312,12 +313,12 @@ public class Couple : MonoBehaviour {
             walk_flg = false;
         }
         //Debug.Log(Vector3.MoveTowards(transform.position, target, 0.01f));
-        if (Vector3.MoveTowards(transform.position, target, 0.05f)==target)
+        if (Vector3.MoveTowards(transform.position, target, move_speed/20)==target)
         {
             walk_flg = true;
            
         }
-        transform.position= Vector3.MoveTowards(transform.position, target, 0.05f);
+        transform.position= Vector3.MoveTowards(transform.position, target,move_speed/20);
     }
 
     //何かにぶつかったとき
