@@ -13,7 +13,7 @@ public class Couple : MonoBehaviour {
     public bool Red_Player=false;
     public GameObject Goal_Point;
     public float move_speed=1;
-
+    int heal_Time=0;
     struct stage
     {
       public  float x;
@@ -324,9 +324,9 @@ public class Couple : MonoBehaviour {
     //何かにぶつかったとき
     void OnTriggerEnter(Collider it)
     {
-        Debug.Log("hit");
-        Debug.Log(it.transform.tag);
-        Debug.Log(it.transform.gameObject.layer);
+        // Debug.Log("hit");
+        // Debug.Log(it.transform.tag);
+        // Debug.Log(it.transform.gameObject.layer);
         //トラップ
         if (it.transform.tag == "Trap")
         {
@@ -349,11 +349,27 @@ public class Couple : MonoBehaviour {
         }
         else if (it.transform.gameObject.layer == 8 && Red_Player == false)
         {
-            Stan_flg = false;
+            if (heal_Time == 120)
+            {
+                Stan_flg = false;
+                heal_Time = 0;
+            }
+            else
+            {
+                heal_Time++;
+            }
         }
         else if (it.transform.gameObject.layer == 9 && Red_Player == true)
         {
-            Stan_flg = false;
+            if (heal_Time == 120)
+            {
+                Stan_flg = false;
+                heal_Time = 0;
+            }
+            else
+            {
+                heal_Time++;
+            }
         }
 
 
