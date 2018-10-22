@@ -12,7 +12,9 @@ public class Couple : MonoBehaviour {
     Vector3 target;
     public bool Red_Player=false;
     public GameObject Goal_Point;
-
+    public float move_speed=1;
+    int heal_Time=0;
+    Vector3 start_pos;
     struct stage
     {
       public  float x;
@@ -30,16 +32,17 @@ public class Couple : MonoBehaviour {
 	void Start () {
         CreateStage();
         GameSystemManager = GameObject.Find("GameSystemManager").GetComponent<GameSystem>();
+        start_pos = transform.position;
 	}
 	
 	// Update is called once per frame
 	void Update () {
         if (!GameSystemManager.Get_GameSet())
         {
-            if (Stan_flg)
+            if (Stan_flg==true)
             {
 
-            }else if (coal_flg == false)
+            }else if (coal_flg == true)
             {
                 Move();
             }
@@ -312,20 +315,20 @@ public class Couple : MonoBehaviour {
             walk_flg = false;
         }
         //Debug.Log(Vector3.MoveTowards(transform.position, target, 0.01f));
-        if (Vector3.MoveTowards(transform.position, target, 0.05f)==target)
+        if (Vector3.MoveTowards(transform.position, target, move_speed/20)==target)
         {
             walk_flg = true;
            
         }
-        transform.position= Vector3.MoveTowards(transform.position, target, 0.05f);
+        transform.position= Vector3.MoveTowards(transform.position, target,move_speed/20);
     }
 
     //何かにぶつかったとき
     void OnTriggerEnter(Collider it)
     {
-        Debug.Log("hit");
-        Debug.Log(it.transform.tag);
-        Debug.Log(it.transform.gameObject.layer);
+        // Debug.Log("hit");
+        // Debug.Log(it.transform.tag);
+        // Debug.Log(it.transform.gameObject.layer);
         //トラップ
         if (it.transform.tag == "Trap")
         {
@@ -346,18 +349,76 @@ public class Couple : MonoBehaviour {
                 Destroy(it.gameObject);
             }
         }
-        else if (it.transform.gameObject.layer == 8 && Red_Player == false)
+        else if (it.transform.gameObject.layer == 8 && Red_Player == false && Stan_flg)
         {
-            Stan_flg = false;
+            Debug.Log("test");
+            it.GetComponent<PL>().Set_Time(120);
+
         }
-        else if (it.transform.gameObject.layer == 9 && Red_Player == true)
+        else if (it.transform.gameObject.layer == 9 && Red_Player == true && Stan_flg)
         {
-            Stan_flg = false;
+            Debug.Log("test");
+            it.GetComponent<PL>().Set_Time(120);
+
         }
 
+        if (it.transform.tag == "Restart_Shot")
+        {
+            Re_Start();
+            Destroy(it.gameObject);
+        }
 
 
 
     }
 
+    void OnTriggerStay(Collider it)
+    {
+
+        if (it.transform.gameObject.layer == 8 && Red_Player == false && Stan_flg)
+        {
+            if (heal_Time == 120)
+            {
+                Stan_flg = false;
+                heal_Time = 0;
+                it.GetComponent<PL>().End_Time();
+            }
+            else
+            {
+                it.GetComponent<PL>().Update_Time();
+                heal_Time++;
+            }
+        }
+        else if (it.transform.gameObject.layer == 9 && Red_Player == true && Stan_flg)
+        {
+            if (heal_Time == 120)
+            {
+                Stan_flg = false;
+                heal_Time = 0;
+                it.GetComponent<PL>().End_Time();
+            }
+            else
+            {
+                it.GetComponent<PL>().Update_Time();
+                heal_Time++;
+            }
+        }
+    }
+
+    void OnTriggerRelease(Collider it)
+    {
+        if (it.transform.gameObject.layer == 8 && Red_Player == false && !Stan_flg)
+        {
+            it.GetComponent<PL>().End_Time();
+        }
+        else if (it.transform.gameObject.layer == 9 && Red_Player == true && !Stan_flg)
+        {
+            it.GetComponent<PL>().End_Time();
+        }
+    }
+    void Re_Start()
+    {
+        transform.position = start_pos;
+        coal_flg = false;
+    }
 }
