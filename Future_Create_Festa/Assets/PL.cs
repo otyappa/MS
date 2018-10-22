@@ -12,7 +12,7 @@ public class PL : MonoBehaviour {
     public GameObject Couple;
     public float Move_Speed=1;
     int Make_Trap_Time = 0;
-    
+    TimeCtl TimeBar;
     [SerializeField]
     [Range(1, 10)]
     int max_trap = 1;
@@ -22,8 +22,8 @@ public class PL : MonoBehaviour {
         trap_count = 0;
       //  max_trap = 1;
 		Start_Player_Position = this.transform.position;
-		
-	}
+        TimeBar = GetComponent<TimeCtl>();
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -42,12 +42,13 @@ public class PL : MonoBehaviour {
 		Vector3 Move_UD = new Vector3 (0.0f, 0.0f, Move_Speed / 20);//
 
         //罠を仕掛ける
-        if (Input.GetKeyDown(KeyCode.RightControl) && trap_count < max_trap && Make_Trap_Time <= 60)
+        if (Input.GetButtonDown("B_Trap") && trap_count < max_trap && Make_Trap_Time <= 60)
         {
+            TimeBar.Set_Pasent(60);
             //敵に見える
             transform.GetChild(0).GetComponent<Hint>().Set_Active();
         }
-        if (Input.GetKey(KeyCode.RightControl) && trap_count < max_trap&&Make_Trap_Time<=60)
+        if (Input.GetButton("B_Trap") && trap_count < max_trap&&Make_Trap_Time<=60)
         {
             if (Make_Trap_Time == 60)
             {
@@ -55,32 +56,37 @@ public class PL : MonoBehaviour {
             }
             else
             {
+                TimeBar.Bar_Update();
                 Make_Trap_Time++;
             }
         }
         else
         {
-            if (Input.GetKeyUp(KeyCode.RightControl))
+            if (Input.GetButtonUp("B_Trap"))
             {
+                TimeBar.Reset();
                 Make_Trap_Time = 0;
             }
             //左右移動
-            if (Input.GetKey(KeyCode.RightArrow))
+            if (Input.GetAxis("B_Right")>0.2f)
             {
+                
                 Move_Transform += Move_LR;
             }
-            else if (Input.GetKey(KeyCode.LeftArrow))
+            else if (Input.GetAxis("B_Left")<-0.2f)
             {
+             
                 Move_Transform -= Move_LR;
             }//end_if
 
             //上下移動
-            if (Input.GetKey(KeyCode.UpArrow))
+            if (Input.GetAxis("B_Up")>0.2f)
             {
+                
                 Move_Transform += Move_UD;
             }
-            else if (Input.GetKey(KeyCode.DownArrow))
-            {
+            else if (Input.GetAxis("B_Down")<-0.2f)
+            { 
                 Move_Transform -= Move_UD;
             }//end_if
 
@@ -89,9 +95,9 @@ public class PL : MonoBehaviour {
 
 
         //カップルを呼ぶ
-        if (Input.GetKeyDown(KeyCode.RightShift))
+        if (Input.GetButtonDown("B_Coll"))
         {
-            Debug.Log("serch_start");
+           
             Coll_Couple();
         }
 	}
@@ -103,11 +109,13 @@ public class PL : MonoBehaviour {
         //罠を仕掛ける
         if (Input.GetKeyDown(KeyCode.E) && trap_count < max_trap && Make_Trap_Time <= 60)
         {
+           TimeBar.Set_Pasent(60);
             //敵に見える
             transform.GetChild(0).GetComponent<Hint>().Set_Active();
         }
         if (Input.GetKey(KeyCode.E) && trap_count < max_trap&&Make_Trap_Time<=60)
         {
+            TimeBar.Bar_Update();
             if (Make_Trap_Time == 60)
             {
                 Set_Trap();
@@ -121,6 +129,7 @@ public class PL : MonoBehaviour {
         {
             if (Input.GetKeyUp(KeyCode.E))
             {
+                TimeBar.Reset();
                 Make_Trap_Time = 0;
             }
             //左右移動
@@ -225,4 +234,17 @@ public class PL : MonoBehaviour {
         }
     }
 
+    public void Set_Time(float t)
+    {
+        TimeBar.Set_Pasent(t);
+    }
+    public void Update_Time()
+    {
+        TimeBar.Bar_Update();
+    }
+
+    public void End_Time()
+    {
+        TimeBar.Reset();
+    }
 }

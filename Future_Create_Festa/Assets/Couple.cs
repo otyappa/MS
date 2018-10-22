@@ -347,29 +347,17 @@ public class Couple : MonoBehaviour {
                 Destroy(it.gameObject);
             }
         }
-        else if (it.transform.gameObject.layer == 8 && Red_Player == false)
+        else if (it.transform.gameObject.layer == 8 && Red_Player == false && Stan_flg)
         {
-            if (heal_Time == 120)
-            {
-                Stan_flg = false;
-                heal_Time = 0;
-            }
-            else
-            {
-                heal_Time++;
-            }
+            Debug.Log("test");
+            it.GetComponent<PL>().Set_Time(120);
+
         }
-        else if (it.transform.gameObject.layer == 9 && Red_Player == true)
+        else if (it.transform.gameObject.layer == 9 && Red_Player == true && Stan_flg)
         {
-            if (heal_Time == 120)
-            {
-                Stan_flg = false;
-                heal_Time = 0;
-            }
-            else
-            {
-                heal_Time++;
-            }
+            Debug.Log("test");
+            it.GetComponent<PL>().Set_Time(120);
+
         }
 
 
@@ -377,4 +365,48 @@ public class Couple : MonoBehaviour {
 
     }
 
+    void OnTriggerStay(Collider it)
+    {
+
+        if (it.transform.gameObject.layer == 8 && Red_Player == false && Stan_flg)
+        {
+            if (heal_Time == 120)
+            {
+                Stan_flg = false;
+                heal_Time = 0;
+                it.GetComponent<PL>().End_Time();
+            }
+            else
+            {
+                it.GetComponent<PL>().Update_Time();
+                heal_Time++;
+            }
+        }
+        else if (it.transform.gameObject.layer == 9 && Red_Player == true && Stan_flg)
+        {
+            if (heal_Time == 120)
+            {
+                Stan_flg = false;
+                heal_Time = 0;
+                it.GetComponent<PL>().End_Time();
+            }
+            else
+            {
+                it.GetComponent<PL>().Update_Time();
+                heal_Time++;
+            }
+        }
+    }
+
+    void OnTriggerRelease(Collider it)
+    {
+        if (it.transform.gameObject.layer == 8 && Red_Player == false && !Stan_flg)
+        {
+            it.GetComponent<PL>().End_Time();
+        }
+        else if (it.transform.gameObject.layer == 9 && Red_Player == true && !Stan_flg)
+        {
+            it.GetComponent<PL>().End_Time();
+        }
+    }
 }

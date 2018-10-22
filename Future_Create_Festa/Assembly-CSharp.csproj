@@ -58,6 +58,8 @@
      <Compile Include="Assets\GameSystem.cs" />
      <Compile Include="Assets\Hint.cs" />
      <Compile Include="Assets\PL.cs" />
+     <Compile Include="Assets\Special_Item.cs" />
+     <Compile Include="Assets\TimeCtl.cs" />
      <Compile Include="Assets\Trap.cs" />
      <None Include="Assets\Translucent.shader" />
  <Reference Include="UnityEditor.StandardEvents">
