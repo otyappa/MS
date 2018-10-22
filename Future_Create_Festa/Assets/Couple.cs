@@ -14,6 +14,7 @@ public class Couple : MonoBehaviour {
     public GameObject Goal_Point;
     public float move_speed=1;
     int heal_Time=0;
+    Vector3 start_pos;
     struct stage
     {
       public  float x;
@@ -31,6 +32,7 @@ public class Couple : MonoBehaviour {
 	void Start () {
         CreateStage();
         GameSystemManager = GameObject.Find("GameSystemManager").GetComponent<GameSystem>();
+        start_pos = transform.position;
 	}
 	
 	// Update is called once per frame
@@ -360,6 +362,11 @@ public class Couple : MonoBehaviour {
 
         }
 
+        if (it.transform.tag == "Restart_Shot")
+        {
+            Re_Start();
+            Destroy(it.gameObject);
+        }
 
 
 
@@ -408,5 +415,10 @@ public class Couple : MonoBehaviour {
         {
             it.GetComponent<PL>().End_Time();
         }
+    }
+    void Re_Start()
+    {
+        transform.position = start_pos;
+        coal_flg = false;
     }
 }

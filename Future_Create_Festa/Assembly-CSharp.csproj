@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Couple.cs" />
+     <Compile Include="Assets\Create_SpecialItem.cs" />
      <Compile Include="Assets\Dual_Display.cs" />
      <Compile Include="Assets\GameSystem.cs" />
      <Compile Include="Assets\Hint.cs" />
