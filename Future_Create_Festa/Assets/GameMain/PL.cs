@@ -13,7 +13,7 @@ public class PL : MonoBehaviour {
     public GameObject Couple;
     public GameObject SPECIAL_SHOT;
     public float Move_Speed=1;
-    GameObject Player_Model;
+   public  GameObject Player_Model;
     GameObject Player_HintModel;
     int Make_Trap_Time = 0;
     bool SP_MODE = false;
@@ -25,8 +25,8 @@ public class PL : MonoBehaviour {
 
    public enum Vec{
         top=0,
-        buttom,
         right,
+        buttom,
         left
     }
     Vec now = 0;
@@ -91,24 +91,29 @@ public class PL : MonoBehaviour {
                 //左右移動
                 if (Input.GetAxis("B_Right") > 0.2f)
                 {
-
+                    now = Vec.right;
                     Move_Transform += Move_LR;
+                    Rotate_Model();
                 }
                 else if (Input.GetAxis("B_Left") < -0.2f)
                 {
-
+                    now = Vec.left;
                     Move_Transform -= Move_LR;
+                    Rotate_Model();
                 }//end_if
 
                 //上下移動
                 if (Input.GetAxis("B_Up") > 0.2f)
                 {
-
+                    now = Vec.top;
                     Move_Transform += Move_UD;
+                    Rotate_Model();
                 }
                 else if (Input.GetAxis("B_Down") < -0.2f)
                 {
+                    now = Vec.buttom;
                     Move_Transform -= Move_UD;
+                    Rotate_Model();
                 }//end_if
 
                 this.transform.position = Move_Transform;
@@ -158,27 +163,36 @@ public class PL : MonoBehaviour {
             {
                 if (Input.GetKeyUp(KeyCode.E))
                 {
+
                     TimeBar.Reset();
                     Make_Trap_Time = 0;
                 }
                 //左右移動
                 if (Input.GetKey(KeyCode.D))
                 {
+                    now = Vec.right;
                     Move_Transform += Move_LR;
+                    Rotate_Model();
                 }
                 else if (Input.GetKey(KeyCode.A))
                 {
+                    now = Vec.left;
                     Move_Transform -= Move_LR;
+                    Rotate_Model();
                 }//左右移動ここまで
 
                 //上下移動
                 if (Input.GetKey(KeyCode.W))
                 {
+                    now = Vec.top;
                     Move_Transform += Move_UD;
+                    Rotate_Model();
                 }
                 else if (Input.GetKey(KeyCode.S))
                 {
+                    now = Vec.buttom;
                     Move_Transform -= Move_UD;
+                    Rotate_Model();
                 }//上下移動ここまで
 
                 this.transform.position = Move_Transform;
@@ -302,18 +316,18 @@ public class PL : MonoBehaviour {
         if (Input.GetButtonUp("B_Trap"))
         {
             Vector3 create_pos=this.transform.position;
-            switch ((int)now)
+            switch (now)
             {
-                case 0:
+                case Vec.top:
                     create_pos.z += 1.5f;
                     break;
-                case 1:
-                    create_pos.z -= 1.5f;
-                    break;
-                case 2:
+                case Vec.right:
                     create_pos.x += 1.5f;
                     break;
-                case 3:
+                case Vec.buttom:
+                    create_pos.z -= 1.5f;
+                    break;
+                case Vec.left:
                     create_pos.x -= 1.5f;
                     break;
             }
@@ -329,11 +343,13 @@ public class PL : MonoBehaviour {
             {
                 now = Vec.right;
                 Move_Transform += Move_LR;
+                Rotate_Model();
             }
             else if (Input.GetAxis("B_Left") < -0.2f)
             {
                 now = Vec.left;
                 Move_Transform -= Move_LR;
+                Rotate_Model();
             }//end_if
 
             //上下移動
@@ -341,11 +357,13 @@ public class PL : MonoBehaviour {
             {
                 now = Vec.top;
                 Move_Transform += Move_UD;
+                Rotate_Model();
             }
             else if (Input.GetAxis("B_Down") < -0.2f)
             {
                 now = Vec.buttom;
                 Move_Transform -= Move_UD;
+                Rotate_Model();
             }//end_if
 
             this.transform.position = Move_Transform;
@@ -395,11 +413,13 @@ public class PL : MonoBehaviour {
             {
                 now = Vec.right;
                 Move_Transform += Move_LR;
+                Rotate_Model();
             }
             else if (Input.GetKey(KeyCode.A))
             {
                 now = Vec.left;
                 Move_Transform -= Move_LR;
+                Rotate_Model();
             }//左右移動ここまで
 
             //上下移動
@@ -407,11 +427,13 @@ public class PL : MonoBehaviour {
             {
                 now = Vec.top;
                 Move_Transform += Move_UD;
+                Rotate_Model();
             }
             else if (Input.GetKey(KeyCode.S))
             {
                 now = Vec.buttom;
                 Move_Transform -= Move_UD;
+                Rotate_Model();
             }//上下移動ここまで
 
             this.transform.position = Move_Transform;
@@ -429,7 +451,9 @@ public class PL : MonoBehaviour {
     //モデルを回転させる
     void Rotate_Model()
     {
-       // Vector3.MoveTowards(Player_Model.transform.Rotate(),new Vector3(0,(int)now*90,0), 2);
+        float step = 5 * Time.deltaTime;
+        Debug.Log((float)now);
+        Player_Model.transform.rotation = Quaternion.Slerp(Player_Model.transform.rotation, Quaternion.Euler(0, (float)now*90.0f, 0), step);
     }
 
 
