@@ -13,6 +13,8 @@ public class PL : MonoBehaviour {
     public GameObject Couple;
     public GameObject SPECIAL_SHOT;
     public float Move_Speed=1;
+    GameObject Player_Model;
+    GameObject Player_HintModel;
     int Make_Trap_Time = 0;
     bool SP_MODE = false;
     TimeCtl TimeBar;
@@ -35,6 +37,7 @@ public class PL : MonoBehaviour {
 		Start_Player_Position = this.transform.position;
         TimeBar = GetComponent<TimeCtl>();
         C_Manager = GameObject.Find("Stage").GetComponent<Create_SpecialItem>();
+        Player_Model = transform.GetChild(2).gameObject;
     }
 	
 	// Update is called once per frame
@@ -120,6 +123,7 @@ public class PL : MonoBehaviour {
             }
         }
 	}
+    //赤チーム側の行動処理
 	void Move_R()
 	{
 		Vector3 Move_Transform = this.transform.position;
@@ -195,7 +199,7 @@ public class PL : MonoBehaviour {
     {
         this.transform.position = ReSporn_Point.transform.position;
     }
-
+    //カップルを呼ぶ
     void Coll_Couple()
     {
         //プレイヤーの現在位置にColl_Pointを設置
@@ -206,7 +210,7 @@ public class PL : MonoBehaviour {
         //敵に見える
         transform.GetChild(0).GetComponent<Hint>().Set_Active();
     }
-
+    //罠を仕掛ける
     void Set_Trap()
     {
         Make_Trap_Time++;
@@ -274,20 +278,22 @@ public class PL : MonoBehaviour {
         }
     }
 
+    //時間をUIに渡す
     public void Set_Time(float t)
     {
         TimeBar.Set_Pasent(t);
     }
+    //時間を進める
     public void Update_Time()
     {
         TimeBar.Bar_Update();
     }
-
+    //バーの経過時間をリセットする
     public void End_Time()
     {
         TimeBar.Reset();
     }
-
+    //球を取った時の行動青バージョン
     void B_Special_Mode()
     {
         Vector3 Move_Transform = this.transform.position;
@@ -353,7 +359,7 @@ public class PL : MonoBehaviour {
             Coll_Couple();
         }
     }
-
+    //球を取った時の行動赤バージョン
     void R_Special_Mode()
     {
         Vector3 Move_Transform = this.transform.position;
@@ -362,18 +368,18 @@ public class PL : MonoBehaviour {
         if (Input.GetKeyUp(KeyCode.E))
         {
             Vector3 create_pos = this.transform.position;
-            switch ((int)now)
+            switch (now)
             {
-                case 0:
+                case Vec.top:
                     create_pos.z += 1.5f;
                     break;
-                case 1:
+                case Vec.buttom:
                     create_pos.z -= 1.5f;
                     break;
-                case 2:
+                case Vec.right:
                     create_pos.x += 1.5f;
                     break;
-                case 3:
+                case Vec.left:
                     create_pos.x -= 1.5f;
                     break;
             }
@@ -413,11 +419,17 @@ public class PL : MonoBehaviour {
 
 
         //カップルを呼ぶ
-        if (Input.GetButtonDown("B_Coll"))
+        if (Input.GetButtonDown("R_Coll"))
         {
 
             Coll_Couple();
         }
+    }
+
+    //モデルを回転させる
+    void Rotate_Model()
+    {
+       // Vector3.MoveTowards(Player_Model.transform.Rotate(),new Vector3(0,(int)now*90,0), 2);
     }
 
 

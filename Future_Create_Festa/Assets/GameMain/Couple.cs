@@ -235,14 +235,7 @@ public class Couple : MonoBehaviour {
             
         }
     }
-    void fool()
-    {
-        //Vector3 Move_Transform = this.transform.position;
 
-        //Move_Transform += Goal_Direction;
-        //this.transform.position = Move_Transform;
-        
-    }
     void CreateStage()
     {
         for (int i = 0; i < 6; i++)
@@ -291,10 +284,7 @@ public class Couple : MonoBehaviour {
         {
             int x = (int)((transform.position.z) / -1.5f);
             int z = (int)((transform.position.x) / 1.5f);
-            // Debug.Log(teststage[x, z].parent_x);
-            // Debug.Log(teststage[x, z].parent_y);
-            Debug.Log(teststage[5, 9].parent_x);
-            Debug.Log(teststage[5, 9].parent_y);
+
             if (teststage[x, z].parent_x == 99)
             {
                 if (transform.position == Goal_Point.transform.position)
@@ -420,5 +410,6 @@ public class Couple : MonoBehaviour {
     {
         transform.position = start_pos;
         coal_flg = false;
+        walk_flg = true;
     }
 }
