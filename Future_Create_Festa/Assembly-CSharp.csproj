@@ -53,16 +53,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Couple.cs" />
-     <Compile Include="Assets\Create_SpecialItem.cs" />
-     <Compile Include="Assets\Dual_Display.cs" />
-     <Compile Include="Assets\GameSystem.cs" />
-     <Compile Include="Assets\Hint.cs" />
-     <Compile Include="Assets\PL.cs" />
-     <Compile Include="Assets\Special_Item.cs" />
-     <Compile Include="Assets\TimeCtl.cs" />
-     <Compile Include="Assets\Trap.cs" />
-     <None Include="Assets\Translucent.shader" />
+     <Compile Include="Assets\GameMain\Couple.cs" />
+     <Compile Include="Assets\GameMain\Create_SpecialItem.cs" />
+     <Compile Include="Assets\GameMain\Dual_Display.cs" />
+     <Compile Include="Assets\GameMain\GameSystem.cs" />
+     <Compile Include="Assets\GameMain\Hint.cs" />
+     <Compile Include="Assets\GameMain\PL.cs" />
+     <Compile Include="Assets\GameMain\Special_Item.cs" />
+     <Compile Include="Assets\GameMain\TimeCtl.cs" />
+     <Compile Include="Assets\GameMain\Trance.cs" />
+     <Compile Include="Assets\GameMain\Trap.cs" />
+     <None Include="Assets\GameMain\Translucent.shader" />
  <Reference Include="UnityEditor.StandardEvents">
  <HintPath>C:/Users/ohs50220/Documents/MS/Future_Create_Festa/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
  </Reference>
