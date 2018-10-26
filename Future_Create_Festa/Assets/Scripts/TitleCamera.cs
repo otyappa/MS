@@ -10,8 +10,12 @@ public class TitleCamera : MonoBehaviour {
     public Renderer rend;
     [Tooltip("遷移フェードスクリプト")]
     public FadeImage fadeImage;
-    [Tooltip("フェードフラグ")]
-    public bool fadeFlg;
+    [Tooltip("フェードインフラグ")]
+    public bool fadeInFlg;
+    [Tooltip("フェードアウトフラグ")]
+    public bool fadeOutFlg;
+    [Tooltip("フェードの時間"), SerializeField, Range(0.1f, 4)]
+    public float fadeTime;
 
     // 現在存在しているオブジェクト実体の記憶領域
     static TitleCamera _instance = null;
@@ -59,6 +63,7 @@ public class TitleCamera : MonoBehaviour {
 
         rend = GameObject.Find("FadePlane").GetComponent<Renderer>();
         fadeImage.Init(rend);
+        fadeImage.SetMaterialAlpha(1);
 	}
 	
 	// Update is called once per frame
@@ -66,11 +71,21 @@ public class TitleCamera : MonoBehaviour {
 
         this.transform.LookAt(lookObj.transform);
 
-        if (fadeFlg)
+        if (fadeInFlg)
         {
-            fadeImage.MaterialFadeIn(rend, 0.5f);
+            Debug.Log("fadein");
+            if (!fadeImage.GetIsFadingIn())
+            {
+                GlobalCoroutine.Go(fadeImage.MaterialFadeIn(rend, fadeTime));
+            }
         }
-
-
+        if (fadeOutFlg)
+        {
+            Debug.Log("fadeout");
+            if (!fadeImage.GetIsFadingOut())
+            {
+                GlobalCoroutine.Go(fadeImage.MaterialFadeOut(rend, fadeTime));
+            }
+        }
     }
 }

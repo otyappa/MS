@@ -51,6 +51,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72c2b949c000e6a4da2a7f8391cf268d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  titleLogo: {fileID: 0}
+  modeSelectLogo: {fileID: 0}
+  stageSelectLogo: {fileID: 0}
   NowScene: 0
   NextScene: 0
   isTransition: 0
+  choseMode: 0
+  choseStage: 0
+  rotFlg: 0
+  isRotation: 0
+  modelTrans: {fileID: 0}
+  titleCamera: {fileID: 0}
+  oneTimeFadeOut: 0

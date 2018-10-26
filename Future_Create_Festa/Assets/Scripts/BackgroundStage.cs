@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BackgroundStage : MonoBehaviour {
 
-    [Tooltip("回転速度"),SerializeField, Range(0.1f, 1.0f)]
+    [Tooltip("回転速度"), SerializeField, Range(0.1f, 1.0f)]
     public float rotSpeed;
 
     

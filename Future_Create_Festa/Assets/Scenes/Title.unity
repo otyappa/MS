@@ -44,7 +44,7 @@ RenderSettings:
 LightmapSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 11
-  m_GIWorkflowMode: 0
+  m_GIWorkflowMode: 1
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -89,7 +89,8 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaIndirect: 2
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ShowResolutionOverlay: 1
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000002, guid: 440225e0eb68fc344a5c459516844f82,
+    type: 2}
   m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
@@ -113,6 +114,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &137123398 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1961645031428610, guid: 003ce35ed2caaa8478c5f30f43f1a03c,
+    type: 2}
+  m_PrefabInternal: {fileID: 1986215300}
 --- !u!1 &646202946 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1719009158909296, guid: 39ae87b33cc308843948789e57fcadfb,
@@ -145,9 +151,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21adc67c2135ceb4d82cd7f54e727d18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  titleLogo: {fileID: 0}
+  modeSelectLogo: {fileID: 0}
+  stageSelectLogo: {fileID: 0}
   NowScene: 0
   NextScene: 0
   isTransition: 0
+  choseMode: 0
+  choseStage: 0
+  rotFlg: 0
+  isRotation: 0
+  modelTrans: {fileID: 0}
+  titleCamera: {fileID: 0}
+  oneTimeFadeOut: 0
   rotSpeed: 0
 --- !u!4 &857489595
 Transform:
@@ -266,9 +282,29 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 114113821612216426, guid: 2ac14ed82f5469f4485e4fd86bdd8c0f,
+        type: 2}
+      propertyPath: titleLogo
+      value: 
+      objectReference: {fileID: 137123398}
+    - target: {fileID: 114113821612216426, guid: 2ac14ed82f5469f4485e4fd86bdd8c0f,
+        type: 2}
+      propertyPath: modeSelectLogo
+      value: 
+      objectReference: {fileID: 1802976021}
+    - target: {fileID: 114113821612216426, guid: 2ac14ed82f5469f4485e4fd86bdd8c0f,
+        type: 2}
+      propertyPath: stageSelectLogo
+      value: 
+      objectReference: {fileID: 1239502825}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2ac14ed82f5469f4485e4fd86bdd8c0f, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1239502825 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1213205441289766, guid: 003ce35ed2caaa8478c5f30f43f1a03c,
+    type: 2}
+  m_PrefabInternal: {fileID: 1986215300}
 --- !u!1 &1254459614
 GameObject:
   m_ObjectHideFlags: 0
@@ -373,23 +409,12 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 39ae87b33cc308843948789e57fcadfb, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &1482309213 stripped
+--- !u!1 &1802976021 stripped
 GameObject:
-  m_PrefabParentObject: {fileID: 1023802258107344, guid: 003ce35ed2caaa8478c5f30f43f1a03c,
+  m_PrefabParentObject: {fileID: 1421378830287584, guid: 003ce35ed2caaa8478c5f30f43f1a03c,
     type: 2}
-  m_PrefabInternal: {fileID: 1639934706}
---- !u!114 &1482309214
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1482309213}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea4697eb298964e40994a71db5535404, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!1001 &1639934706
+  m_PrefabInternal: {fileID: 1986215300}
+--- !u!1001 &1986215300
 Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -433,7 +458,6 @@ Prefab:
       propertyPath: lookObj
       value: 
       objectReference: {fileID: 646202946}
-    m_RemovedComponents:
-    - {fileID: 114027157070994478, guid: 003ce35ed2caaa8478c5f30f43f1a03c, type: 2}
+    m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 003ce35ed2caaa8478c5f30f43f1a03c, type: 2}
   m_IsPrefabParent: 0
