@@ -5,10 +5,21 @@ using UnityEngine;
 public class BillBoard : MonoBehaviour
 {
 
+    [Tooltip("注視点オブジェクト")]
+    public GameObject lookObj;
+
     void Update()
     {
-        Vector3 p = Camera.main.transform.position;
-        p.y = transform.position.y;
-        transform.LookAt(p);
+
+        if (lookObj == null)
+        {
+            this.transform.LookAt(Camera.main.transform);
+        }
+        else
+        {
+            this.transform.LookAt(lookObj.transform);
+        }
+
+
     }
 }
