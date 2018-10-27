@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using GamepadInput;
 public class PL : MonoBehaviour {
     float cool_time;
     Vector3 Start_Player_Position;
@@ -14,6 +14,7 @@ public class PL : MonoBehaviour {
     public GameObject SPECIAL_SHOT;
     public float Move_Speed=1;
    public  GameObject Player_Model;
+    public bool TonT; 
     GameObject Player_HintModel;
     int Make_Trap_Time = 0;
     bool SP_MODE = false;
@@ -38,7 +39,7 @@ public class PL : MonoBehaviour {
         TimeBar = GetComponent<TimeCtl>();
         C_Manager = GameObject.Find("Stage").GetComponent<Create_SpecialItem>();
         Player_Model = transform.GetChild(2).gameObject;
-    }
+   }
 	
 	// Update is called once per frame
 	void Update () {
@@ -61,70 +62,146 @@ public class PL : MonoBehaviour {
             B_Special_Mode();
         }
         else
-        { 
-            //罠を仕掛ける
-            if (Input.GetButtonDown("B_Trap") && trap_count < max_trap && Make_Trap_Time <= 60)
+        {
+            if (TonT)
             {
-                TimeBar.Set_Pasent(60);
-                //敵に見える
-                transform.GetChild(0).GetComponent<Hint>().Set_Active();
-            }
-            if (Input.GetButton("B_Trap") && trap_count < max_trap && Make_Trap_Time <= 60)
-            {
-                if (Make_Trap_Time == 60)
+                GamepadState state = GamePad.GetState(GamePad.Index.Three);
+
+                //罠を仕掛ける
+                if (GamePad.GetButtonDown(GamePad.Button.B, GamePad.Index.Three) && trap_count < max_trap && Make_Trap_Time <= 60)
                 {
-                    Set_Trap();
+                    TimeBar.Set_Pasent(60);
+                    //敵に見える
+                    transform.GetChild(0).GetComponent<Hint>().Set_Active();
+                }
+                if (GamePad.GetButton(GamePad.Button.B, GamePad.Index.Three) && trap_count < max_trap && Make_Trap_Time <= 60)
+                {
+                    if (Make_Trap_Time == 60)
+                    {
+                        Set_Trap();
+                    }
+                    else
+                    {
+                        TimeBar.Bar_Update();
+                        Make_Trap_Time++;
+                    }
                 }
                 else
                 {
-                    TimeBar.Bar_Update();
-                    Make_Trap_Time++;
+                    if (GamePad.GetButtonUp(GamePad.Button.B, GamePad.Index.Three))
+                    {
+                        TimeBar.Reset();
+                        Make_Trap_Time = 0;
+                    }
+                    //左右移動
+                    if (state.dPadAxis.x > 0.2f)
+                    {
+                        now = Vec.right;
+                        Move_Transform += Move_LR;
+                        Rotate_Model();
+                    }
+                    else if (state.dPadAxis.x < -0.2f)
+                    {
+                        now = Vec.left;
+                        Move_Transform -= Move_LR;
+                        Rotate_Model();
+                    }//end_if
+
+                    //上下移動
+                    if (state.dPadAxis.y > 0.2f)
+                    {
+                        now = Vec.top;
+                        Move_Transform += Move_UD;
+                        Rotate_Model();
+                    }
+                    else if (state.dPadAxis.y < -0.2f)
+                    {
+                        now = Vec.buttom;
+                        Move_Transform -= Move_UD;
+                        Rotate_Model();
+                    }//end_if
+
+                    this.transform.position = Move_Transform;
                 }
+
+
+                //カップルを呼ぶ
+                if (state.A)
+                {
+
+                    Coll_Couple();
+                }
+
             }
-            else
+            else//1対１
             {
-                if (Input.GetButtonUp("B_Trap"))
+                GamepadState state = GamePad.GetState(GamePad.Index.One);
+
+                //罠を仕掛ける
+                if (GamePad.GetButtonDown(GamePad.Button.B, GamePad.Index.One) && trap_count < max_trap && Make_Trap_Time <= 60)
                 {
-                    TimeBar.Reset();
-                    Make_Trap_Time = 0;
+                    TimeBar.Set_Pasent(60);
+                    //敵に見える
+                    transform.GetChild(0).GetComponent<Hint>().Set_Active();
                 }
-                //左右移動
-                if (Input.GetAxis("B_Right") > 0.2f)
+                if (GamePad.GetButton(GamePad.Button.B, GamePad.Index.One) && trap_count < max_trap && Make_Trap_Time <= 60)
                 {
-                    now = Vec.right;
-                    Move_Transform += Move_LR;
-                    Rotate_Model();
+                    if (Make_Trap_Time == 60)
+                    {
+                        Set_Trap();
+                    }
+                    else
+                    {
+                        TimeBar.Bar_Update();
+                        Make_Trap_Time++;
+                    }
                 }
-                else if (Input.GetAxis("B_Left") < -0.2f)
+                else
                 {
-                    now = Vec.left;
-                    Move_Transform -= Move_LR;
-                    Rotate_Model();
-                }//end_if
+                    if (GamePad.GetButtonDown(GamePad.Button.B, GamePad.Index.One))
+                    {
+                        TimeBar.Reset();
+                        Make_Trap_Time = 0;
+                    }
+                    //左右移動
+                    if (state.dPadAxis.x > 0.2f)
+                    {
+                        now = Vec.right;
+                        Move_Transform += Move_LR;
+                        Rotate_Model();
+                    }
+                    else if (state.dPadAxis.x < -0.2f)
+                    {
+                        now = Vec.left;
+                        Move_Transform -= Move_LR;
+                        Rotate_Model();
+                    }//end_if
 
-                //上下移動
-                if (Input.GetAxis("B_Up") > 0.2f)
-                {
-                    now = Vec.top;
-                    Move_Transform += Move_UD;
-                    Rotate_Model();
+                    //上下移動
+                    if (state.dPadAxis.y > 0.2f)
+                    {
+                        now = Vec.top;
+                        Move_Transform += Move_UD;
+                        Rotate_Model();
+                    }
+                    else if (state.dPadAxis.y < -0.2f)
+                    {
+                        now = Vec.buttom;
+                        Move_Transform -= Move_UD;
+                        Rotate_Model();
+                    }//end_if
+
+                    this.transform.position = Move_Transform;
                 }
-                else if (Input.GetAxis("B_Down") < -0.2f)
+
+
+                //カップルを呼ぶ
+                if (state.A)
                 {
-                    now = Vec.buttom;
-                    Move_Transform -= Move_UD;
-                    Rotate_Model();
-                }//end_if
 
-                this.transform.position = Move_Transform;
-            }
+                    Coll_Couple();
+                }
 
-
-            //カップルを呼ぶ
-            if (Input.GetButtonDown("B_Coll"))
-            {
-
-                Coll_Couple();
             }
         }
 	}
@@ -140,70 +217,147 @@ public class PL : MonoBehaviour {
         }
         else
         {
-            //罠を仕掛ける
-            if (Input.GetKeyDown(KeyCode.E) && trap_count < max_trap && Make_Trap_Time <= 60)
+            if (TonT)
             {
-                TimeBar.Set_Pasent(60);
-                //敵に見える
-                transform.GetChild(0).GetComponent<Hint>().Set_Active();
-            }
-            if (Input.GetKey(KeyCode.E) && trap_count < max_trap && Make_Trap_Time <= 60)
-            {
-                TimeBar.Bar_Update();
-                if (Make_Trap_Time == 60)
+                GamepadState state = GamePad.GetState(GamePad.Index.Four);
+               
+
+                //罠を仕掛ける
+                if (GamePad.GetButtonDown(GamePad.Button.B, GamePad.Index.Four) && trap_count < max_trap && Make_Trap_Time <= 60 || (Input.GetKeyDown(KeyCode.E) && trap_count < max_trap && Make_Trap_Time <= 60))
                 {
-                    Set_Trap();
+                    TimeBar.Set_Pasent(60);
+                    //敵に見える
+                    transform.GetChild(0).GetComponent<Hint>().Set_Active();
+                }
+                if ((GamePad.GetButton(GamePad.Button.B, GamePad.Index.Four) && trap_count < max_trap && Make_Trap_Time <= 60) || (Input.GetKey(KeyCode.E) && trap_count < max_trap && Make_Trap_Time <= 60))
+                {
+                    TimeBar.Bar_Update();
+                    if (Make_Trap_Time == 60)
+                    {
+                        Set_Trap();
+                    }
+                    else
+                    {
+                        Make_Trap_Time++;
+                    }
                 }
                 else
                 {
-                    Make_Trap_Time++;
+                    if (Input.GetKeyUp(KeyCode.E) || GamePad.GetButtonUp(GamePad.Button.B, GamePad.Index.Four))
+                    {
+
+                        TimeBar.Reset();
+                        Make_Trap_Time = 0;
+                    }
+                    //左右移動
+                    if (Input.GetKey(KeyCode.D) || state.dPadAxis.x>0.2f)
+                    {
+                        now = Vec.right;
+                        Move_Transform += Move_LR;
+                        Rotate_Model();
+                    }
+                    else if (Input.GetKey(KeyCode.A) || state.dPadAxis.x < -0.2f)
+                    {
+                        now = Vec.left;
+                        Move_Transform -= Move_LR;
+                        Rotate_Model();
+                    }//左右移動ここまで
+
+                    //上下移動
+                    if (Input.GetKey(KeyCode.W) || state.dPadAxis.y > 0.2f)
+                    {
+                        now = Vec.top;
+                        Move_Transform += Move_UD;
+                        Rotate_Model();
+                    }
+                    else if (Input.GetKey(KeyCode.S) || state.dPadAxis.y < -0.2f)
+                    {
+                        now = Vec.buttom;
+                        Move_Transform -= Move_UD;
+                        Rotate_Model();
+                    }//上下移動ここまで
+
+                    this.transform.position = Move_Transform;
+
                 }
+
+                //カップルを呼ぶ
+                if (Input.GetKeyUp(KeyCode.Q) || state.A)
+                {
+
+                    Coll_Couple();
+                }
+
             }
             else
             {
-                if (Input.GetKeyUp(KeyCode.E))
-                {
+                GamepadState state = GamePad.GetState(GamePad.Index.Two);
 
-                    TimeBar.Reset();
-                    Make_Trap_Time = 0;
+                //罠を仕掛ける
+                if (GamePad.GetButtonDown(GamePad.Button.B, GamePad.Index.Two) && trap_count < max_trap && Make_Trap_Time <= 60 )
+                {
+                    TimeBar.Set_Pasent(60);
+                    //敵に見える
+                    transform.GetChild(0).GetComponent<Hint>().Set_Active();
                 }
-                //左右移動
-                if (Input.GetKey(KeyCode.D))
+                if ((GamePad.GetButton(GamePad.Button.B, GamePad.Index.Two) && trap_count < max_trap && Make_Trap_Time <= 60))
                 {
-                    now = Vec.right;
-                    Move_Transform += Move_LR;
-                    Rotate_Model();
+                    TimeBar.Bar_Update();
+                    if (Make_Trap_Time == 60)
+                    {
+                        Set_Trap();
+                    }
+                    else
+                    {
+                        Make_Trap_Time++;
+                    }
                 }
-                else if (Input.GetKey(KeyCode.A))
+                else
                 {
-                    now = Vec.left;
-                    Move_Transform -= Move_LR;
-                    Rotate_Model();
-                }//左右移動ここまで
+                    if (GamePad.GetButtonUp(GamePad.Button.B, GamePad.Index.Two))
+                    {
 
-                //上下移動
-                if (Input.GetKey(KeyCode.W))
-                {
-                    now = Vec.top;
-                    Move_Transform += Move_UD;
-                    Rotate_Model();
+                        TimeBar.Reset();
+                        Make_Trap_Time = 0;
+                    }
+                    //左右移動
+                    if (state.dPadAxis.x > 0.2f)
+                    {
+                        now = Vec.right;
+                        Move_Transform += Move_LR;
+                        Rotate_Model();
+                    }
+                    else if (state.dPadAxis.x < -0.2f)
+                    {
+                        now = Vec.left;
+                        Move_Transform -= Move_LR;
+                        Rotate_Model();
+                    }//左右移動ここまで
+
+                    //上下移動
+                    if (state.dPadAxis.y > 0.2f)
+                    {
+                        now = Vec.top;
+                        Move_Transform += Move_UD;
+                        Rotate_Model();
+                    }
+                    else if (state.dPadAxis.y < -0.2f)
+                    {
+                        now = Vec.buttom;
+                        Move_Transform -= Move_UD;
+                        Rotate_Model();
+                    }//上下移動ここまで
+
+                    this.transform.position = Move_Transform;
+
                 }
-                else if (Input.GetKey(KeyCode.S))
+
+                //カップルを呼ぶ
+                if (state.A)
                 {
-                    now = Vec.buttom;
-                    Move_Transform -= Move_UD;
-                    Rotate_Model();
-                }//上下移動ここまで
 
-                this.transform.position = Move_Transform;
-
-            }
-
-            //カップルを呼ぶ
-            if (Input.GetKeyUp(KeyCode.Q))
-            {
-
-                Coll_Couple();
+                    Coll_Couple();
+                }
             }
         }
     }
@@ -218,7 +372,7 @@ public class PL : MonoBehaviour {
     {
         //プレイヤーの現在位置にColl_Pointを設置
         Coll_Point.transform.position = this.transform.position;
-        //カップルを移動させる　未実装
+        //カップルを移動させる　
         Couple.GetComponent<Couple>().root_serch(Coll_Point.transform);
 
         //敵に見える
@@ -313,68 +467,142 @@ public class PL : MonoBehaviour {
         Vector3 Move_Transform = this.transform.position;
         Vector3 Move_LR = new Vector3(Move_Speed / 20, 0.0f, 0.0f);//
         Vector3 Move_UD = new Vector3(0.0f, 0.0f, Move_Speed / 20);//
-        if (Input.GetButtonUp("B_Trap"))
+        if (TonT)
         {
-            Vector3 create_pos=this.transform.position;
-            switch (now)
+            GamepadState state = GamePad.GetState(GamePad.Index.Three);
+
+            if (GamePad.GetButtonUp(GamePad.Button.B, GamePad.Index.Three))
             {
-                case Vec.top:
-                    create_pos.z += 1.5f;
-                    break;
-                case Vec.right:
-                    create_pos.x += 1.5f;
-                    break;
-                case Vec.buttom:
-                    create_pos.z -= 1.5f;
-                    break;
-                case Vec.left:
-                    create_pos.x -= 1.5f;
-                    break;
+                Vector3 create_pos = this.transform.position;
+                switch (now)
+                {
+                    case Vec.top:
+                        create_pos.z += 1.5f;
+                        break;
+                    case Vec.right:
+                        create_pos.x += 1.5f;
+                        break;
+                    case Vec.buttom:
+                        create_pos.z -= 1.5f;
+                        break;
+                    case Vec.left:
+                        create_pos.x -= 1.5f;
+                        break;
+                }
+                GameObject shot = Instantiate(SPECIAL_SHOT, create_pos, Quaternion.identity);
+                shot.GetComponent<Special_Item>().Set_vector((int)now);
+                SP_MODE = false;
             }
-            GameObject shot = Instantiate(SPECIAL_SHOT, create_pos, Quaternion.identity);
-            shot.GetComponent<Special_Item>().Set_vector((int)now);
-            SP_MODE = false;
+            else
+            {
+
+                //左右移動
+                if (state.dPadAxis.x > 0.2f)
+                {
+                    now = Vec.right;
+                    Move_Transform += Move_LR;
+                    Rotate_Model();
+                }
+                else if (state.dPadAxis.x < -0.2f)
+                {
+                    now = Vec.left;
+                    Move_Transform -= Move_LR;
+                    Rotate_Model();
+                }//end_if
+
+                //上下移動
+                if (state.dPadAxis.y > 0.2f)
+                {
+                    now = Vec.top;
+                    Move_Transform += Move_UD;
+                    Rotate_Model();
+                }
+                else if (state.dPadAxis.y < -0.2f)
+                {
+                    now = Vec.buttom;
+                    Move_Transform -= Move_UD;
+                    Rotate_Model();
+                }//end_if
+
+                this.transform.position = Move_Transform;
+            }
+
+
+            //カップルを呼ぶ
+            if (state.A)
+            {
+
+                Coll_Couple();
+            }
+
         }
         else
         {
+            GamepadState state = GamePad.GetState(GamePad.Index.One);
 
-            //左右移動
-            if (Input.GetAxis("B_Right") > 0.2f)
+            if (GamePad.GetButtonDown(GamePad.Button.B, GamePad.Index.One))
             {
-                now = Vec.right;
-                Move_Transform += Move_LR;
-                Rotate_Model();
+                Vector3 create_pos = this.transform.position;
+                switch (now)
+                {
+                    case Vec.top:
+                        create_pos.z += 1.5f;
+                        break;
+                    case Vec.right:
+                        create_pos.x += 1.5f;
+                        break;
+                    case Vec.buttom:
+                        create_pos.z -= 1.5f;
+                        break;
+                    case Vec.left:
+                        create_pos.x -= 1.5f;
+                        break;
+                }
+                GameObject shot = Instantiate(SPECIAL_SHOT, create_pos, Quaternion.identity);
+                shot.GetComponent<Special_Item>().Set_vector((int)now);
+                SP_MODE = false;
             }
-            else if (Input.GetAxis("B_Left") < -0.2f)
+            else
             {
-                now = Vec.left;
-                Move_Transform -= Move_LR;
-                Rotate_Model();
-            }//end_if
 
-            //上下移動
-            if (Input.GetAxis("B_Up") > 0.2f)
-            {
-                now = Vec.top;
-                Move_Transform += Move_UD;
-                Rotate_Model();
+                //左右移動
+                if (state.dPadAxis.x > 0.2f)
+                {
+                    now = Vec.right;
+                    Move_Transform += Move_LR;
+                    Rotate_Model();
+                }
+                else if (state.dPadAxis.x < -0.2f)
+                {
+                    now = Vec.left;
+                    Move_Transform -= Move_LR;
+                    Rotate_Model();
+                }//end_if
+
+                //上下移動
+                if (state.dPadAxis.y > 0.2f)
+                {
+                    now = Vec.top;
+                    Move_Transform += Move_UD;
+                    Rotate_Model();
+                }
+                else if (state.dPadAxis.y < -0.2f)
+                {
+                    now = Vec.buttom;
+                    Move_Transform -= Move_UD;
+                    Rotate_Model();
+                }//end_if
+
+                this.transform.position = Move_Transform;
             }
-            else if (Input.GetAxis("B_Down") < -0.2f)
+
+
+            //カップルを呼ぶ
+            if (state.A)
             {
-                now = Vec.buttom;
-                Move_Transform -= Move_UD;
-                Rotate_Model();
-            }//end_if
 
-            this.transform.position = Move_Transform;
-        }
-
-
-        //カップルを呼ぶ
-        if (Input.GetButtonDown("B_Coll"))
-        {
-
-            Coll_Couple();
+                Coll_Couple();
+            }
         }
     }
     //球を取った時の行動赤バージョン
@@ -383,68 +611,157 @@ public class PL : MonoBehaviour {
         Vector3 Move_Transform = this.transform.position;
         Vector3 Move_LR = new Vector3(Move_Speed / 20, 0.0f, 0.0f);
         Vector3 Move_UD = new Vector3(0.0f, 0.0f, Move_Speed / 20);
-        if (Input.GetKeyUp(KeyCode.E))
+        if (TonT)
         {
-            Vector3 create_pos = this.transform.position;
-            switch (now)
+            GamepadState state = GamePad.GetState(GamePad.Index.Four);
+
+            if (Input.GetKeyUp(KeyCode.E) || GamePad.GetButtonUp(GamePad.Button.B, GamePad.Index.Four))
             {
-                case Vec.top:
-                    create_pos.z += 1.5f;
-                    break;
-                case Vec.buttom:
-                    create_pos.z -= 1.5f;
-                    break;
-                case Vec.right:
-                    create_pos.x += 1.5f;
-                    break;
-                case Vec.left:
-                    create_pos.x -= 1.5f;
-                    break;
+                Vector3 create_pos = this.transform.position;
+                switch (now)
+                {
+                    case Vec.top:
+                        create_pos.z += 1.5f;
+                        break;
+                    case Vec.buttom:
+                        create_pos.z -= 1.5f;
+                        break;
+                    case Vec.right:
+                        create_pos.x += 1.5f;
+                        break;
+                    case Vec.left:
+                        create_pos.x -= 1.5f;
+                        break;
+                }
+                GameObject shot = Instantiate(SPECIAL_SHOT, create_pos, Quaternion.identity);
+                shot.GetComponent<Special_Item>().Set_vector((int)now);
+                SP_MODE = false;
             }
-            GameObject shot = Instantiate(SPECIAL_SHOT, create_pos, Quaternion.identity);
-            shot.GetComponent<Special_Item>().Set_vector((int)now);
-            SP_MODE = false;
+            else
+            {
+
+                //if (Input.GetKeyUp(KeyCode.E) || Input.GetButtonUp("R2_Trap"))
+                //{
+
+                //    TimeBar.Reset();
+                //    Make_Trap_Time = 0;
+                //}
+                //左右移動
+                if (Input.GetKey(KeyCode.D) || state.dPadAxis.x > 0.2f)
+                {
+                    now = Vec.right;
+                    Move_Transform += Move_LR;
+                    Rotate_Model();
+                }
+                else if (Input.GetKey(KeyCode.A) || state.dPadAxis.x < -0.2f)
+                {
+                    now = Vec.left;
+                    Move_Transform -= Move_LR;
+                    Rotate_Model();
+                }//左右移動ここまで
+
+                //上下移動
+                if (Input.GetKey(KeyCode.W) || state.dPadAxis.y > 0.2f)
+                {
+                    now = Vec.top;
+                    Move_Transform += Move_UD;
+                    Rotate_Model();
+                }
+                else if (Input.GetKey(KeyCode.S) || state.dPadAxis.y < -0.2f)
+                {
+                    now = Vec.buttom;
+                    Move_Transform -= Move_UD;
+                    Rotate_Model();
+                }//上下移動ここまで
+
+
+                this.transform.position = Move_Transform;
+            }
+
+
+            //カップルを呼ぶ
+            if (state.A)
+            {
+
+                Coll_Couple();
+            }
+
+
         }
         else
         {
+            GamepadState state = GamePad.GetState(GamePad.Index.Two);
 
-            //左右移動
-            if (Input.GetKey(KeyCode.D))
+            if (GamePad.GetButtonDown(GamePad.Button.B, GamePad.Index.Two))
             {
-                now = Vec.right;
-                Move_Transform += Move_LR;
-                Rotate_Model();
+                Vector3 create_pos = this.transform.position;
+                switch (now)
+                {
+                    case Vec.top:
+                        create_pos.z += 1.5f;
+                        break;
+                    case Vec.buttom:
+                        create_pos.z -= 1.5f;
+                        break;
+                    case Vec.right:
+                        create_pos.x += 1.5f;
+                        break;
+                    case Vec.left:
+                        create_pos.x -= 1.5f;
+                        break;
+                }
+                GameObject shot = Instantiate(SPECIAL_SHOT, create_pos, Quaternion.identity);
+                shot.GetComponent<Special_Item>().Set_vector((int)now);
+                SP_MODE = false;
             }
-            else if (Input.GetKey(KeyCode.A))
+            else
             {
-                now = Vec.left;
-                Move_Transform -= Move_LR;
-                Rotate_Model();
-            }//左右移動ここまで
 
-            //上下移動
-            if (Input.GetKey(KeyCode.W))
-            {
-                now = Vec.top;
-                Move_Transform += Move_UD;
-                Rotate_Model();
+                //if (Input.GetKeyUp(KeyCode.E) || Input.GetButtonUp("R_Trap"))
+                //{
+
+                //    TimeBar.Reset();
+                //    Make_Trap_Time = 0;
+                //}
+                //左右移動
+                if (state.dPadAxis.x > 0.2f)
+                {
+                    now = Vec.right;
+                    Move_Transform += Move_LR;
+                    Rotate_Model();
+                }
+                else if (state.dPadAxis.x < -0.2f)
+                {
+                    now = Vec.left;
+                    Move_Transform -= Move_LR;
+                    Rotate_Model();
+                }//左右移動ここまで
+
+                //上下移動
+                if (state.dPadAxis.y > 0.2f)
+                {
+                    now = Vec.top;
+                    Move_Transform += Move_UD;
+                    Rotate_Model();
+                }
+                else if (state.dPadAxis.y< -0.2f)
+                {
+                    now = Vec.buttom;
+                    Move_Transform -= Move_UD;
+                    Rotate_Model();
+                }//上下移動ここまで
+
+
+                this.transform.position = Move_Transform;
             }
-            else if (Input.GetKey(KeyCode.S))
+
+
+            //カップルを呼ぶ
+            if (state.A)
             {
-                now = Vec.buttom;
-                Move_Transform -= Move_UD;
-                Rotate_Model();
-            }//上下移動ここまで
 
-            this.transform.position = Move_Transform;
-        }
-
-
-        //カップルを呼ぶ
-        if (Input.GetButtonDown("R_Coll"))
-        {
-
-            Coll_Couple();
+                Coll_Couple();
+            }
         }
     }
 
