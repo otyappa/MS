@@ -122,6 +122,11 @@ public class SceneTransitionManager : MonoBehaviour
             case SceneType.Title:
                 if (!oneTimeFadeOut)
                 {
+                    Sound.LoadBgm("TitleBgm", "Title_TestBgm");
+                    Sound.LoadSe("TitleSe", "Title_TestSe");
+
+                    Sound.PlayBgm("TitleBgm");
+
                     titleLogo.SetActive(true);
                     modeSelectLogo.SetActive(false);
                     stageSelectLogo.SetActive(false);
@@ -136,6 +141,11 @@ public class SceneTransitionManager : MonoBehaviour
             case SceneType.ModeSelect:
                 if (!oneTimeFadeOut)
                 {
+                    Sound.LoadBgm("ModeSelectBgm", "ModeSelect_TestBgm");
+                    Sound.LoadSe("ModeSelectSe", "ModeSelect_TestSe");
+
+                    Sound.PlayBgm("ModeSelectBgm");
+
                     titleLogo.SetActive(false);
                     modeSelectLogo.SetActive(true);
                     stageSelectLogo.SetActive(false);
@@ -150,6 +160,11 @@ public class SceneTransitionManager : MonoBehaviour
             case SceneType.StageSelect:
                 if (!oneTimeFadeOut)
                 {
+                    Sound.LoadBgm("StageSelectBgm", "StageSelect_TestBgm");
+                    Sound.LoadSe("StageSelectSe", "StageSelect_TestSe");
+
+                    Sound.PlayBgm("StageSelectBgm");
+
                     titleLogo.SetActive(false);
                     modeSelectLogo.SetActive(false);
                     stageSelectLogo.SetActive(true);
@@ -191,6 +206,8 @@ public class SceneTransitionManager : MonoBehaviour
             case SceneType.Title:
                 if (Input.GetKeyDown(KeyCode.Return))
                 {
+                    Sound.StopBgm();
+                    Sound.PlaySe("TitleSe");
                     isTransition = true;
                     GlobalCoroutine.Go(titleCamera.fadeImage.MaterialFadeIn(titleCamera.rend, titleCamera.fadeTime));
                 }
@@ -199,6 +216,8 @@ public class SceneTransitionManager : MonoBehaviour
             case SceneType.ModeSelect:
                 if (Input.GetKeyDown(KeyCode.Return))
                 {
+                    Sound.StopBgm();
+                    Sound.PlaySe("ModeSelectSe");
                     isTransition = true;
                     GlobalCoroutine.Go(titleCamera.fadeImage.MaterialFadeIn(titleCamera.rend, titleCamera.fadeTime));
                 }
@@ -215,6 +234,8 @@ public class SceneTransitionManager : MonoBehaviour
             case SceneType.StageSelect:
                 if (Input.GetKeyDown(KeyCode.Return))
                 {
+                    Sound.StopBgm();
+                    Sound.PlaySe("StageSelectSe");
                     isTransition = true;
                     GlobalCoroutine.Go(titleCamera.fadeImage.MaterialFadeIn(titleCamera.rend, titleCamera.fadeTime));
                 }

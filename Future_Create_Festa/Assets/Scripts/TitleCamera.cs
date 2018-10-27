@@ -64,12 +64,14 @@ public class TitleCamera : MonoBehaviour {
         rend = GameObject.Find("FadePlane").GetComponent<Renderer>();
         fadeImage.Init(rend);
         fadeImage.SetMaterialAlpha(1);
-	}
-	
-	// Update is called once per frame
-	void Update () {
+
+    }
+
+    // Update is called once per frame
+    void Update () {
 
         this.transform.LookAt(lookObj.transform);
+
 
         if (fadeInFlg)
         {
