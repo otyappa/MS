@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Main.unity
     guid: 5a4d20d674799bf45b1f6237a0925389
+  - enabled: 0
+    path: Assets/GamePadInput/Demo/Demo.unity
+    guid: 7b6e520eb497da44f8359f8d8dc9c1e0
   m_configObjects: {}

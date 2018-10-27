@@ -25,10 +25,12 @@ public class Special_Item : MonoBehaviour {
                 muki = new Vector3(0, 0, 0.15f);
                 break;
             case 1:
-                muki = new Vector3(0, 0, -0.15f);
+                muki = new Vector3(0.15f, 0, 0);
+
                 break;
             case 2:
-                muki = new Vector3( 0.15f, 0, 0);
+                muki = new Vector3(0, 0, -0.15f);
+
                 break;
             case 3:
                 muki = new Vector3( -0.15f, 0, 0);

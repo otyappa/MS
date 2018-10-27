@@ -1,11 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class GameSystem : MonoBehaviour {
 
     bool GameSet=false;
     bool Blue_Win=false;
+    GameObject blue_2;
+    GameObject red_2;
+    bool two_on_two;
 	// Use this for initialization
 	void Start () {
 		
@@ -16,9 +19,12 @@ public class GameSystem : MonoBehaviour {
         if (Input.GetKey(KeyCode.Escape))
         {
             Application.Quit();
-
         }
-	}
+        if (Input.GetKey(KeyCode.F12))
+        {
+            SceneManager.LoadScene("Main");
+        }
+    }
 
     public void BlueWin()
     {
@@ -38,6 +44,10 @@ public class GameSystem : MonoBehaviour {
     public bool Get_GameSet()
     {
         return GameSet;
+    }
+    public bool Get_WINNER()
+    {
+        return Blue_Win;
     }
 
 }

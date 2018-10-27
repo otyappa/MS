@@ -59,10 +59,14 @@
      <Compile Include="Assets\GameMain\GameSystem.cs" />
      <Compile Include="Assets\GameMain\Hint.cs" />
      <Compile Include="Assets\GameMain\PL.cs" />
+     <Compile Include="Assets\GameMain\Result.cs" />
      <Compile Include="Assets\GameMain\Special_Item.cs" />
      <Compile Include="Assets\GameMain\TimeCtl.cs" />
      <Compile Include="Assets\GameMain\Trance.cs" />
      <Compile Include="Assets\GameMain\Trap.cs" />
+     <Compile Include="Assets\GamePadInput\Demo\DemoScript.cs" />
+     <Compile Include="Assets\GamePadInput\Demo\GamePadManager.cs" />
+     <Compile Include="Assets\GamePadInput\GamePad.cs" />
      <None Include="Assets\GameMain\Translucent.shader" />
  <Reference Include="UnityEditor.StandardEvents">
  <HintPath>C:/Users/ohs50220/Documents/MS/Future_Create_Festa/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
