@@ -71,7 +71,7 @@ public class Couple : MonoBehaviour {
         if (Stan_flg == false)
         {
             CreateStage();
-            walk_flg = true;
+            //walk_flg = true;
             goal = Goal.position;
             int g_x = (int)((Goal.transform.position.z-0.75f) / -1.5f);
             int g_z = (int)((Goal.transform.position.x + 0.75f) / 1.5f);
@@ -272,7 +272,13 @@ public class Couple : MonoBehaviour {
 
     void Move()
     {
-        if (walk_flg==true)
+
+        if (Vector3.MoveTowards(transform.position, target, move_speed / 20) == target)
+        {
+            walk_flg = true;
+
+        }
+        if (walk_flg == true)
         {
             int x = (int)((transform.position.z) / -1.5f);
             int z = (int)((transform.position.x) / 1.5f);
@@ -297,12 +303,11 @@ public class Couple : MonoBehaviour {
             target = new Vector3(teststage[teststage[x, z].parent_x, teststage[x, z].parent_y].x, 1.55f, teststage[teststage[x, z].parent_x, teststage[x, z].parent_y].z);
             walk_flg = false;
         }
-        if (Vector3.MoveTowards(transform.position, target, move_speed/20)==target)
+
+        if (!walk_flg)
         {
-            walk_flg = true;
-           
+            transform.position = Vector3.MoveTowards(transform.position, target, move_speed / 20);
         }
-        transform.position= Vector3.MoveTowards(transform.position, target,move_speed/20);
     }
 
     //何かにぶつかったとき

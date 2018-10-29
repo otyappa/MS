@@ -117,6 +117,8 @@ public class PL : MonoBehaviour {
                 }
                 else
                 {
+                    Player_Anm.SetBool("walk", false);
+
                     if (GamePad.GetButtonUp(GamePad.Button.B, GamePad.Index.Three))
                     {
                         TimeBar.Reset();
@@ -125,14 +127,14 @@ public class PL : MonoBehaviour {
                     //左右移動
                     if (state.dPadAxis.x > 0.2f)
                     {
-                        Player_Anm.SetTrigger("walk");
+                        Player_Anm.SetBool("walk", true);
                         now = Vec.right;
                         Move_Transform += Move_LR;
                         Rotate_Model();
                     }
                     else if (state.dPadAxis.x < -0.2f)
                     {
-                        Player_Anm.SetTrigger("walk");
+                        Player_Anm.SetBool("walk", true);
                         now = Vec.left;
                         Move_Transform -= Move_LR;
                         Rotate_Model();
@@ -141,14 +143,14 @@ public class PL : MonoBehaviour {
                     //上下移動
                     if (state.dPadAxis.y > 0.2f)
                     {
-                        Player_Anm.SetTrigger("walk");
+                        Player_Anm.SetBool("walk", true);
                         now = Vec.top;
                         Move_Transform += Move_UD;
                         Rotate_Model();
                     }
                     else if (state.dPadAxis.y < -0.2f)
                     {
-                        Player_Anm.SetTrigger("walk");
+                        Player_Anm.SetBool("walk", true);
                         now = Vec.buttom;
                         Move_Transform -= Move_UD;
                         Rotate_Model();
@@ -192,6 +194,8 @@ public class PL : MonoBehaviour {
                 }
                 else
                 {
+                    Player_Anm.SetBool("walk", false);
+
                     if (GamePad.GetButtonUp(GamePad.Button.B, GamePad.Index.One))
                     {
                         TimeBar.Reset();
@@ -200,14 +204,14 @@ public class PL : MonoBehaviour {
                     //左右移動
                     if (state.dPadAxis.x > 0.2f)
                     {
-                        Player_Anm.SetTrigger("walk");
+                        Player_Anm.SetBool("walk", true);
                         now = Vec.right;
                         Move_Transform += Move_LR;
                         Rotate_Model();
                     }
                     else if (state.dPadAxis.x < -0.2f)
                     {
-                        Player_Anm.SetTrigger("walk");
+                        Player_Anm.SetBool("walk", true);
                         now = Vec.left;
                         Move_Transform -= Move_LR;
                         Rotate_Model();
@@ -216,14 +220,14 @@ public class PL : MonoBehaviour {
                     //上下移動
                     if (state.dPadAxis.y > 0.2f)
                     {
-                        Player_Anm.SetTrigger("walk");
+                        Player_Anm.SetBool("walk", true);
                         now = Vec.top;
                         Move_Transform += Move_UD;
                         Rotate_Model();
                     }
                     else if (state.dPadAxis.y < -0.2f)
                     {
-                        Player_Anm.SetTrigger("walk");
+                        Player_Anm.SetBool("walk", true);
                         now = Vec.buttom;
                         Move_Transform -= Move_UD;
                         Rotate_Model();
@@ -357,6 +361,8 @@ public class PL : MonoBehaviour {
                 }
                 else
                 {
+                    Player_Anm.SetBool("walk", false);
+
                     if (GamePad.GetButtonUp(GamePad.Button.B, GamePad.Index.Two))
                     {
 
@@ -366,14 +372,14 @@ public class PL : MonoBehaviour {
                     //左右移動
                     if (state.dPadAxis.x > 0.2f)
                     {
-                        Player_Anm.SetTrigger("walk");
+                        Player_Anm.SetBool("walk", true);
                         now = Vec.right;
                         Move_Transform += Move_LR;
                         Rotate_Model();
                     }
                     else if (state.dPadAxis.x < -0.2f)
                     {
-                        Player_Anm.SetTrigger("walk");
+                        Player_Anm.SetBool("walk", true);
                         now = Vec.left;
                         Move_Transform -= Move_LR;
                         Rotate_Model();
@@ -382,14 +388,14 @@ public class PL : MonoBehaviour {
                     //上下移動
                     if (state.dPadAxis.y > 0.2f)
                     {
-                        Player_Anm.SetTrigger("walk");
+                        Player_Anm.SetBool("walk", true);
                         now = Vec.top;
                         Move_Transform += Move_UD;
                         Rotate_Model();
                     }
                     else if (state.dPadAxis.y < -0.2f)
                     {
-                        Player_Anm.SetTrigger("walk");
+                        Player_Anm.SetBool("walk", true);
                         now = Vec.buttom;
                         Move_Transform -= Move_UD;
                         Rotate_Model();
@@ -543,18 +549,19 @@ public class PL : MonoBehaviour {
             }
             else
             {
+                Player_Anm.SetBool("walk",false);
 
                 //左右移動
                 if (state.dPadAxis.x > 0.2f)
                 {
-                    Player_Anm.SetTrigger("walk");
+                    Player_Anm.SetBool("walk", true);
                     now = Vec.right;
                     Move_Transform += Move_LR;
                     Rotate_Model();
                 }
                 else if (state.dPadAxis.x < -0.2f)
                 {
-                    Player_Anm.SetTrigger("walk");
+                    Player_Anm.SetBool("walk", true);
                     now = Vec.left;
                     Move_Transform -= Move_LR;
                     Rotate_Model();
@@ -563,14 +570,14 @@ public class PL : MonoBehaviour {
                 //上下移動
                 if (state.dPadAxis.y > 0.2f)
                 {
-                    Player_Anm.SetTrigger("walk");
+                    Player_Anm.SetBool("walk", true);
                     now = Vec.top;
                     Move_Transform += Move_UD;
                     Rotate_Model();
                 }
                 else if (state.dPadAxis.y < -0.2f)
                 {
-                    Player_Anm.SetTrigger("walk");
+                    Player_Anm.SetBool("walk", true);
                     now = Vec.buttom;
                     Move_Transform -= Move_UD;
                     Rotate_Model();
@@ -616,18 +623,19 @@ public class PL : MonoBehaviour {
             }
             else
             {
+                Player_Anm.SetBool("walk", false);
 
                 //左右移動
                 if (state.dPadAxis.x > 0.2f)
                 {
-                    Player_Anm.SetTrigger("walk");
+                    Player_Anm.SetBool("walk", true);
                     now = Vec.right;
                     Move_Transform += Move_LR;
                     Rotate_Model();
                 }
                 else if (state.dPadAxis.x < -0.2f)
                 {
-                    Player_Anm.SetTrigger("walk");
+                    Player_Anm.SetBool("walk", true);
                     now = Vec.left;
                     Move_Transform -= Move_LR;
                     Rotate_Model();
@@ -636,14 +644,14 @@ public class PL : MonoBehaviour {
                 //上下移動
                 if (state.dPadAxis.y > 0.2f)
                 {
-                    Player_Anm.SetTrigger("walk");
+                    Player_Anm.SetBool("walk", true);
                     now = Vec.top;
                     Move_Transform += Move_UD;
                     Rotate_Model();
                 }
                 else if (state.dPadAxis.y < -0.2f)
                 {
-                    Player_Anm.SetTrigger("walk");
+                    Player_Anm.SetBool("walk", true);
                     now = Vec.buttom;
                     Move_Transform -= Move_UD;
                     Rotate_Model();
@@ -696,23 +704,19 @@ public class PL : MonoBehaviour {
             else
             {
 
-                //if (Input.GetKeyUp(KeyCode.E) || Input.GetButtonUp("R2_Trap"))
-                //{
+                Player_Anm.SetBool("walk", false);
 
-                //    TimeBar.Reset();
-                //    Make_Trap_Time = 0;
-                //}
                 //左右移動
                 if (Input.GetKey(KeyCode.D) || state.dPadAxis.x > 0.2f)
                 {
-                    Player_Anm.SetTrigger("walk");
+                    Player_Anm.SetBool("walk", true);
                     now = Vec.right;
                     Move_Transform += Move_LR;
                     Rotate_Model();
                 }
                 else if (Input.GetKey(KeyCode.A) || state.dPadAxis.x < -0.2f)
                 {
-                    Player_Anm.SetTrigger("walk");
+                    Player_Anm.SetBool("walk", true);
                     now = Vec.left;
                     Move_Transform -= Move_LR;
                     Rotate_Model();
@@ -721,14 +725,14 @@ public class PL : MonoBehaviour {
                 //上下移動
                 if (Input.GetKey(KeyCode.W) || state.dPadAxis.y > 0.2f)
                 {
-                    Player_Anm.SetTrigger("walk");
+                    Player_Anm.SetBool("walk", true);
                     now = Vec.top;
                     Move_Transform += Move_UD;
                     Rotate_Model();
                 }
                 else if (Input.GetKey(KeyCode.S) || state.dPadAxis.y < -0.2f)
                 {
-                    Player_Anm.SetTrigger("walk");
+                    Player_Anm.SetBool("walk", true);
                     now = Vec.buttom;
                     Move_Transform -= Move_UD;
                     Rotate_Model();
@@ -776,6 +780,7 @@ public class PL : MonoBehaviour {
             }
             else
             {
+                Player_Anm.SetBool("walk", false);
 
                 //if (Input.GetKeyUp(KeyCode.E) || Input.GetButtonUp("R_Trap"))
                 //{
@@ -786,14 +791,14 @@ public class PL : MonoBehaviour {
                 //左右移動
                 if (state.dPadAxis.x > 0.2f)
                 {
-                    Player_Anm.SetTrigger("walk");
+                    Player_Anm.SetBool("walk", true);
                     now = Vec.right;
                     Move_Transform += Move_LR;
                     Rotate_Model();
                 }
                 else if (state.dPadAxis.x < -0.2f)
                 {
-                    Player_Anm.SetTrigger("walk");
+                    Player_Anm.SetBool("walk", true);
                     now = Vec.left;
                     Move_Transform -= Move_LR;
                     Rotate_Model();
@@ -802,14 +807,14 @@ public class PL : MonoBehaviour {
                 //上下移動
                 if (state.dPadAxis.y > 0.2f)
                 {
-                    Player_Anm.SetTrigger("walk");
+                    Player_Anm.SetBool("walk", true);
                     now = Vec.top;
                     Move_Transform += Move_UD;
                     Rotate_Model();
                 }
                 else if (state.dPadAxis.y< -0.2f)
                 {
-                    Player_Anm.SetTrigger("walk");
+                    Player_Anm.SetBool("walk", true);
                     now = Vec.buttom;
                     Move_Transform -= Move_UD;
                     Rotate_Model();
