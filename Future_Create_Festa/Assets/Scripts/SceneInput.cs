@@ -58,7 +58,7 @@ public class SceneInput : SceneTransitionManager {
 
                 break;
 
-            case SceneType.GameMain:
+            case SceneType.Main:
                 break;
 
         }

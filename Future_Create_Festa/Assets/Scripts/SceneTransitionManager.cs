@@ -10,7 +10,7 @@ public class SceneTransitionManager : MonoBehaviour
         Title = 0,
         ModeSelect,
         StageSelect,
-        GameMain,
+        Main,
         VALUE_MAX
     }
 
@@ -48,6 +48,8 @@ public class SceneTransitionManager : MonoBehaviour
     public ModeType choseMode;
     [Tooltip("ステージ選択結果")]
     public int choseStage;
+    [Tooltip("ステージセレクト回転速度")]
+    public float stageSelectRotationSpeed;
     [Tooltip("Rotationフラグ")]
     public bool rotFlg;
     [Tooltip("Rotation中フラグ")]
@@ -171,7 +173,7 @@ public class SceneTransitionManager : MonoBehaviour
                     GlobalCoroutine.Go(titleCamera.fadeImage.MaterialFadeOut(titleCamera.rend, titleCamera.fadeTime));
                     oneTimeFadeOut = true;
                 }
-                NextScene = SceneType.Title;
+                NextScene = SceneType.Main;
                 if (modelTrans == null)
                 {
                     modelTrans = GameObject.Find("SelectPanelParent").transform;
@@ -180,7 +182,22 @@ public class SceneTransitionManager : MonoBehaviour
                 CheckTransition();
                 break;
 
-            case SceneType.GameMain:
+            case SceneType.Main:
+                if (!oneTimeFadeOut)
+                {
+                    Sound.LoadBgm("StageSelectBgm", "StageSelect_TestBgm");
+                    Sound.LoadSe("StageSelectSe", "StageSelect_TestSe");
+
+                    Sound.PlayBgm("StageSelectBgm");
+
+                    titleLogo.SetActive(false);
+                    modeSelectLogo.SetActive(false);
+                    stageSelectLogo.SetActive(true);
+                    GlobalCoroutine.Go(titleCamera.fadeImage.MaterialFadeOut(titleCamera.rend, titleCamera.fadeTime));
+                    oneTimeFadeOut = true;
+                }
+                NextScene = SceneType.Title;
+
                 break;
 
         }
@@ -195,6 +212,7 @@ public class SceneTransitionManager : MonoBehaviour
             isTransition = false;
             NowScene = NextScene;
             SceneManager.LoadScene(NextScene.ToString());
+            Debug.Log(NextScene.ToString());
         }
     }
 
@@ -246,7 +264,7 @@ public class SceneTransitionManager : MonoBehaviour
                     {
                         choseStage = (int)StageType.Stage1;
                     }
-                    GlobalCoroutine.Go(RotationModel(modelTrans, 1.0f, true));
+                    GlobalCoroutine.Go(RotationModel(modelTrans, stageSelectRotationSpeed, true));
                 }
                 if (Input.GetKeyDown(KeyCode.RightArrow) && !isRotation)
                 {
@@ -255,12 +273,13 @@ public class SceneTransitionManager : MonoBehaviour
                     {
                         choseStage = (int)StageType.Stage4;
                     }
-                    GlobalCoroutine.Go(RotationModel(modelTrans, 1.0f, false));
+                    GlobalCoroutine.Go(RotationModel(modelTrans, stageSelectRotationSpeed, false));
                 }
 
                 break;
 
-            case SceneType.GameMain:
+            case SceneType.Main:
+
                 break;
 
         }
