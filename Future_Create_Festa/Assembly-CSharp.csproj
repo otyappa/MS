@@ -73,6 +73,7 @@
      <Compile Include="Assets\Scripts\GlobalCoroutine.cs" />
      <Compile Include="Assets\Scripts\SceneInput.cs" />
      <Compile Include="Assets\Scripts\SceneTransitionManager.cs" />
+     <Compile Include="Assets\Scripts\Sound.cs" />
      <Compile Include="Assets\Scripts\StageSelectPanel.cs" />
      <Compile Include="Assets\Scripts\TitleCamera.cs" />
      <None Include="Assets\GameMain\Translucent.shader" />

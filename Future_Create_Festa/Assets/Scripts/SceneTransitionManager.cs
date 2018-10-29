@@ -185,6 +185,7 @@ public class SceneTransitionManager : MonoBehaviour
             case SceneType.Main:
                 if (!oneTimeFadeOut)
                 {
+                    oneTimeFadeOut = true;
                     Sound.LoadBgm("StageSelectBgm", "StageSelect_TestBgm");
                     Sound.LoadSe("StageSelectSe", "StageSelect_TestSe");
 
@@ -193,8 +194,9 @@ public class SceneTransitionManager : MonoBehaviour
                     titleLogo.SetActive(false);
                     modeSelectLogo.SetActive(false);
                     stageSelectLogo.SetActive(true);
+                    titleCamera.gameObject.SetActive(false);
                     GlobalCoroutine.Go(titleCamera.fadeImage.MaterialFadeOut(titleCamera.rend, titleCamera.fadeTime));
-                    oneTimeFadeOut = true;
+
                 }
                 NextScene = SceneType.Title;
 
