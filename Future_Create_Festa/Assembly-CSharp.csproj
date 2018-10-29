@@ -67,6 +67,14 @@
      <Compile Include="Assets\GamePadInput\Demo\DemoScript.cs" />
      <Compile Include="Assets\GamePadInput\Demo\GamePadManager.cs" />
      <Compile Include="Assets\GamePadInput\GamePad.cs" />
+     <Compile Include="Assets\Scripts\BackgroundStage.cs" />
+     <Compile Include="Assets\Scripts\BillBoard.cs" />
+     <Compile Include="Assets\Scripts\FadeImage.cs" />
+     <Compile Include="Assets\Scripts\GlobalCoroutine.cs" />
+     <Compile Include="Assets\Scripts\SceneInput.cs" />
+     <Compile Include="Assets\Scripts\SceneTransitionManager.cs" />
+     <Compile Include="Assets\Scripts\StageSelectPanel.cs" />
+     <Compile Include="Assets\Scripts\TitleCamera.cs" />
      <None Include="Assets\GameMain\Translucent.shader" />
  <Reference Include="UnityEditor.StandardEvents">
  <HintPath>C:/Users/ohs50220/Documents/MS/Future_Create_Festa/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>

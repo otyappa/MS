@@ -17,13 +17,14 @@ public class Result : MonoBehaviour {
 	void Update () {
         if (End_Manager.Get_GameSet())
         {
-            if (Red && !End_Manager.Get_WINNER())
+            if (Red == !End_Manager.Get_WINNER())
             {
                 transform.GetChild(0).gameObject.SetActive(true);
 
             }
             else
             {
+                
                 transform.GetChild(1).gameObject.SetActive(true);
 
             }

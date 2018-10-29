@@ -3,19 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Couple : MonoBehaviour {
-    Vector3 goal;
+  [SerializeField]  Vector3 goal;
+    [SerializeField]
     Vector3 Goal_Direction;
+    [SerializeField]
     GameSystem GameSystemManager;
+    [SerializeField]
     bool coal_flg;
+    [SerializeField]
     bool Stan_flg=false;
+    [SerializeField]
     bool walk_flg=true;
+    [SerializeField]
     Vector3 target;
+    [SerializeField]
     public bool Red_Player=false;
+    [SerializeField]
     public GameObject Goal_Point;
+    [SerializeField]
     public float move_speed=1;
+    [SerializeField]
     int heal_Time=0;
+    [SerializeField]
     Vector3 start_pos;
-    struct stage
+    public struct stage
     {
       public  float x;
       public float z;
@@ -26,10 +37,13 @@ public class Couple : MonoBehaviour {
       public int parent_x;
       public int parent_y;
     }
-    stage[,] teststage = new stage[6, 11];
+    [SerializeField]
+    stage[,]teststage = new stage[6, 11];
     bool coll;
-	// Use this for initialization
-	void Start () {
+    int old_heal_Time = 0;
+
+    // Use this for initialization
+    void Start () {
         CreateStage();
         GameSystemManager = GameObject.Find("GameSystemManager").GetComponent<GameSystem>();
         start_pos = transform.position;
@@ -41,7 +55,10 @@ public class Couple : MonoBehaviour {
         {
             if (Stan_flg==true)
             {
+                if (old_heal_Time < heal_Time)
+                {
 
+                }
             }else if (coal_flg == true)
             {
                 Move();
@@ -54,16 +71,12 @@ public class Couple : MonoBehaviour {
         if (Stan_flg == false)
         {
             CreateStage();
-
+            walk_flg = true;
             goal = Goal.position;
             int g_x = (int)((Goal.transform.position.z-0.75f) / -1.5f);
             int g_z = (int)((Goal.transform.position.x + 0.75f) / 1.5f);
             int t_x = (int)((transform.position.z) / -1.5f);
             int t_z = (int)((transform.position.x) / 1.5f);
-            Debug.Log("x:");
-            Debug.Log(g_x);
-            Debug.Log("y:");
-            Debug.Log(g_z);
             teststage[g_x, g_z].status = 2;
             teststage[g_x, g_z].jitucost = 0;
             teststage[g_x, g_z].suiteicost = (t_x - g_x) + (t_z - g_z);
@@ -73,7 +86,6 @@ public class Couple : MonoBehaviour {
             {
                 if (teststage[g_x + 1, g_z].status == 0)
                 {
-                    Debug.Log("buttom");
                     teststage[g_x + 1, g_z].status = 0;
                     teststage[g_x + 1, g_z].parent_x = g_x;
                     teststage[g_x + 1, g_z].parent_y = g_z;
@@ -86,7 +98,6 @@ public class Couple : MonoBehaviour {
             {
                 if (teststage[g_x, g_z + 1].status == 0)
                 {
-                    Debug.Log("right");
                     teststage[g_x, g_z + 1].status = 0;
                     teststage[g_x, g_z + 1].parent_x = g_x;
                     teststage[g_x, g_z + 1].parent_y = g_z;
@@ -97,7 +108,6 @@ public class Couple : MonoBehaviour {
             {
                 if (teststage[g_x - 1, g_z].status == 0)
                 {
-                    Debug.Log("top");
                     teststage[g_x - 1, g_z].status = 0;
                     teststage[g_x - 1, g_z].parent_x = g_x;
                     teststage[g_x - 1, g_z].parent_y = g_z;
@@ -110,7 +120,6 @@ public class Couple : MonoBehaviour {
 
                 if (teststage[g_x, g_z - 1].status == 0)
                 {
-                    Debug.Log("left");
                     teststage[g_x, g_z - 1].status = 0;
                     teststage[g_x, g_z - 1].parent_x = g_x;
                     teststage[g_x, g_z - 1].parent_y = g_z;
@@ -144,20 +153,11 @@ public class Couple : MonoBehaviour {
                     }
                 }
                 teststage[min_x, min_y].status = 2;
-                //teststage[min_x, min_y].parent_x = parent_x;
-                //teststage[min_x, min_y].parent_y = parent_y;
                 parent_x = min_x;
                 parent_y = min_y;
-                  Debug.Log("x:");
-                  Debug.Log(min_x);
-                  Debug.Log("y:");
-                  Debug.Log(min_y);
-                Debug.Log("score");
-                Debug.Log(teststage[min_x, min_y].jitucost);
                 if (min_x == t_x && min_y == t_z)
                 {
                     coal_flg = true;
-                    Debug.Log("END");
                     break;
                 }
                 count++;
@@ -166,7 +166,6 @@ public class Couple : MonoBehaviour {
 
                     if (teststage[min_x+1, min_y].status == 0)
                     {
-                        //teststage[g_x + 1, g_z].status = 1;
                         teststage[min_x + 1, min_y].parent_x = min_x;
                         teststage[min_x + 1, min_y].parent_y = min_y;
                         A_Star(count, min_x + 1, min_y);
@@ -177,7 +176,6 @@ public class Couple : MonoBehaviour {
 
                     if (teststage[min_x, min_y + 1].status == 0)
                     {
-                        //teststage[g_x, g_z + 1].status = 1;
                         teststage[min_x, min_y + 1].parent_x = min_x;
                         teststage[min_x, min_y + 1].parent_y = min_y;
                         A_Star(count, min_x, min_y + 1);
@@ -188,7 +186,6 @@ public class Couple : MonoBehaviour {
 
                     if (teststage[min_x - 1, min_y].status == 0)
                     {
-                        //teststage[g_x - 1, g_z].status = 1;
                         teststage[min_x - 1, min_y].parent_x = min_x;
                         teststage[min_x - 1, min_y].parent_y = min_y;
                         A_Star(count, min_x - 1, min_y);
@@ -199,7 +196,6 @@ public class Couple : MonoBehaviour {
 
                     if (teststage[min_x, min_y-1].status == 0)
                     {
-                        // teststage[g_x, g_z - 1].status = 1;
                         teststage[min_x, min_y - 1].parent_x = min_x;
                         teststage[min_x, min_y - 1].parent_y = min_y;
                         A_Star(count, min_x, min_y - 1);
@@ -221,8 +217,6 @@ public class Couple : MonoBehaviour {
     {
         int t_x = (int)((this.transform.position.x) / 1.5f);
         int t_z = (int)((this.transform.position.z) / 1.5f);
-        // int count = 0;
-       // Debug.Log("fuuuuu");
         if (teststage[x, z].score == 2)
         {
             return;
@@ -278,9 +272,7 @@ public class Couple : MonoBehaviour {
 
     void Move()
     {
-
-      
-        if (walk_flg)
+        if (walk_flg==true)
         {
             int x = (int)((transform.position.z) / -1.5f);
             int z = (int)((transform.position.x) / 1.5f);
@@ -301,10 +293,10 @@ public class Couple : MonoBehaviour {
                 coal_flg = false;
                 return;
             }
+
             target = new Vector3(teststage[teststage[x, z].parent_x, teststage[x, z].parent_y].x, 1.55f, teststage[teststage[x, z].parent_x, teststage[x, z].parent_y].z);
             walk_flg = false;
         }
-        //Debug.Log(Vector3.MoveTowards(transform.position, target, 0.01f));
         if (Vector3.MoveTowards(transform.position, target, move_speed/20)==target)
         {
             walk_flg = true;
@@ -397,6 +389,7 @@ public class Couple : MonoBehaviour {
 
     void OnTriggerRelease(Collider it)
     {
+        Debug.Log(it);
         if (it.transform.gameObject.layer == 8 && Red_Player == false && !Stan_flg)
         {
             it.GetComponent<PL>().End_Time();

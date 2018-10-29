@@ -156,5 +156,13 @@ c2275a8bfbb9f9942cad75ecdfded41d UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.Spa
 8518e9ab62cc1b1d4cf4611182ca5484 Assembly-CSharp.dll:.Create_SpecialItem
 7a93b5c911281eb62dd05c17dbdd4119 Assembly-CSharp.dll:.Dual_Display
 f66456e39f8e7a836008fe31f4c9c2dd Assembly-CSharp.dll:.Trance
-05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.GameSystem
+8b905aa864e021f2dfb38f44cf338333 Assembly-CSharp.dll:.GameSystem
 5e38eaae89e484aaaa5c7942da8ff1ea Assembly-CSharp.dll:.Couple
+e70f1d9af6b665eb44913695bef5474d Assembly-CSharp.dll:.TitleCamera
+738222baba1e912cdcc604ca99b80aaa Assembly-CSharp.dll:.SceneInput
+05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.StageSelectPanel
+a48e692ecf8b94257ab68a315748dc94 Assembly-CSharp.dll:.BackgroundStage
+c4491059730daad8d32230381fecbbce Assembly-CSharp.dll:.BillBoard
+f50acbd12a11701d6539fd3c78424fd0 Assembly-CSharp.dll:.SceneTransitionManager
+05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.GlobalCoroutine
+05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.FadeImage
