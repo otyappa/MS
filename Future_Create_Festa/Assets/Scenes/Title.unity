@@ -243,11 +243,6 @@ Prefab:
       propertyPath: stageSelectLogo
       value: 
       objectReference: {fileID: 1239502825}
-    - target: {fileID: 114113821612216426, guid: 2ac14ed82f5469f4485e4fd86bdd8c0f,
-        type: 2}
-      propertyPath: stageSelectRotationSpeed
-      value: 0.5
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2ac14ed82f5469f4485e4fd86bdd8c0f, type: 2}
   m_IsPrefabParent: 0

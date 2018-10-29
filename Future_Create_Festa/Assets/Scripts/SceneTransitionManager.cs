@@ -36,6 +36,8 @@ public class SceneTransitionManager : MonoBehaviour
     public GameObject modeSelectLogo;
     [Tooltip("ステージセレクトロゴ")]
     public GameObject stageSelectLogo;
+    [Tooltip("背景ステージ")]
+    public GameObject titleStage;
 
     [Tooltip("現在のシーン")]
     public SceneType NowScene;
@@ -100,6 +102,11 @@ public class SceneTransitionManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+
+        titleLogo = GameObject.Find("TitleLogo");
+        modeSelectLogo = GameObject.Find("ModeSelectLogo");
+        stageSelectLogo = GameObject.Find("StageSelectLogo");
+        titleStage = GameObject.Find("TitleStage");
         titleCamera = GameObject.Find("TitleCamera").GetComponent<TitleCamera>();
         oneTimeFadeOut = false;
 
@@ -193,7 +200,8 @@ public class SceneTransitionManager : MonoBehaviour
 
                     titleLogo.SetActive(false);
                     modeSelectLogo.SetActive(false);
-                    stageSelectLogo.SetActive(true);
+                    stageSelectLogo.SetActive(false);
+                    titleStage.SetActive(false);
                     titleCamera.gameObject.SetActive(false);
                     GlobalCoroutine.Go(titleCamera.fadeImage.MaterialFadeOut(titleCamera.rend, titleCamera.fadeTime));
 
