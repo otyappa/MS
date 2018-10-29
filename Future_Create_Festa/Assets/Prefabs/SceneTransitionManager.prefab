@@ -54,11 +54,13 @@ MonoBehaviour:
   titleLogo: {fileID: 0}
   modeSelectLogo: {fileID: 0}
   stageSelectLogo: {fileID: 0}
+  titleStage: {fileID: 0}
   NowScene: 0
   NextScene: 0
   isTransition: 0
   choseMode: 0
   choseStage: 0
+  stageSelectRotationSpeed: 0.5
   rotFlg: 0
   isRotation: 0
   modelTrans: {fileID: 0}
