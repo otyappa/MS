@@ -41,11 +41,15 @@ public class Couple : MonoBehaviour {
     stage[,]teststage = new stage[6, 11];
     bool coll;
     int old_heal_Time = 0;
-
+    bool Trap_now = false;
+    int Flash_Time;
+    int flash_now;
+    Renderer flash_mesh;
     // Use this for initialization
     void Start () {
         CreateStage();
         GameSystemManager = GameObject.Find("GameSystemManager").GetComponent<GameSystem>();
+        flash_mesh = GetComponent<Renderer>();
         start_pos = transform.position;
 	}
 	
@@ -55,11 +59,23 @@ public class Couple : MonoBehaviour {
         {
             if (Stan_flg==true)
             {
-                if (old_heal_Time < heal_Time)
+                if (flash_now > 15)
                 {
-
+                    //this.renderer.
+                    flash_mesh.enabled = !flash_mesh.enabled;
+                    flash_now = 0;
+                    Flash_Time++;
                 }
-            }else if (coal_flg == true)
+                if (Flash_Time > 8)
+                {
+                    //Re_Start();
+                   // Flash_Time = 0;
+                    //Trap_now = false;
+                    //Player_Model.SetActive(true);
+                }
+                flash_now++;
+            }
+            else if (coal_flg == true)
             {
                 Move();
             }
@@ -275,8 +291,20 @@ public class Couple : MonoBehaviour {
 
         if (Vector3.MoveTowards(transform.position, target, move_speed / 20) == target)
         {
+
             walk_flg = true;
 
+        }
+        if (transform.position == Goal_Point.transform.position)
+        {
+            if (Red_Player == true)
+            {
+                GameSystemManager.RedWin();
+            }
+            else
+            {
+                GameSystemManager.BlueWin();
+            }
         }
         if (walk_flg == true)
         {
@@ -285,7 +313,7 @@ public class Couple : MonoBehaviour {
 
             if (teststage[x, z].parent_x == 99)
             {
-                if (transform.position == Goal_Point.transform.position)
+                if (x == (int)(Goal_Point.transform.position.z/-1.5f)&& z == (int)(Goal_Point.transform.position.x / 1.5f))
                 {
                     if (Red_Player == true)
                     {
@@ -381,6 +409,7 @@ public class Couple : MonoBehaviour {
             if (heal_Time == 120)
             {
                 Stan_flg = false;
+                flash_mesh.enabled = true;
                 heal_Time = 0;
                 it.GetComponent<PL>().End_Time();
             }

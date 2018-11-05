@@ -83,8 +83,8 @@ public class PL : MonoBehaviour {
     void Move_B()
 	{
 		Vector3 Move_Transform = this.transform.position;
-		Vector3 Move_LR = new Vector3 (Move_Speed/20, 0.0f, 0.0f);//
-		Vector3 Move_UD = new Vector3 (0.0f, 0.0f, Move_Speed / 20);//
+		Vector3 Move_LR = new Vector3 (Move_Speed * Time.deltaTime, 0.0f, 0.0f);//
+		Vector3 Move_UD = new Vector3 (0.0f, 0.0f, Move_Speed * Time.deltaTime);//
 
         if (SP_MODE)
         {
@@ -99,6 +99,7 @@ public class PL : MonoBehaviour {
                 //罠を仕掛ける
                 if (GamePad.GetButtonDown(GamePad.Button.B, GamePad.Index.Three) && trap_count < max_trap && Make_Trap_Time <= 60)
                 {
+                    Player_Anm.SetBool("trap", true);
                     TimeBar.Set_Pasent(60);
                     //敵に見える
                     transform.GetChild(0).GetComponent<Hint>().Set_Active();
@@ -107,6 +108,7 @@ public class PL : MonoBehaviour {
                 {
                     if (Make_Trap_Time == 60)
                     {
+
                         Set_Trap();
                     }
                     else
@@ -121,6 +123,7 @@ public class PL : MonoBehaviour {
 
                     if (GamePad.GetButtonUp(GamePad.Button.B, GamePad.Index.Three))
                     {
+                        Player_Anm.SetBool("trap", false);
                         TimeBar.Reset();
                         Make_Trap_Time = 0;
                     }
@@ -175,7 +178,7 @@ public class PL : MonoBehaviour {
                 //罠を仕掛ける
                 if (GamePad.GetButtonDown(GamePad.Button.B, GamePad.Index.One) && trap_count < max_trap && Make_Trap_Time <= 60)
                 {
-
+                    Player_Anm.SetBool("trap", true);
                     TimeBar.Set_Pasent(60);
                     //敵に見える
                     transform.GetChild(0).GetComponent<Hint>().Set_Active();
@@ -198,6 +201,7 @@ public class PL : MonoBehaviour {
 
                     if (GamePad.GetButtonUp(GamePad.Button.B, GamePad.Index.One))
                     {
+                        Player_Anm.SetBool("trap", false);
                         TimeBar.Reset();
                         Make_Trap_Time = 0;
                     }
@@ -251,8 +255,8 @@ public class PL : MonoBehaviour {
 	void Move_R()
 	{
 		Vector3 Move_Transform = this.transform.position;
-		Vector3 Move_LR = new Vector3 (Move_Speed / 20, 0.0f, 0.0f);
-		Vector3 Move_UD = new Vector3 (0.0f, 0.0f, Move_Speed / 20);
+		Vector3 Move_LR = new Vector3 (Move_Speed * Time.deltaTime, 0.0f, 0.0f);
+		Vector3 Move_UD = new Vector3 (0.0f, 0.0f, Move_Speed * Time.deltaTime);
         if (SP_MODE)
         {
             R_Special_Mode();
@@ -267,6 +271,7 @@ public class PL : MonoBehaviour {
                 //罠を仕掛ける
                 if (GamePad.GetButtonDown(GamePad.Button.B, GamePad.Index.Four) && trap_count < max_trap && Make_Trap_Time <= 60 || (Input.GetKeyDown(KeyCode.E) && trap_count < max_trap && Make_Trap_Time <= 60))
                 {
+                    Player_Anm.SetBool("trap", true);
                     TimeBar.Set_Pasent(60);
                     //敵に見える
                     transform.GetChild(0).GetComponent<Hint>().Set_Active();
@@ -287,7 +292,7 @@ public class PL : MonoBehaviour {
                 {
                     if (Input.GetKeyUp(KeyCode.E) || GamePad.GetButtonUp(GamePad.Button.B, GamePad.Index.Four))
                     {
-
+                        Player_Anm.SetBool("trap", false);
                         TimeBar.Reset();
                         Make_Trap_Time = 0;
                     }
@@ -343,6 +348,7 @@ public class PL : MonoBehaviour {
                 //罠を仕掛ける
                 if (GamePad.GetButtonDown(GamePad.Button.B, GamePad.Index.Two) && trap_count < max_trap && Make_Trap_Time <= 60 )
                 {
+                    Player_Anm.SetBool("trap", true);
                     TimeBar.Set_Pasent(60);
                     //敵に見える
                     transform.GetChild(0).GetComponent<Hint>().Set_Active();
@@ -365,7 +371,7 @@ public class PL : MonoBehaviour {
 
                     if (GamePad.GetButtonUp(GamePad.Button.B, GamePad.Index.Two))
                     {
-
+                        Player_Anm.SetBool("trap", false);
                         TimeBar.Reset();
                         Make_Trap_Time = 0;
                     }
@@ -434,6 +440,7 @@ public class PL : MonoBehaviour {
     //罠を仕掛ける
     void Set_Trap()
     {
+        Player_Anm.SetBool("trap", false);
         Make_Trap_Time++;
         trap_count++;
         //落とし穴作成
@@ -519,8 +526,8 @@ public class PL : MonoBehaviour {
     void B_Special_Mode()
     {
         Vector3 Move_Transform = this.transform.position;
-        Vector3 Move_LR = new Vector3(Move_Speed / 20, 0.0f, 0.0f);//
-        Vector3 Move_UD = new Vector3(0.0f, 0.0f, Move_Speed / 20);//
+        Vector3 Move_LR = new Vector3(Move_Speed *Time.deltaTime, 0.0f, 0.0f);//
+        Vector3 Move_UD = new Vector3(0.0f, 0.0f, Move_Speed * Time.deltaTime);//
         if (TonT)
         {
             GamepadState state = GamePad.GetState(GamePad.Index.Three);
@@ -673,8 +680,8 @@ public class PL : MonoBehaviour {
     void R_Special_Mode()
     {
         Vector3 Move_Transform = this.transform.position;
-        Vector3 Move_LR = new Vector3(Move_Speed / 20, 0.0f, 0.0f);
-        Vector3 Move_UD = new Vector3(0.0f, 0.0f, Move_Speed / 20);
+        Vector3 Move_LR = new Vector3(Move_Speed * Time.deltaTime, 0.0f, 0.0f);
+        Vector3 Move_UD = new Vector3(0.0f, 0.0f, Move_Speed * Time.deltaTime);
         if (TonT)
         {
             GamepadState state = GamePad.GetState(GamePad.Index.Four);
@@ -744,7 +751,7 @@ public class PL : MonoBehaviour {
 
 
             //カップルを呼ぶ
-            if (state.A)
+            if (state.A||Input.GetKey(KeyCode.Q))
             {
 
                 Coll_Couple();
