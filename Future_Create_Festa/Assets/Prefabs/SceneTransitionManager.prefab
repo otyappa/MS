@@ -51,9 +51,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72c2b949c000e6a4da2a7f8391cf268d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  titleLogo: {fileID: 0}
-  modeSelectLogo: {fileID: 0}
-  stageSelectLogo: {fileID: 0}
+  titleUI: {fileID: 0}
+  modeSelectUI: {fileID: 0}
+  stageSelectUI: {fileID: 0}
   titleStage: {fileID: 0}
   NowScene: 0
   NextScene: 0

@@ -16,6 +16,8 @@ public class TitleCamera : MonoBehaviour {
     public bool fadeOutFlg;
     [Tooltip("フェードの時間"), SerializeField, Range(0.1f, 4)]
     public float fadeTime;
+    [Tooltip("ディスプレイの数")]
+    public int displayNum;
 
     // 現在存在しているオブジェクト実体の記憶領域
     static TitleCamera _instance = null;
@@ -40,6 +42,10 @@ public class TitleCamera : MonoBehaviour {
 
         // 以降破棄しない
         DontDestroyOnLoad(gameObject);
+        for (int i = 0; i < displayNum; ++i)
+        {
+            Display.displays[i].Activate();
+        }
 
     }
 

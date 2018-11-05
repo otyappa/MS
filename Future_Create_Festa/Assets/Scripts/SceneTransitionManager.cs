@@ -30,12 +30,12 @@ public class SceneTransitionManager : MonoBehaviour
 
     }
 
-    [Tooltip("タイトルロゴ")]
-    public GameObject titleLogo;
-    [Tooltip("モードセレクトロゴ")]
-    public GameObject modeSelectLogo;
-    [Tooltip("ステージセレクトロゴ")]
-    public GameObject stageSelectLogo;
+    [Tooltip("タイトルUI")]
+    public GameObject titleUI;
+    [Tooltip("モードセレクトUI")]
+    public GameObject modeSelectUI;
+    [Tooltip("ステージセレクトUI")]
+    public GameObject stageSelectUI;
     [Tooltip("背景ステージ")]
     public GameObject titleStage;
 
@@ -103,9 +103,9 @@ public class SceneTransitionManager : MonoBehaviour
     void Start()
     {
 
-        titleLogo = GameObject.Find("TitleLogo");
-        modeSelectLogo = GameObject.Find("ModeSelectLogo");
-        stageSelectLogo = GameObject.Find("StageSelectLogo");
+        titleUI = GameObject.Find("TitleUI");
+        modeSelectUI = GameObject.Find("ModeSelectUI");
+        stageSelectUI = GameObject.Find("StageSelectUI");
         titleStage = GameObject.Find("TitleStage");
         titleCamera = GameObject.Find("TitleCamera").GetComponent<TitleCamera>();
         oneTimeFadeOut = false;
@@ -136,9 +136,9 @@ public class SceneTransitionManager : MonoBehaviour
 
                     Sound.PlayBgm("TitleBgm");
 
-                    titleLogo.SetActive(true);
-                    modeSelectLogo.SetActive(false);
-                    stageSelectLogo.SetActive(false);
+                    titleUI.SetActive(true);
+                    modeSelectUI.SetActive(false);
+                    stageSelectUI.SetActive(false);
                     GlobalCoroutine.Go(titleCamera.fadeImage.MaterialFadeOut(titleCamera.rend, titleCamera.fadeTime));
                     oneTimeFadeOut = true;
                 }
@@ -155,9 +155,9 @@ public class SceneTransitionManager : MonoBehaviour
 
                     Sound.PlayBgm("ModeSelectBgm");
 
-                    titleLogo.SetActive(false);
-                    modeSelectLogo.SetActive(true);
-                    stageSelectLogo.SetActive(false);
+                    titleUI.SetActive(false);
+                    modeSelectUI.SetActive(true);
+                    stageSelectUI.SetActive(false);
                     GlobalCoroutine.Go(titleCamera.fadeImage.MaterialFadeOut(titleCamera.rend, titleCamera.fadeTime));
                     oneTimeFadeOut = true;
                 }
@@ -174,9 +174,9 @@ public class SceneTransitionManager : MonoBehaviour
 
                     Sound.PlayBgm("StageSelectBgm");
 
-                    titleLogo.SetActive(false);
-                    modeSelectLogo.SetActive(false);
-                    stageSelectLogo.SetActive(true);
+                    titleUI.SetActive(false);
+                    modeSelectUI.SetActive(false);
+                    stageSelectUI.SetActive(true);
                     GlobalCoroutine.Go(titleCamera.fadeImage.MaterialFadeOut(titleCamera.rend, titleCamera.fadeTime));
                     oneTimeFadeOut = true;
                 }
@@ -198,9 +198,9 @@ public class SceneTransitionManager : MonoBehaviour
 
                     Sound.PlayBgm("StageSelectBgm");
 
-                    titleLogo.SetActive(false);
-                    modeSelectLogo.SetActive(false);
-                    stageSelectLogo.SetActive(false);
+                    titleUI.SetActive(false);
+                    modeSelectUI.SetActive(false);
+                    stageSelectUI.SetActive(false);
                     titleStage.SetActive(false);
                     titleCamera.gameObject.SetActive(false);
                     GlobalCoroutine.Go(titleCamera.fadeImage.MaterialFadeOut(titleCamera.rend, titleCamera.fadeTime));
@@ -275,6 +275,7 @@ public class SceneTransitionManager : MonoBehaviour
                         choseStage = (int)StageType.Stage1;
                     }
                     GlobalCoroutine.Go(RotationModel(modelTrans, stageSelectRotationSpeed, true));
+                    //GlobalCoroutine.Go(testRotationModel(modelTrans, stageSelectRotationSpeed, true));
                 }
                 if (Input.GetKeyDown(KeyCode.RightArrow) && !isRotation)
                 {
@@ -284,6 +285,7 @@ public class SceneTransitionManager : MonoBehaviour
                         choseStage = (int)StageType.Stage4;
                     }
                     GlobalCoroutine.Go(RotationModel(modelTrans, stageSelectRotationSpeed, false));
+                    //GlobalCoroutine.Go(testRotationModel(modelTrans, stageSelectRotationSpeed, false));
                 }
 
                 break;
@@ -372,9 +374,10 @@ public class SceneTransitionManager : MonoBehaviour
         {
             nowTime += Time.deltaTime;
             tmpRotY = nowTime / rotTime * rotAngle + startRotY;
-
+            
             trans.transform.eulerAngles = new Vector3(trans.rotation.x, tmpRotY, trans.rotation.z);
             //trans.transform.rotation = Quaternion.Euler(trans.rotation.x, tmpRotY, trans.rotation.z);
+            //trans.Rotate(0, stageSelectRotationSpeed, 0);
 
             yield return true;
 
@@ -382,4 +385,44 @@ public class SceneTransitionManager : MonoBehaviour
 
         isRotation = false;
     }
+
+
+    private IEnumerator testRotationModel(Transform trans, float rotTime, bool leftRot)
+    {
+        // 排他制御
+        if (isRotation)
+        {
+            yield break;
+        }
+
+        isRotation = true;
+
+        float nowTime = 0.0f;
+        float tmpRotY = 0.0f;
+        float rotAngle = 90.0f;
+
+        if (leftRot)
+        {
+            rotAngle *= -1;
+        }
+
+        while (nowTime < rotTime)
+        {
+            nowTime += Time.deltaTime;
+            //tmpRotY = nowTime / rotTime * rotAngle;
+            tmpRotY = Time.deltaTime * rotAngle;
+
+            //trans.transform.eulerAngles = new Vector3(trans.rotation.x, tmpRotY, trans.rotation.z);
+            //trans.transform.rotation = Quaternion.Euler(trans.rotation.x, tmpRotY, trans.rotation.z);
+            //trans.Rotate(0, stageSelectRotationSpeed, 0);
+            transform.Rotate(0, tmpRotY, 0);
+
+            yield return true;
+
+        }
+
+        isRotation = false;
+    }
+
 }
+
