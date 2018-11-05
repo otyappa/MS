@@ -62,6 +62,7 @@
      <Compile Include="Assets\GameMain\Result.cs" />
      <Compile Include="Assets\GameMain\Special_Item.cs" />
      <Compile Include="Assets\GameMain\TimeCtl.cs" />
+     <Compile Include="Assets\GameMain\Timer.cs" />
      <Compile Include="Assets\GameMain\Trance.cs" />
      <Compile Include="Assets\GameMain\Trap.cs" />
      <Compile Include="Assets\GamePadInput\Demo\DemoScript.cs" />
