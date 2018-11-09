@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using GamepadInput;
 
 public class SceneTransitionManager : MonoBehaviour
 {
@@ -62,6 +63,9 @@ public class SceneTransitionManager : MonoBehaviour
     public TitleCamera titleCamera;
     public bool oneTimeFadeOut;
 
+    private GamepadState gpState;
+
+
     // 現在存在しているオブジェクト実体の記憶領域
     static SceneTransitionManager _instance = null;
 
@@ -102,7 +106,6 @@ public class SceneTransitionManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
         titleUI = GameObject.Find("TitleUI");
         modeSelectUI = GameObject.Find("ModeSelectUI");
         stageSelectUI = GameObject.Find("StageSelectUI");
@@ -111,6 +114,9 @@ public class SceneTransitionManager : MonoBehaviour
         oneTimeFadeOut = false;
 
         NowScene = SceneTransitionManager.SceneType.Title;
+        titleUI.SetActive(true);
+        modeSelectUI.SetActive(false);
+        stageSelectUI.SetActive(false);
         //NowScene = SceneTransitionManager.SceneType.StageSelect;
 
         choseMode = ModeType.VALUE_MAX;
@@ -125,6 +131,9 @@ public class SceneTransitionManager : MonoBehaviour
     void Update()
     {
         Debug.Log(modelTrans);
+        //NowScene = (SceneType)SceneManager.GetActiveScene().rootCount;
+        gpState = GamePad.GetState(GamePad.Index.One);
+        testinput();
 
         switch (NowScene)
         {
@@ -142,9 +151,8 @@ public class SceneTransitionManager : MonoBehaviour
                     GlobalCoroutine.Go(titleCamera.fadeImage.MaterialFadeOut(titleCamera.rend, titleCamera.fadeTime));
                     oneTimeFadeOut = true;
                 }
-                NextScene = SceneType.ModeSelect;
-                SceneTransition();
                 CheckTransition();
+                SceneTransition();
                 break;
 
             case SceneType.ModeSelect:
@@ -161,9 +169,8 @@ public class SceneTransitionManager : MonoBehaviour
                     GlobalCoroutine.Go(titleCamera.fadeImage.MaterialFadeOut(titleCamera.rend, titleCamera.fadeTime));
                     oneTimeFadeOut = true;
                 }
-                NextScene = SceneType.StageSelect;
-                SceneTransition();
                 CheckTransition();
+                SceneTransition();
                 break;
 
             case SceneType.StageSelect:
@@ -180,13 +187,12 @@ public class SceneTransitionManager : MonoBehaviour
                     GlobalCoroutine.Go(titleCamera.fadeImage.MaterialFadeOut(titleCamera.rend, titleCamera.fadeTime));
                     oneTimeFadeOut = true;
                 }
-                NextScene = SceneType.Main;
                 if (modelTrans == null)
                 {
                     modelTrans = GameObject.Find("SelectPanelParent").transform;
                 }
-                SceneTransition();
                 CheckTransition();
+                SceneTransition();
                 break;
 
             case SceneType.Main:
@@ -206,7 +212,6 @@ public class SceneTransitionManager : MonoBehaviour
                     GlobalCoroutine.Go(titleCamera.fadeImage.MaterialFadeOut(titleCamera.rend, titleCamera.fadeTime));
 
                 }
-                NextScene = SceneType.Title;
 
                 break;
 
@@ -232,8 +237,9 @@ public class SceneTransitionManager : MonoBehaviour
         switch (NowScene)
         {
             case SceneType.Title:
-                if (Input.GetKeyDown(KeyCode.Return))
+                if (Input.GetKeyDown(KeyCode.Return) || IsInputGp_ABXY())
                 {
+                    NextScene = SceneType.ModeSelect;
                     Sound.StopBgm();
                     Sound.PlaySe("TitleSe");
                     isTransition = true;
@@ -242,55 +248,70 @@ public class SceneTransitionManager : MonoBehaviour
                 break;
 
             case SceneType.ModeSelect:
-                if (Input.GetKeyDown(KeyCode.Return))
+                if (Input.GetKeyDown(KeyCode.Return) || gpState.X)
                 {
+                    NextScene = SceneType.StageSelect;
                     Sound.StopBgm();
                     Sound.PlaySe("ModeSelectSe");
                     isTransition = true;
                     GlobalCoroutine.Go(titleCamera.fadeImage.MaterialFadeIn(titleCamera.rend, titleCamera.fadeTime));
                 }
-                if (Input.GetKeyDown(KeyCode.LeftArrow))
+                if (Input.GetKeyDown(KeyCode.LeftArrow) || gpState.Left)
                 {
                     choseMode = ModeType.OneToOne;
                 }
-                if (Input.GetKeyDown(KeyCode.RightArrow))
+                if (Input.GetKeyDown(KeyCode.RightArrow) || gpState.Right)
                 {
                     choseMode = ModeType.TwoToTwo;
                 }
                 break;
 
             case SceneType.StageSelect:
-                if (Input.GetKeyDown(KeyCode.Return))
+
+                // モード選択に戻る
+                if(Input.GetKeyDown(KeyCode.Backspace) || gpState.B)
                 {
+                    Sound.StopBgm();
+                    Sound.PlaySe("StageSelectSe");
+                    NextScene = SceneType.ModeSelect;
+                    isTransition = true;
+                    GlobalCoroutine.Go(titleCamera.fadeImage.MaterialFadeIn(titleCamera.rend, titleCamera.fadeTime));
+
+                }
+
+                if (Input.GetKeyDown(KeyCode.Return) || gpState.X)
+                {
+                    NextScene = SceneType.Main;
                     Sound.StopBgm();
                     Sound.PlaySe("StageSelectSe");
                     isTransition = true;
                     GlobalCoroutine.Go(titleCamera.fadeImage.MaterialFadeIn(titleCamera.rend, titleCamera.fadeTime));
                 }
-                if (Input.GetKeyDown(KeyCode.LeftArrow) && !isRotation)
+                if (Input.GetKeyDown(KeyCode.LeftArrow) || gpState.Left && !isRotation)
                 {
                     choseStage++;
                     if ((StageType)choseStage > StageType.Stage4)
                     {
                         choseStage = (int)StageType.Stage1;
                     }
-                    GlobalCoroutine.Go(RotationModel(modelTrans, stageSelectRotationSpeed, true));
-                    //GlobalCoroutine.Go(testRotationModel(modelTrans, stageSelectRotationSpeed, true));
+                    //GlobalCoroutine.Go(RotationModel(modelTrans, stageSelectRotationSpeed, true));
+                    GlobalCoroutine.Go(testRotationModel(modelTrans, stageSelectRotationSpeed, true));
                 }
-                if (Input.GetKeyDown(KeyCode.RightArrow) && !isRotation)
+                if (Input.GetKeyDown(KeyCode.RightArrow) || gpState.Right && !isRotation)
                 {
                     choseStage--;
                     if ((StageType)choseStage < StageType.Stage1)
                     {
                         choseStage = (int)StageType.Stage4;
                     }
-                    GlobalCoroutine.Go(RotationModel(modelTrans, stageSelectRotationSpeed, false));
-                    //GlobalCoroutine.Go(testRotationModel(modelTrans, stageSelectRotationSpeed, false));
+                    //GlobalCoroutine.Go(RotationModel(modelTrans, stageSelectRotationSpeed, false));
+                    GlobalCoroutine.Go(testRotationModel(modelTrans, stageSelectRotationSpeed, false));
                 }
 
                 break;
 
             case SceneType.Main:
+                NextScene = SceneType.Title;
 
                 break;
 
@@ -374,10 +395,10 @@ public class SceneTransitionManager : MonoBehaviour
         {
             nowTime += Time.deltaTime;
             tmpRotY = nowTime / rotTime * rotAngle + startRotY;
-            
-            trans.transform.eulerAngles = new Vector3(trans.rotation.x, tmpRotY, trans.rotation.z);
+
+            //trans.transform.eulerAngles = new Vector3(trans.rotation.x, tmpRotY, trans.rotation.z);
             //trans.transform.rotation = Quaternion.Euler(trans.rotation.x, tmpRotY, trans.rotation.z);
-            //trans.Rotate(0, stageSelectRotationSpeed, 0);
+            trans.Rotate(0, 1, 0);
 
             yield return true;
 
@@ -387,8 +408,10 @@ public class SceneTransitionManager : MonoBehaviour
     }
 
 
+    [SerializeField] float test;
     private IEnumerator testRotationModel(Transform trans, float rotTime, bool leftRot)
     {
+
         // 排他制御
         if (isRotation)
         {
@@ -397,32 +420,89 @@ public class SceneTransitionManager : MonoBehaviour
 
         isRotation = true;
 
-        float nowTime = 0.0f;
-        float tmpRotY = 0.0f;
-        float rotAngle = 90.0f;
+        Debug.Log("A");
+
+        float speed = rotTime;
+        float rotAngle = 90f;
+        float variation;
+        float rot;
 
         if (leftRot)
         {
-            rotAngle *= -1;
+            variation = rotAngle / speed * -1;
+        }
+        else
+        {
+            variation = rotAngle / speed;
         }
 
-        while (nowTime < rotTime)
-        {
-            nowTime += Time.deltaTime;
-            //tmpRotY = nowTime / rotTime * rotAngle;
-            tmpRotY = Time.deltaTime * rotAngle;
+        rot = 0f;
+        //trans.transform.localRotation = Quaternion.Euler(0, 0, 0);
 
-            //trans.transform.eulerAngles = new Vector3(trans.rotation.x, tmpRotY, trans.rotation.z);
-            //trans.transform.rotation = Quaternion.Euler(trans.rotation.x, tmpRotY, trans.rotation.z);
-            //trans.Rotate(0, stageSelectRotationSpeed, 0);
-            transform.Rotate(0, tmpRotY, 0);
+        float startRotY = trans.transform.rotation.y;
+        float endRotY;
+
+        //while (rot <= rotAngle)
+        while (leftRot ? rot >= -rotAngle : rot <= rotAngle)
+        {
+            //if (leftRot)
+            //{
+            //    trans.transform.Rotate(0, variation * Time.deltaTime * -1, 0);
+            //}
+            //else
+            //{
+            //    trans.transform.Rotate(0, variation * Time.deltaTime, 0);
+            //}
+            trans.transform.Rotate(0, variation * Time.deltaTime, 0);
+
+            rot += variation * Time.deltaTime;
+
+            test = rot;
 
             yield return true;
 
         }
 
+        rot = Mathf.Floor(rot);
+        //  Debug.Log("")
+        rot = Mathf.Round(rot / 10);
+        rot = Mathf.Floor(rot);
+        rot = rot * 10;
+
+
+        //rot = Mathf.Floor((trans.transform.rotation.y / 10) * 10);
+
+
+        //trans.transform.localRotation = Quaternion.Euler(0, rot, 0);
+
         isRotation = false;
+
+    }
+
+    // ボタンのどれかが押されたら
+    private bool IsInputGp_ABXY()
+    {
+        if (gpState.A) return true;
+        if (gpState.B) return true;
+        if (gpState.X) return true;
+        if (gpState.Y) return true;
+
+        return false;
+    }
+
+    private void testinput()
+    {
+        if (gpState.A) Debug.Log("A");
+        if (gpState.B) Debug.Log("B");
+        if (gpState.X) Debug.Log("X");
+        if (gpState.Y) Debug.Log("Y");
+        if (gpState.Back) Debug.Log("Back");
+        if (gpState.Start) Debug.Log("Start");
+        if (gpState.Up) Debug.Log("Up");
+        if (gpState.Down) Debug.Log("Down");
+        if (gpState.Left) Debug.Log("Left");
+        if (gpState.Right) Debug.Log("Right");
+
     }
 
 }
-

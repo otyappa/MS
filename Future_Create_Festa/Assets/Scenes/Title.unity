@@ -114,11 +114,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &137123398 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1961645031428610, guid: 003ce35ed2caaa8478c5f30f43f1a03c,
-    type: 2}
-  m_PrefabInternal: {fileID: 1986215300}
 --- !u!1 &646202946 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1719009158909296, guid: 39ae87b33cc308843948789e57fcadfb,
@@ -228,29 +223,9 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 114113821612216426, guid: 2ac14ed82f5469f4485e4fd86bdd8c0f,
-        type: 2}
-      propertyPath: titleLogo
-      value: 
-      objectReference: {fileID: 137123398}
-    - target: {fileID: 114113821612216426, guid: 2ac14ed82f5469f4485e4fd86bdd8c0f,
-        type: 2}
-      propertyPath: modeSelectLogo
-      value: 
-      objectReference: {fileID: 1802976021}
-    - target: {fileID: 114113821612216426, guid: 2ac14ed82f5469f4485e4fd86bdd8c0f,
-        type: 2}
-      propertyPath: stageSelectLogo
-      value: 
-      objectReference: {fileID: 1239502825}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2ac14ed82f5469f4485e4fd86bdd8c0f, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &1239502825 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1213205441289766, guid: 003ce35ed2caaa8478c5f30f43f1a03c,
-    type: 2}
-  m_PrefabInternal: {fileID: 1986215300}
 --- !u!1001 &1432576214
 Prefab:
   m_ObjectHideFlags: 0
@@ -293,11 +268,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 39ae87b33cc308843948789e57fcadfb, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &1802976021 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1421378830287584, guid: 003ce35ed2caaa8478c5f30f43f1a03c,
-    type: 2}
-  m_PrefabInternal: {fileID: 1986215300}
 --- !u!1001 &1986215300
 Prefab:
   m_ObjectHideFlags: 0

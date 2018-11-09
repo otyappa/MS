@@ -42,6 +42,7 @@ public class TitleCamera : MonoBehaviour {
 
         // 以降破棄しない
         DontDestroyOnLoad(gameObject);
+
         for (int i = 0; i < displayNum; ++i)
         {
             Display.displays[i].Activate();
