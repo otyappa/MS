@@ -65,6 +65,7 @@ public class SceneTransitionManager : MonoBehaviour
 
     private GamepadState gpState;
 
+    private GameObject[] modeSelectFrameObj;
 
     // 現在存在しているオブジェクト実体の記憶領域
     static SceneTransitionManager _instance = null;
@@ -111,6 +112,10 @@ public class SceneTransitionManager : MonoBehaviour
         stageSelectUI = GameObject.Find("StageSelectUI");
         titleStage = GameObject.Find("TitleStage");
         titleCamera = GameObject.Find("TitleCamera").GetComponent<TitleCamera>();
+        modeSelectFrameObj = new GameObject[2];
+        modeSelectFrameObj[0] = GameObject.Find("selectFrame_1v1");
+        modeSelectFrameObj[1] = GameObject.Find("selectFrame_2v2");
+
         oneTimeFadeOut = false;
 
         NowScene = SceneTransitionManager.SceneType.Title;
@@ -121,6 +126,12 @@ public class SceneTransitionManager : MonoBehaviour
 
         choseMode = ModeType.VALUE_MAX;
         choseStage = 1;
+
+        Sound.LoadBgm("bgm", "BGM/BGM_Title");
+        Sound.LoadSe("enter", "SE/SE_Enter");
+        Sound.LoadSe("select", "SE/SE_Select");
+        Sound.LoadSe("cancel", "SE/SE_Cancel");
+        Sound.LoadSe("modeSelectIn", "SE/SE_ModeSelect_Start");
 
         DontDestroyOnLoad(this.gameObject);
 
@@ -140,10 +151,10 @@ public class SceneTransitionManager : MonoBehaviour
             case SceneType.Title:
                 if (!oneTimeFadeOut)
                 {
-                    Sound.LoadBgm("TitleBgm", "Title_TestBgm");
-                    Sound.LoadSe("TitleSe", "Title_TestSe");
-
-                    Sound.PlayBgm("TitleBgm");
+                    //Sound.LoadBgm("TitleBgm", "Title_TestBgm");
+                    //Sound.LoadSe("TitleSe", "Title_TestSe");
+                    //Sound.PlayBgm("TitleBgm");
+                    Sound.PlayBgm("bgm");
 
                     titleUI.SetActive(true);
                     modeSelectUI.SetActive(false);
@@ -158,14 +169,19 @@ public class SceneTransitionManager : MonoBehaviour
             case SceneType.ModeSelect:
                 if (!oneTimeFadeOut)
                 {
-                    Sound.LoadBgm("ModeSelectBgm", "ModeSelect_TestBgm");
-                    Sound.LoadSe("ModeSelectSe", "ModeSelect_TestSe");
+                    //Sound.LoadBgm("ModeSelectBgm", "ModeSelect_TestBgm");
+                    //Sound.LoadSe("ModeSelectSe", "ModeSelect_TestSe");
+                    //Sound.PlayBgm("ModeSelectBgm");
 
-                    Sound.PlayBgm("ModeSelectBgm");
+                    choseMode = ModeType.OneToOne;
+
+                    Sound.PlaySe("modeSelectIn");
 
                     titleUI.SetActive(false);
                     modeSelectUI.SetActive(true);
                     stageSelectUI.SetActive(false);
+                    modeSelectFrameObj[0].SetActive(true);
+                    modeSelectFrameObj[1].SetActive(false);
                     GlobalCoroutine.Go(titleCamera.fadeImage.MaterialFadeOut(titleCamera.rend, titleCamera.fadeTime));
                     oneTimeFadeOut = true;
                 }
@@ -176,10 +192,9 @@ public class SceneTransitionManager : MonoBehaviour
             case SceneType.StageSelect:
                 if (!oneTimeFadeOut)
                 {
-                    Sound.LoadBgm("StageSelectBgm", "StageSelect_TestBgm");
-                    Sound.LoadSe("StageSelectSe", "StageSelect_TestSe");
-
-                    Sound.PlayBgm("StageSelectBgm");
+                    //Sound.LoadBgm("StageSelectBgm", "StageSelect_TestBgm");
+                    //Sound.LoadSe("StageSelectSe", "StageSelect_TestSe");
+                    //Sound.PlayBgm("StageSelectBgm");
 
                     titleUI.SetActive(false);
                     modeSelectUI.SetActive(false);
@@ -199,10 +214,9 @@ public class SceneTransitionManager : MonoBehaviour
                 if (!oneTimeFadeOut)
                 {
                     oneTimeFadeOut = true;
-                    Sound.LoadBgm("StageSelectBgm", "StageSelect_TestBgm");
-                    Sound.LoadSe("StageSelectSe", "StageSelect_TestSe");
-
-                    Sound.PlayBgm("StageSelectBgm");
+                    //Sound.LoadBgm("StageSelectBgm", "StageSelect_TestBgm");
+                    //Sound.LoadSe("StageSelectSe", "StageSelect_TestSe");
+                    //Sound.PlayBgm("StageSelectBgm");
 
                     titleUI.SetActive(false);
                     modeSelectUI.SetActive(false);
@@ -240,8 +254,8 @@ public class SceneTransitionManager : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.Return) || IsInputGp_ABXY())
                 {
                     NextScene = SceneType.ModeSelect;
-                    Sound.StopBgm();
-                    Sound.PlaySe("TitleSe");
+                    //Sound.StopBgm();
+                    Sound.PlaySe("enter");
                     isTransition = true;
                     GlobalCoroutine.Go(titleCamera.fadeImage.MaterialFadeIn(titleCamera.rend, titleCamera.fadeTime));
                 }
@@ -251,17 +265,23 @@ public class SceneTransitionManager : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.Return) || gpState.X)
                 {
                     NextScene = SceneType.StageSelect;
-                    Sound.StopBgm();
-                    Sound.PlaySe("ModeSelectSe");
+                    //Sound.StopBgm();
+                    Sound.PlaySe("enter");
                     isTransition = true;
                     GlobalCoroutine.Go(titleCamera.fadeImage.MaterialFadeIn(titleCamera.rend, titleCamera.fadeTime));
                 }
-                if (Input.GetKeyDown(KeyCode.LeftArrow) || gpState.Left)
+                if (Input.GetKeyDown(KeyCode.LeftArrow) || gpState.Left || gpState.Up)
                 {
+                    Sound.PlaySe("select");
+                    modeSelectFrameObj[0].SetActive(true);
+                    modeSelectFrameObj[1].SetActive(false);
                     choseMode = ModeType.OneToOne;
                 }
-                if (Input.GetKeyDown(KeyCode.RightArrow) || gpState.Right)
+                if (Input.GetKeyDown(KeyCode.RightArrow) || gpState.Right || gpState.Down)
                 {
+                    Sound.PlaySe("select");
+                    modeSelectFrameObj[0].SetActive(false);
+                    modeSelectFrameObj[1].SetActive(true);
                     choseMode = ModeType.TwoToTwo;
                 }
                 break;
@@ -271,8 +291,8 @@ public class SceneTransitionManager : MonoBehaviour
                 // モード選択に戻る
                 if(Input.GetKeyDown(KeyCode.Backspace) || gpState.B)
                 {
-                    Sound.StopBgm();
-                    Sound.PlaySe("StageSelectSe");
+                    //Sound.StopBgm();
+                    Sound.PlaySe("cancel");
                     NextScene = SceneType.ModeSelect;
                     isTransition = true;
                     GlobalCoroutine.Go(titleCamera.fadeImage.MaterialFadeIn(titleCamera.rend, titleCamera.fadeTime));
@@ -283,12 +303,13 @@ public class SceneTransitionManager : MonoBehaviour
                 {
                     NextScene = SceneType.Main;
                     Sound.StopBgm();
-                    Sound.PlaySe("StageSelectSe");
+                    Sound.PlaySe("enter");
                     isTransition = true;
                     GlobalCoroutine.Go(titleCamera.fadeImage.MaterialFadeIn(titleCamera.rend, titleCamera.fadeTime));
                 }
                 if (Input.GetKeyDown(KeyCode.LeftArrow) || gpState.Left && !isRotation)
                 {
+                    Sound.PlaySe("select");
                     choseStage++;
                     if ((StageType)choseStage > StageType.Stage4)
                     {
@@ -299,6 +320,7 @@ public class SceneTransitionManager : MonoBehaviour
                 }
                 if (Input.GetKeyDown(KeyCode.RightArrow) || gpState.Right && !isRotation)
                 {
+                    Sound.PlaySe("select");
                     choseStage--;
                     if ((StageType)choseStage < StageType.Stage1)
                     {
