@@ -25,7 +25,7 @@ public class TimeCtl : MonoBehaviour {
     public void Bar_Update()
     {
         SliderManager.value = count / wari;
-        count++;
+        count+=Time.deltaTime;
     }
     public void Reset()
     {

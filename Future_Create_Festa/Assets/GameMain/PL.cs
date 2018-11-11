@@ -17,7 +17,7 @@ public class PL : MonoBehaviour {
     Animator Player_Anm;
     public bool TonT; 
     GameObject Player_HintModel;
-    int Make_Trap_Time = 0;
+    float Make_Trap_Time = 0;
     bool SP_MODE = false;
     TimeCtl TimeBar;
     [SerializeField]
@@ -26,7 +26,7 @@ public class PL : MonoBehaviour {
     int trap_count;
     bool Trap_now=false;
     int Flash_Time;
-    int flash_now;
+    float flash_now;
    public enum Vec{
         top=0,
         right,
@@ -36,6 +36,7 @@ public class PL : MonoBehaviour {
     Vec now = 0;
 	// Use this for initialization
 	void Start () {
+      //  Debug.Log("1000");
         trap_count = 0;
       //  max_trap = 1;
 		Start_Player_Position = this.transform.position;
@@ -49,9 +50,10 @@ public class PL : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+       // Debug.Log("100");
         if (Trap_now)
         {
-            if (flash_now > 15)
+            if (flash_now > 0.25)
             {
                 Player_Model.SetActive(!Player_Model.activeSelf);
                 flash_now = 0;
@@ -64,7 +66,7 @@ public class PL : MonoBehaviour {
                 Trap_now = false;
                 Player_Model.SetActive(true);
             }
-            flash_now++;
+            flash_now+=Time.deltaTime;
         }
         else
         {
@@ -97,16 +99,16 @@ public class PL : MonoBehaviour {
                 GamepadState state = GamePad.GetState(GamePad.Index.Three);
 
                 //罠を仕掛ける
-                if (GamePad.GetButtonDown(GamePad.Button.B, GamePad.Index.Three) && trap_count < max_trap && Make_Trap_Time <= 60)
+                if (GamePad.GetButtonDown(GamePad.Button.B, GamePad.Index.Three) && trap_count < max_trap && (int)Make_Trap_Time <= 60)
                 {
                     Player_Anm.SetBool("trap", true);
-                    TimeBar.Set_Pasent(60);
+                    TimeBar.Set_Pasent(1);
                     //敵に見える
                     transform.GetChild(0).GetComponent<Hint>().Set_Active();
                 }
-                if (GamePad.GetButton(GamePad.Button.B, GamePad.Index.Three) && trap_count < max_trap && Make_Trap_Time <= 60)
+                if (GamePad.GetButton(GamePad.Button.B, GamePad.Index.Three) && trap_count < max_trap && (int)Make_Trap_Time <= 1)
                 {
-                    if (Make_Trap_Time == 60)
+                    if ((int)Make_Trap_Time == 1)
                     {
 
                         Set_Trap();
@@ -114,7 +116,7 @@ public class PL : MonoBehaviour {
                     else
                     {
                         TimeBar.Bar_Update();
-                        Make_Trap_Time++;
+                        Make_Trap_Time+=Time.deltaTime;
                     }
                 }
                 else
@@ -176,23 +178,23 @@ public class PL : MonoBehaviour {
                 GamepadState state = GamePad.GetState(GamePad.Index.One);
 
                 //罠を仕掛ける
-                if (GamePad.GetButtonDown(GamePad.Button.B, GamePad.Index.One) && trap_count < max_trap && Make_Trap_Time <= 60)
+                if (GamePad.GetButtonDown(GamePad.Button.B, GamePad.Index.One) && trap_count < max_trap && (int)Make_Trap_Time <= 1)
                 {
                     Player_Anm.SetBool("trap", true);
-                    TimeBar.Set_Pasent(60);
+                    TimeBar.Set_Pasent(1);
                     //敵に見える
                     transform.GetChild(0).GetComponent<Hint>().Set_Active();
                 }
-                if (GamePad.GetButton(GamePad.Button.B, GamePad.Index.One) && trap_count < max_trap && Make_Trap_Time <= 60)
+                if (GamePad.GetButton(GamePad.Button.B, GamePad.Index.One) && trap_count < max_trap && (int)Make_Trap_Time <= 1)
                 {
-                    if (Make_Trap_Time == 60)
+                    if ((int)Make_Trap_Time ==1)
                     {
                         Set_Trap();
                     }
                     else
                     {
                         TimeBar.Bar_Update();
-                        Make_Trap_Time++;
+                        Make_Trap_Time+=Time.deltaTime;
                     }
                 }
                 else
@@ -269,23 +271,26 @@ public class PL : MonoBehaviour {
                
 
                 //罠を仕掛ける
-                if (GamePad.GetButtonDown(GamePad.Button.B, GamePad.Index.Four) && trap_count < max_trap && Make_Trap_Time <= 60 || (Input.GetKeyDown(KeyCode.E) && trap_count < max_trap && Make_Trap_Time <= 60))
+                if (GamePad.GetButtonDown(GamePad.Button.B, GamePad.Index.Four) && trap_count < max_trap && (int)Make_Trap_Time <= 1 || (Input.GetKeyDown(KeyCode.E) && trap_count < max_trap && (int)Make_Trap_Time <= 1))
                 {
                     Player_Anm.SetBool("trap", true);
-                    TimeBar.Set_Pasent(60);
+                    TimeBar.Set_Pasent(1);
                     //敵に見える
                     transform.GetChild(0).GetComponent<Hint>().Set_Active();
                 }
-                if ((GamePad.GetButton(GamePad.Button.B, GamePad.Index.Four) && trap_count < max_trap && Make_Trap_Time <= 60) || (Input.GetKey(KeyCode.E) && trap_count < max_trap && Make_Trap_Time <= 60))
+                if ((GamePad.GetButton(GamePad.Button.B, GamePad.Index.Four) && trap_count < max_trap && (int)Make_Trap_Time <= 1) || (Input.GetKey(KeyCode.E) && trap_count < max_trap && (int)Make_Trap_Time <= 1))
                 {
                     TimeBar.Bar_Update();
-                    if (Make_Trap_Time == 60)
+                    if ((int)Make_Trap_Time == 1)
                     {
+                        Debug.Log("gogogo");
                         Set_Trap();
                     }
                     else
                     {
-                        Make_Trap_Time++;
+                        Make_Trap_Time+=Time.deltaTime;
+                        Debug.Log(Make_Trap_Time);
+                        Debug.Log((int)Make_Trap_Time);
                     }
                 }
                 else
@@ -346,23 +351,23 @@ public class PL : MonoBehaviour {
                 GamepadState state = GamePad.GetState(GamePad.Index.Two);
 
                 //罠を仕掛ける
-                if (GamePad.GetButtonDown(GamePad.Button.B, GamePad.Index.Two) && trap_count < max_trap && Make_Trap_Time <= 60 )
+                if (GamePad.GetButtonDown(GamePad.Button.B, GamePad.Index.Two) && trap_count < max_trap && (int)Make_Trap_Time <= 1 )
                 {
                     Player_Anm.SetBool("trap", true);
-                    TimeBar.Set_Pasent(60);
+                    TimeBar.Set_Pasent(1);
                     //敵に見える
                     transform.GetChild(0).GetComponent<Hint>().Set_Active();
                 }
-                if ((GamePad.GetButton(GamePad.Button.B, GamePad.Index.Two) && trap_count < max_trap && Make_Trap_Time <= 60))
+                if ((GamePad.GetButton(GamePad.Button.B, GamePad.Index.Two) && trap_count < max_trap && (int)Make_Trap_Time <= 1))
                 {
                     TimeBar.Bar_Update();
-                    if (Make_Trap_Time == 60)
+                    if ((int)Make_Trap_Time == 1)
                     {
                         Set_Trap();
                     }
                     else
                     {
-                        Make_Trap_Time++;
+                        Make_Trap_Time+=Time.deltaTime;
                     }
                 }
                 else
