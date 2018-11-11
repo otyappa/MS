@@ -26,6 +26,7 @@ public class Couple : MonoBehaviour {
     int heal_Time=0;
     [SerializeField]
     Vector3 start_pos;
+    Couple_Bar Set_bar;
     public struct stage
     {
       public  float x;
@@ -45,13 +46,23 @@ public class Couple : MonoBehaviour {
     int Flash_Time;
     int flash_now;
     Renderer flash_mesh;
+    Animator Couple_Anm;
+    GameObject Couple_Model;
+    Sound test;
     // Use this for initialization
     void Start () {
         CreateStage();
         GameSystemManager = GameObject.Find("GameSystemManager").GetComponent<GameSystem>();
+        Set_bar = GameObject.Find("GameSystemManager").GetComponent<Couple_Bar>();
+        Couple_Model = transform.GetChild(0).gameObject;
+        Couple_Anm = Couple_Model.GetComponent<Animator>();
         flash_mesh = GetComponent<Renderer>();
         start_pos = transform.position;
-	}
+        //Sound.LoadSe("start", "SE/name");
+        //Sound.PlaySe("start");
+        //Sound.SetVolumeSe()
+        //Sound.StopBgm();
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -78,6 +89,8 @@ public class Couple : MonoBehaviour {
             else if (coal_flg == true)
             {
                 Move();
+                Set_bar.SetSlider(transform.position.x, Red_Player);
+               
             }
         }
     }
@@ -291,7 +304,7 @@ public class Couple : MonoBehaviour {
 
         if (Vector3.MoveTowards(transform.position, target, move_speed / 20) == target)
         {
-
+            Couple_Anm.SetBool("walk", false);
             walk_flg = true;
 
         }
@@ -330,11 +343,26 @@ public class Couple : MonoBehaviour {
 
             target = new Vector3(teststage[teststage[x, z].parent_x, teststage[x, z].parent_y].x, 1.55f, teststage[teststage[x, z].parent_x, teststage[x, z].parent_y].z);
             walk_flg = false;
+
+
         }
 
         if (!walk_flg)
         {
             transform.position = Vector3.MoveTowards(transform.position, target, move_speed / 20);
+            Couple_Anm.SetBool("walk", true);
+            Vector3 diff = transform.position - target;
+            if (diff.magnitude > 0.01f) //ベクトルの長さが0.01fより大きい場合にプレイヤーの向きを変える処理を入れる(0では入れないので）
+            {
+                transform.rotation = Quaternion.LookRotation(diff);  //ベクトルの情報をQuaternion.LookRotationに引き渡し回転量を取得しプレイヤーを回転させる
+                float step = 5 * Time.deltaTime;
+                //Debug.Log((float)now);
+                
+
+               // Couple_Model.transform.rotation = Quaternion.Slerp(Couple_Model.transform.rotation, Quaternion.Euler(0, (float)now * 90.0f, 0), step);
+
+
+            }
         }
     }
 
@@ -436,6 +464,8 @@ public class Couple : MonoBehaviour {
     void Re_Start()
     {
         transform.position = start_pos;
+        Set_bar.SetSlider(transform.position.x, Red_Player);
+
         coal_flg = false;
         walk_flg = true;
     }

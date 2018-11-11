@@ -124,7 +124,7 @@ public class SceneTransitionManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(modelTrans);
+        //Debug.Log(modelTrans);
 
         switch (NowScene)
         {
