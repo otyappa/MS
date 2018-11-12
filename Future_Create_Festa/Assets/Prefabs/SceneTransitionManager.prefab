@@ -66,4 +66,6 @@ MonoBehaviour:
   modelTrans: {fileID: 0}
   titleCamera: {fileID: 0}
   oneTimeFadeOut: 0
+  leftDoorAnim: {fileID: 0}
+  rightDoorAnim: {fileID: 0}
   test: 0

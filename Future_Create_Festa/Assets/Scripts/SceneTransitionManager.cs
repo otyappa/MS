@@ -67,6 +67,12 @@ public class SceneTransitionManager : MonoBehaviour
 
     private GameObject[] modeSelectFrameObj;
 
+    [Tooltip("扉アニメーション")]
+    public Animator Disp1_leftDoorAnim;
+    public Animator Disp1_rightDoorAnim;
+    public Animator Disp2_leftDoorAnim;
+    public Animator Disp2_rightDoorAnim;
+
     // 現在存在しているオブジェクト実体の記憶領域
     static SceneTransitionManager _instance = null;
 
@@ -107,31 +113,11 @@ public class SceneTransitionManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        titleUI = GameObject.Find("TitleUI");
-        modeSelectUI = GameObject.Find("ModeSelectUI");
-        stageSelectUI = GameObject.Find("StageSelectUI");
-        titleStage = GameObject.Find("TitleStage");
-        titleCamera = GameObject.Find("TitleCamera").GetComponent<TitleCamera>();
-        modeSelectFrameObj = new GameObject[2];
-        modeSelectFrameObj[0] = GameObject.Find("selectFrame_1v1");
-        modeSelectFrameObj[1] = GameObject.Find("selectFrame_2v2");
 
-        oneTimeFadeOut = false;
+        Init();
 
-        NowScene = SceneTransitionManager.SceneType.Title;
-        titleUI.SetActive(true);
-        modeSelectUI.SetActive(false);
-        stageSelectUI.SetActive(false);
         //NowScene = SceneTransitionManager.SceneType.StageSelect;
 
-        choseMode = ModeType.VALUE_MAX;
-        choseStage = 1;
-
-        Sound.LoadBgm("bgm", "BGM/BGM_Title");
-        Sound.LoadSe("enter", "SE/SE_Enter");
-        Sound.LoadSe("select", "SE/SE_Select");
-        Sound.LoadSe("cancel", "SE/SE_Cancel");
-        Sound.LoadSe("modeSelectIn", "SE/SE_ModeSelect_Start");
 
         DontDestroyOnLoad(this.gameObject);
 
@@ -195,6 +181,7 @@ public class SceneTransitionManager : MonoBehaviour
                     //Sound.LoadBgm("StageSelectBgm", "StageSelect_TestBgm");
                     //Sound.LoadSe("StageSelectSe", "StageSelect_TestSe");
                     //Sound.PlayBgm("StageSelectBgm");
+                    InitAnim();
 
                     titleUI.SetActive(false);
                     modeSelectUI.SetActive(false);
@@ -223,7 +210,7 @@ public class SceneTransitionManager : MonoBehaviour
                     stageSelectUI.SetActive(false);
                     titleStage.SetActive(false);
                     titleCamera.gameObject.SetActive(false);
-                    GlobalCoroutine.Go(titleCamera.fadeImage.MaterialFadeOut(titleCamera.rend, titleCamera.fadeTime));
+                    //GlobalCoroutine.Go(titleCamera.fadeImage.MaterialFadeOut(titleCamera.rend, titleCamera.fadeTime));
 
                 }
 
@@ -235,13 +222,26 @@ public class SceneTransitionManager : MonoBehaviour
     // シーンの遷移
     void SceneTransition()
     {
-        if (isTransition && !titleCamera.fadeImage.GetIsFadingIn())
+        if (NowScene != SceneType.StageSelect && isTransition && !titleCamera.fadeImage.GetIsFadingIn())
         {
             oneTimeFadeOut = false;
             isTransition = false;
             NowScene = NextScene;
             SceneManager.LoadScene(NextScene.ToString());
             Debug.Log(NextScene.ToString());
+        }
+        if (NowScene == SceneType.StageSelect && isTransition && !titleCamera.fadeImage.GetIsFadingIn())
+        {
+            // 扉が閉まっている状態
+            if (CheckAnimState("stop"))
+            {
+                oneTimeFadeOut = false;
+                isTransition = false;
+                NowScene = NextScene;
+                SceneManager.LoadScene(NextScene.ToString());
+                Debug.Log(NextScene.ToString());
+
+            }
         }
     }
 
@@ -305,7 +305,8 @@ public class SceneTransitionManager : MonoBehaviour
                     Sound.StopBgm();
                     Sound.PlaySe("enter");
                     isTransition = true;
-                    GlobalCoroutine.Go(titleCamera.fadeImage.MaterialFadeIn(titleCamera.rend, titleCamera.fadeTime));
+                    //GlobalCoroutine.Go(titleCamera.fadeImage.MaterialFadeIn(titleCamera.rend, titleCamera.fadeTime));
+                    CloseDoorAnim();
                 }
                 if (Input.GetKeyDown(KeyCode.LeftArrow) || gpState.Left && !isRotation)
                 {
@@ -527,4 +528,99 @@ public class SceneTransitionManager : MonoBehaviour
 
     }
 
+    private bool CheckAnimState(string str)
+    {
+        bool flg = false;
+
+        switch (str)
+        {
+            case "stop":
+                if(Disp1_leftDoorAnim.GetCurrentAnimatorClipInfo(0)[0].clip.name == "door_stop_left" && 
+                   Disp1_rightDoorAnim.GetCurrentAnimatorClipInfo(0)[0].clip.name == "door_stop_right" &&
+                   Disp2_leftDoorAnim.GetCurrentAnimatorClipInfo(0)[0].clip.name == "door_stop_left" &&
+                   Disp2_rightDoorAnim.GetCurrentAnimatorClipInfo(0)[0].clip.name == "door_stop_right" )
+                {
+                    flg = true;   
+                }
+                break;
+        }
+        return flg;
+    }
+
+    private void CloseDoorAnim()
+    {
+        Disp1_rightDoorAnim.Play("door_close_right");
+        Disp1_rightDoorAnim.SetBool("isStop", true);
+        Disp1_leftDoorAnim.Play("door_close_left");
+        Disp1_leftDoorAnim.SetBool("isStop", true);
+        Disp2_rightDoorAnim.Play("door_close_right");
+        Disp2_rightDoorAnim.SetBool("isStop", true);
+        Disp2_leftDoorAnim.Play("door_close_left");
+        Disp2_leftDoorAnim.SetBool("isStop", true);
+    }
+
+    private void OpenDoorAnim()
+    {
+        Disp1_rightDoorAnim.Play("door_open_right");
+        Disp1_leftDoorAnim.Play("door_open_left");
+        Disp2_rightDoorAnim.Play("door_open_right");
+        Disp2_leftDoorAnim.Play("door_open_left");
+    }
+
+    private void Init()
+    {
+
+        InitObject();
+
+        InitProperty();
+
+        InitSound();
+
+    }
+
+    private void InitObject()
+    {
+        titleUI = GameObject.Find("TitleUI");
+        modeSelectUI = GameObject.Find("ModeSelectUI");
+        stageSelectUI = GameObject.Find("StageSelectUI");
+        titleStage = GameObject.Find("TitleStage");
+        titleCamera = GameObject.Find("TitleCamera").GetComponent<TitleCamera>();
+        modeSelectFrameObj = new GameObject[2];
+        modeSelectFrameObj[0] = GameObject.Find("selectFrame_1v1");
+        modeSelectFrameObj[1] = GameObject.Find("selectFrame_2v2");
+                
+    }
+
+    private void InitAnim()
+    {
+        Disp1_leftDoorAnim = GameObject.Find("door_left_disp1").GetComponent<Animator>();
+        Disp1_rightDoorAnim = GameObject.Find("door_right_disp1").GetComponent<Animator>();
+        Disp2_leftDoorAnim = GameObject.Find("door_left_disp2").GetComponent<Animator>();
+        Disp2_rightDoorAnim = GameObject.Find("door_right_disp2").GetComponent<Animator>();
+
+
+    }
+
+    private void InitProperty()
+    {
+        oneTimeFadeOut = false;
+
+        NowScene = SceneTransitionManager.SceneType.Title;
+        titleUI.SetActive(true);
+        modeSelectUI.SetActive(false);
+        stageSelectUI.SetActive(false);
+
+        choseMode = ModeType.VALUE_MAX;
+        choseStage = 1;
+    }
+
+
+    private void InitSound()
+    {
+        Sound.LoadBgm("bgm", "BGM/BGM_Title");
+        Sound.LoadSe("enter", "SE/SE_Enter");
+        Sound.LoadSe("select", "SE/SE_Select");
+        Sound.LoadSe("cancel", "SE/SE_Cancel");
+        Sound.LoadSe("modeSelectIn", "SE/SE_ModeSelect_Start");
+    }
 }
