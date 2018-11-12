@@ -262,7 +262,7 @@ public class SceneTransitionManager : MonoBehaviour
                 break;
 
             case SceneType.ModeSelect:
-                if (Input.GetKeyDown(KeyCode.Return) || gpState.X)
+                if (Input.GetKeyDown(KeyCode.Return) || GamePad.GetButtonDown(GamePad.Button.X, GamePad.Index.One))
                 {
                     NextScene = SceneType.StageSelect;
                     //Sound.StopBgm();
@@ -270,14 +270,14 @@ public class SceneTransitionManager : MonoBehaviour
                     isTransition = true;
                     GlobalCoroutine.Go(titleCamera.fadeImage.MaterialFadeIn(titleCamera.rend, titleCamera.fadeTime));
                 }
-                if (Input.GetKeyDown(KeyCode.LeftArrow) || gpState.Left || gpState.Up)
+                if (Input.GetKeyDown(KeyCode.LeftArrow) || GamePad.GetButtonDown(GamePad.Button.Left, GamePad.Index.One) || GamePad.GetButtonDown(GamePad.Button.Up, GamePad.Index.One))
                 {
                     Sound.PlaySe("select");
                     modeSelectFrameObj[0].SetActive(true);
                     modeSelectFrameObj[1].SetActive(false);
                     choseMode = ModeType.OneToOne;
                 }
-                if (Input.GetKeyDown(KeyCode.RightArrow) || gpState.Right || gpState.Down)
+                if (Input.GetKeyDown(KeyCode.RightArrow) || GamePad.GetButtonDown(GamePad.Button.Right, GamePad.Index.One) || GamePad.GetButtonDown(GamePad.Button.Down, GamePad.Index.One))
                 {
                     Sound.PlaySe("select");
                     modeSelectFrameObj[0].SetActive(false);
@@ -289,7 +289,7 @@ public class SceneTransitionManager : MonoBehaviour
             case SceneType.StageSelect:
 
                 // モード選択に戻る
-                if(Input.GetKeyDown(KeyCode.Backspace) || gpState.B)
+                if(Input.GetKeyDown(KeyCode.Backspace) || GamePad.GetButtonDown(GamePad.Button.B, GamePad.Index.One))
                 {
                     //Sound.StopBgm();
                     Sound.PlaySe("cancel");
@@ -299,7 +299,7 @@ public class SceneTransitionManager : MonoBehaviour
 
                 }
 
-                if (Input.GetKeyDown(KeyCode.Return) || gpState.X)
+                if (Input.GetKeyDown(KeyCode.Return) || GamePad.GetButtonDown(GamePad.Button.X, GamePad.Index.One))
                 {
                     NextScene = SceneType.Main;
                     Sound.StopBgm();
@@ -430,8 +430,6 @@ public class SceneTransitionManager : MonoBehaviour
         isRotation = false;
     }
 
-
-    [SerializeField] float test;
     private IEnumerator testRotationModel(Transform trans, float rotTime, bool leftRot)
     {
 
@@ -479,8 +477,6 @@ public class SceneTransitionManager : MonoBehaviour
             trans.transform.Rotate(0, variation * Time.deltaTime, 0);
 
             rot += variation * Time.deltaTime;
-
-            test = rot;
 
             yield return true;
 
