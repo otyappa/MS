@@ -18,8 +18,8 @@ public class Couple : MonoBehaviour {
     Vector3 target;
     [SerializeField]
     public bool Red_Player=false;
-    [SerializeField]
-    public GameObject Goal_Point;
+    //[SerializeField]
+    //public GameObject Goal_Point;
     [SerializeField]
     public float move_speed=1;
     [SerializeField]
@@ -39,7 +39,7 @@ public class Couple : MonoBehaviour {
       public int parent_y;
     }
     [SerializeField]
-    stage[,]teststage = new stage[6, 11];
+    stage[,]teststage = new stage[9, 15];
     bool coll;
     int old_heal_Time = 0;
     bool Trap_now = false;
@@ -111,7 +111,7 @@ public class Couple : MonoBehaviour {
             teststage[g_x, g_z].suiteicost = (t_x - g_x) + (t_z - g_z);
             teststage[g_x, g_z].score = teststage[g_x, g_z].jitucost + teststage[g_x, g_z].suiteicost;
             teststage[g_x, g_z].parent_x = 99;
-            if (g_x < 5)
+            if (g_x < 8)
             {
                 if (teststage[g_x + 1, g_z].status == 0)
                 {
@@ -123,7 +123,7 @@ public class Couple : MonoBehaviour {
                 }
 
             }
-            if (g_z < 10)
+            if (g_z < 14)
             {
                 if (teststage[g_x, g_z + 1].status == 0)
                 {
@@ -168,9 +168,9 @@ public class Couple : MonoBehaviour {
                 int min_x = g_x;
                 int min_y = g_z;
 
-                for (int i = 0; i < 6; i++)
+                for (int i = 0; i < 9; i++)
                 {
-                    for (int j = 0; j < 11; j++)
+                    for (int j = 0; j < 15; j++)
                     {
                         if (min > teststage[i, j].score && teststage[i, j].status == 1)
                         {
@@ -190,7 +190,7 @@ public class Couple : MonoBehaviour {
                     break;
                 }
                 count++;
-                if (min_x < 5)
+                if (min_x < 8)
                 {
 
                     if (teststage[min_x+1, min_y].status == 0)
@@ -200,7 +200,7 @@ public class Couple : MonoBehaviour {
                         A_Star(count, min_x + 1, min_y);
                     }
                 }
-                if (min_y < 10)
+                if (min_y < 14)
                 {
 
                     if (teststage[min_x, min_y + 1].status == 0)
@@ -232,7 +232,7 @@ public class Couple : MonoBehaviour {
                 }
 
 
-                if (count > 66)
+                if (count > 135)
                 {
                     break;
                 }
@@ -261,41 +261,98 @@ public class Couple : MonoBehaviour {
 
     void CreateStage()
     {
-        for (int i = 0; i < 6; i++)
+        if (false)
         {
-            for (int j = 0; j < 11; j++)
+            for (int i = 0; i < 6; i++)
             {
-                teststage[i, j].x = (j * 1.5f);
-                teststage[i, j].z = (i * -1.5f);
-                teststage[i, j].status = 0;
-                teststage[i, j].jitucost = 0;
-                teststage[i, j].parent_x = 0;
-                teststage[i, j].parent_y = 0;
-                teststage[i, j].score = 0;
-                teststage[i, j].suiteicost = 0;
+                for (int j = 0; j < 11; j++)
+                {
+                    teststage[i, j].x = (j * 1.5f);
+                    teststage[i, j].z = (i * -1.5f);
+                    teststage[i, j].status = 0;
+                    teststage[i, j].jitucost = 0;
+                    teststage[i, j].parent_x = 0;
+                    teststage[i, j].parent_y = 0;
+                    teststage[i, j].score = 0;
+                    teststage[i, j].suiteicost = 0;
+                }
             }
-            teststage[0, 0].status = 2;
-            teststage[0, 5].status = 2;
-            teststage[0, 10].status = 2;
-            teststage[1, 0].status = 2;
+                teststage[0, 0].status = 2;
+                teststage[0, 5].status = 2;
+                teststage[0, 10].status = 2;
+                teststage[1, 0].status = 2;
+                teststage[1, 2].status = 2;
+                teststage[1, 3].status = 2;
+                teststage[1, 7].status = 2;
+                teststage[1, 8].status = 2;
+                teststage[1, 10].status = 2;
+                teststage[2, 5].status = 2;
+                teststage[3, 5].status = 2;
+                teststage[4, 0].status = 2;
+                teststage[4, 2].status = 2;
+                teststage[4, 3].status = 2;
+                teststage[4, 7].status = 2;
+                teststage[4, 8].status = 2;
+                teststage[4, 10].status = 2;
+                teststage[5, 0].status = 2;
+                teststage[5, 5].status = 2;
+                teststage[5, 10].status = 2;
+        }else
+        {
+            for (int i = 0; i < 9; i++)
+            {
+                for (int j = 0; j < 15; j++)
+                {
+                    teststage[i, j].x = (j * 1.5f);
+                    teststage[i, j].z = (i * -1.5f);
+                    teststage[i, j].status = 0;
+                    teststage[i, j].jitucost = 0;
+                    teststage[i, j].parent_x = 0;
+                    teststage[i, j].parent_y = 0;
+                    teststage[i, j].score = 0;
+                    teststage[i, j].suiteicost = 0;
+                }
+            }
+            teststage[1, 1].status = 2;
             teststage[1, 2].status = 2;
-            teststage[1, 3].status = 2;
+            teststage[1, 5].status = 2;
+            teststage[1, 6].status = 2;
             teststage[1, 7].status = 2;
+
             teststage[1, 8].status = 2;
-            teststage[1, 10].status = 2;
-            teststage[2, 5].status = 2;
-            teststage[3, 5].status = 2;
-            teststage[4, 0].status = 2;
-            teststage[4, 2].status = 2;
+            teststage[1, 9].status = 2;
+            teststage[1, 12].status = 2;
+            teststage[1, 13].status = 2;
+            teststage[2, 1].status = 2;
+
+            teststage[2, 13].status = 2;
             teststage[4, 3].status = 2;
+            teststage[4, 4].status = 2;
+            teststage[4, 5].status = 2;
+            teststage[4, 6].status = 2;
+
             teststage[4, 7].status = 2;
             teststage[4, 8].status = 2;
+            teststage[4, 9].status = 2;
             teststage[4, 10].status = 2;
-            teststage[5, 0].status = 2;
-            teststage[5, 5].status = 2;
-            teststage[5, 10].status = 2;
+            teststage[4, 11].status = 2;
+
+            teststage[6, 1].status = 2;
+            teststage[6, 13].status = 2;
+            teststage[7, 1].status = 2;
+            teststage[7, 2].status = 2;
+            teststage[7, 5].status = 2;
+
+            teststage[7, 6].status = 2;
+            teststage[7, 7].status = 2;
+            teststage[7, 8].status = 2;
+            teststage[7, 9].status = 2;
+            teststage[7, 12].status = 2;
+
+            teststage[7, 13].status = 2;
 
         }
+
 
     }
 
@@ -308,17 +365,17 @@ public class Couple : MonoBehaviour {
             walk_flg = true;
 
         }
-        if (transform.position == Goal_Point.transform.position)
-        {
-            if (Red_Player == true)
-            {
-                GameSystemManager.RedWin();
-            }
-            else
-            {
-                GameSystemManager.BlueWin();
-            }
-        }
+        //if (transform.position == Goal_Point.transform.position)
+        //{
+        //    if (Red_Player == true)
+        //    {
+        //        GameSystemManager.RedWin();
+        //    }
+        //    else
+        //    {
+        //        GameSystemManager.BlueWin();
+        //    }
+        //}
         if (walk_flg == true)
         {
             int x = (int)((transform.position.z) / -1.5f);
@@ -326,17 +383,17 @@ public class Couple : MonoBehaviour {
 
             if (teststage[x, z].parent_x == 99)
             {
-                if (x == (int)(Goal_Point.transform.position.z/-1.5f)&& z == (int)(Goal_Point.transform.position.x / 1.5f))
-                {
-                    if (Red_Player == true)
-                    {
-                        GameSystemManager.RedWin();
-                    }
-                    else
-                    {
-                        GameSystemManager.BlueWin();
-                    }
-                }
+                //if (x == (int)(Goal_Point.transform.position.z/-1.5f)&& z == (int)(Goal_Point.transform.position.x / 1.5f))
+                //{
+                //    if (Red_Player == true)
+                //    {
+                //        GameSystemManager.RedWin();
+                //    }
+                //    else
+                //    {
+                //        GameSystemManager.BlueWin();
+                //    }
+                //}
                 coal_flg = false;
                 return;
             }
@@ -372,6 +429,7 @@ public class Couple : MonoBehaviour {
         // Debug.Log("hit");
         // Debug.Log(it.transform.tag);
         // Debug.Log(it.transform.gameObject.layer);
+        //Re_Start();
         //トラップ
         if (it.transform.tag == "Trap")
         {
@@ -409,6 +467,15 @@ public class Couple : MonoBehaviour {
         {
             Re_Start();
             Destroy(it.gameObject);
+        }
+
+        if (it.transform.tag == "RedGoal" && Red_Player == true)
+        {
+            GameSystemManager.RedWin();
+        }
+        else if (it.transform.tag == "BlueGoal" && Red_Player == false)
+        {
+            GameSystemManager.BlueWin();
         }
 
 
@@ -469,4 +536,11 @@ public class Couple : MonoBehaviour {
         coal_flg = false;
         walk_flg = true;
     }
+
+    public void SetUp(int x, int z)
+    {
+        transform.position = new Vector3(1.5f * z, 1.55f, -1.5f * x);
+        start_pos = transform.position;
+    }
+
 }

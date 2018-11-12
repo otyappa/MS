@@ -22,13 +22,13 @@ public class Couple_Bar : MonoBehaviour {
     {
         if (Red)
         {
-            RedSliderManager1.value = x / 15.0f;
-            RedSliderManager2.value = x / 15.0f;
+            RedSliderManager1.value = x / 21.0f;
+            RedSliderManager2.value = x / 21.0f;
         }
         else
         {
-            BlueSliderManager1.value = 1-(x / 15.0f);
-            BlueSliderManager2.value = 1-(x/ 15.0f);
+            BlueSliderManager1.value = 1-(x / 21.0f);
+            BlueSliderManager2.value = 1-(x/ 21.0f);
 
         }
     }

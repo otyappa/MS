@@ -8,6 +8,8 @@ TagManager:
   - S.P.E.C.I.A.L
   - Restart_Shot
   - Stage
+  - RedGoal
+  - BlueGoal
   layers:
   - Default
   - TransparentFX

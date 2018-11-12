@@ -4,8 +4,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class GameSystem : MonoBehaviour {
 
-    bool GameSet=false;
-    bool Blue_Win=false;
+    bool GameSet = false;
+    bool Blue_Win = false;
     public GameObject blue_1;
     public GameObject red_1;
     public GameObject blue_2;
@@ -13,54 +13,27 @@ public class GameSystem : MonoBehaviour {
     Couple_Bar TimeUpWinner;
     SceneTransitionManager scene_mana;
     bool two_on_two;
-    int Round_count = 0;
-    int B_Win_Count = 0;
-    int R_Win_Count = 0;
+    TotalGameManager TotalManager;
+    public GameObject Stage1;
+    public GameObject Stage2;
+    public GameObject Stage3;
+    public GameObject Stage4;
+
     // Use this for initialization
-    // 現在存在しているオブジェクト実体の記憶領域
-    static GameSystem _instance = null;
 
-    // オブジェクト実体の参照（初期参照時、実体の登録も行う）
-    static GameSystem instance
+        void Awake()
     {
-        get { return _instance ?? (_instance = FindObjectOfType<GameSystem>()); }
-    }
-
-    void Awake()
-    {
-
-        // ※オブジェクトが重複していたらここで破棄される
-
-        // 自身がインスタンスでなければ自滅
-        if (this != instance)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
-        // 以降破棄しない
-        DontDestroyOnLoad(gameObject);
-
-    }
-
-    void OnDestroy()
-    {
-
-        // ※破棄時に、登録した実体の解除を行なっている
-
-        // 自身がインスタンスなら登録を解除
-        if (this == instance) _instance = null;
-
-    }
-
-
-
-    void Start () {
         Init();
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+
+    void Start() {
+     //   Init();
+        TotalManager = GameObject.Find("TotalManager").GetComponent<TotalGameManager>();
+    }
+
+    // Update is called once per frame
+    void Update() {
 
         if (Input.GetKey(KeyCode.Escape))
         {
@@ -88,8 +61,7 @@ public class GameSystem : MonoBehaviour {
         {
             GameSet = true;
             Blue_Win = true;
-            B_Win_Count++;
-            Round_count++;
+            TotalManager.AddWin(false);
         }
     }
     public void RedWin()
@@ -97,8 +69,7 @@ public class GameSystem : MonoBehaviour {
         if (GameSet == false)
         {
             GameSet = true;
-            B_Win_Count++;
-            Round_count++;
+            TotalManager.AddWin(true);
         }
     }
 
@@ -122,7 +93,7 @@ public class GameSystem : MonoBehaviour {
     {
         switch (TimeUpWinner.RedWin())
         {
-            case 0 :
+            case 0:
                 RedWin();
                 break;
             case 1:
@@ -141,6 +112,62 @@ public class GameSystem : MonoBehaviour {
         blue_2 = GameObject.Find("Blue_Player2");
         red_1 = GameObject.Find("Red_Player");
         red_2 = GameObject.Find("Red_Player2");
+        switch ((int)scene_mana.choseStage)
+        {
+            case 1:
+                blue_1.GetComponent<PL>().SetUp(6, 12);
+                blue_2.GetComponent<PL>().SetUp(2, 12);
+                red_1.GetComponent<PL>().SetUp(6, 2);
+                red_2.GetComponent<PL>().SetUp(2, 2);
+                GameObject.Find("Red_Couple").GetComponent<Couple>().SetUp(4,0);
+                GameObject.Find("Blue_Couple").GetComponent<Couple>().SetUp(4, 14);
+               GameObject stage = Instantiate(Stage1, new Vector3(0,0,-4.5f), Quaternion.identity);
+                stage.name = "Stage";
+
+                break;
+            case 2:
+                blue_1.GetComponent<PL>().SetUp(6, 12);
+                blue_2.GetComponent<PL>().SetUp(2, 12);
+                red_1.GetComponent<PL>().SetUp(6, 2);
+                red_2.GetComponent<PL>().SetUp(2, 2);
+                GameObject.Find("Red_Couple").GetComponent<Couple>().SetUp(4, 0);
+                GameObject.Find("Blue_Couple").GetComponent<Couple>().SetUp(4, 14);
+                GameObject stage2 = Instantiate(Stage2, new Vector3(0, 0, -4.5f), Quaternion.identity);
+                stage2.name = "Stage";
+                break;
+            case 3:
+                blue_1.GetComponent<PL>().SetUp(6, 12);
+                blue_2.GetComponent<PL>().SetUp(2, 12);
+                red_1.GetComponent<PL>().SetUp(6, 2);
+                red_2.GetComponent<PL>().SetUp(2, 2);
+                GameObject.Find("Red_Couple").GetComponent<Couple>().SetUp(4, 0);
+                GameObject.Find("Blue_Couple").GetComponent<Couple>().SetUp(4, 14);
+                GameObject stage3 = Instantiate(Stage3, new Vector3(0, 0, -4.5f), Quaternion.identity);
+                stage3.name = "Stage";
+                break;
+            case 4:
+                blue_1.GetComponent<PL>().SetUp(6, 12);
+                blue_2.GetComponent<PL>().SetUp(2, 12);
+                red_1.GetComponent<PL>().SetUp(6, 2);
+                red_2.GetComponent<PL>().SetUp(2, 2);
+                GameObject.Find("Red_Couple").GetComponent<Couple>().SetUp(4, 0);
+                GameObject.Find("Blue_Couple").GetComponent<Couple>().SetUp(4, 14);
+                GameObject stage4 = Instantiate(Stage4, new Vector3(0, 0, -4.5f), Quaternion.identity);
+                stage4.name = "Stage";
+                break;                
+                   
+            default:
+                blue_1.GetComponent<PL>().SetUp(6, 12);
+                blue_2.GetComponent<PL>().SetUp(2, 12);
+                red_1.GetComponent<PL>().SetUp(6, 2);
+                red_2.GetComponent<PL>().SetUp(2, 2);
+                GameObject.Find("Red_Couple").GetComponent<Couple>().SetUp(4, 0);
+                GameObject.Find("Blue_Couple").GetComponent<Couple>().SetUp(4, 14);
+                break;
+
+        }
+
+
         TimeUpWinner = GetComponent<Couple_Bar>();
         if ((int)scene_mana.choseMode == 0)
         {

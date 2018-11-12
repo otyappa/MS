@@ -27,6 +27,8 @@ public class PL : MonoBehaviour {
     bool Trap_now=false;
     int Flash_Time;
     float flash_now;
+    GameSystem GameSystemManager;
+
    public enum Vec{
         top=0,
         right,
@@ -44,39 +46,42 @@ public class PL : MonoBehaviour {
         C_Manager = GameObject.Find("Stage").GetComponent<Create_SpecialItem>();
         Player_Model = transform.GetChild(2).gameObject;
         Player_Anm = Player_Model.GetComponent<Animator>();
-        
+        GameSystemManager = GameObject.Find("GameSystemManager").GetComponent<GameSystem>();
    }
 
     // Update is called once per frame
     void Update()
     {
-       // Debug.Log("100");
-        if (Trap_now)
+        if (!GameSystemManager.Get_GameSet())
         {
-            if (flash_now > 0.25)
+            // Debug.Log("100");
+            if (Trap_now)
             {
-                Player_Model.SetActive(!Player_Model.activeSelf);
-                flash_now = 0;
-                Flash_Time++;
-            }
-            if (Flash_Time > 8)
-            {
-                Re_Start();
-                Flash_Time = 0;
-                Trap_now = false;
-                Player_Model.SetActive(true);
-            }
-            flash_now+=Time.deltaTime;
-        }
-        else
-        {
-            if (Red_Player)
-            {
-                Move_R();
+                if (flash_now > 0.25)
+                {
+                    Player_Model.SetActive(!Player_Model.activeSelf);
+                    flash_now = 0;
+                    Flash_Time++;
+                }
+                if (Flash_Time > 8)
+                {
+                    Re_Start();
+                    Flash_Time = 0;
+                    Trap_now = false;
+                    Player_Model.SetActive(true);
+                }
+                flash_now += Time.deltaTime;
             }
             else
             {
-                Move_B();
+                if (Red_Player)
+                {
+                    Move_R();
+                }
+                else
+                {
+                    Move_B();
+                }
             }
         }
     }
@@ -210,6 +215,7 @@ public class PL : MonoBehaviour {
                     //左右移動
                     if (state.dPadAxis.x > 0.2f)
                     {
+                        
                         Player_Anm.SetBool("walk", true);
                         now = Vec.right;
                         Move_Transform += Move_LR;
@@ -859,5 +865,12 @@ public class PL : MonoBehaviour {
         max_trap = setter;
     }
 
+    public void SetUp(int x,int z)
+    {
+        transform.position = new Vector3(1.5f * z, 0.55f, -1.5f * x);
+        Start_Player_Position = this.transform.position;
+
+        ReSporn_Point.transform.position = transform.position;
+    }
 
 }
