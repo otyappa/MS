@@ -127,7 +127,7 @@ public class SceneTransitionManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(modelTrans);
+        //Debug.Log(modelTrans);
         //NowScene = (SceneType)SceneManager.GetActiveScene().rootCount;
         gpState = GamePad.GetState(GamePad.Index.One);
         testinput();
@@ -186,12 +186,13 @@ public class SceneTransitionManager : MonoBehaviour
                     titleUI.SetActive(false);
                     modeSelectUI.SetActive(false);
                     stageSelectUI.SetActive(true);
+                    if (modelTrans == null)
+                    {
+                        modelTrans = GameObject.Find("SelectPanelParent").transform;
+                    }
+                    modelTrans.transform.rotation = Quaternion.Euler(0.0f, modelTrans.localEulerAngles.y, 0.0f);
                     GlobalCoroutine.Go(titleCamera.fadeImage.MaterialFadeOut(titleCamera.rend, titleCamera.fadeTime));
                     oneTimeFadeOut = true;
-                }
-                if (modelTrans == null)
-                {
-                    modelTrans = GameObject.Find("SelectPanelParent").transform;
                 }
                 CheckTransition();
                 SceneTransition();
@@ -228,9 +229,8 @@ public class SceneTransitionManager : MonoBehaviour
             isTransition = false;
             NowScene = NextScene;
             SceneManager.LoadScene(NextScene.ToString());
-            Debug.Log(NextScene.ToString());
         }
-        if (NowScene == SceneType.StageSelect && isTransition && !titleCamera.fadeImage.GetIsFadingIn())
+        if (NowScene == SceneType.StageSelect && NextScene == SceneType.Main && isTransition && !titleCamera.fadeImage.GetIsFadingIn())
         {
             // 扉が閉まっている状態
             if (CheckAnimState("stop"))
@@ -239,8 +239,6 @@ public class SceneTransitionManager : MonoBehaviour
                 isTransition = false;
                 NowScene = NextScene;
                 SceneManager.LoadScene(NextScene.ToString());
-                Debug.Log(NextScene.ToString());
-
             }
         }
     }
@@ -308,24 +306,24 @@ public class SceneTransitionManager : MonoBehaviour
                     //GlobalCoroutine.Go(titleCamera.fadeImage.MaterialFadeIn(titleCamera.rend, titleCamera.fadeTime));
                     CloseDoorAnim();
                 }
-                if (Input.GetKeyDown(KeyCode.LeftArrow) || gpState.Left && !isRotation)
-                {
-                    Sound.PlaySe("select");
-                    choseStage++;
-                    if ((StageType)choseStage > StageType.Stage4)
-                    {
-                        choseStage = (int)StageType.Stage1;
-                    }
-                    //GlobalCoroutine.Go(RotationModel(modelTrans, stageSelectRotationSpeed, true));
-                    GlobalCoroutine.Go(testRotationModel(modelTrans, stageSelectRotationSpeed, true));
-                }
-                if (Input.GetKeyDown(KeyCode.RightArrow) || gpState.Right && !isRotation)
+                if ((Input.GetKeyDown(KeyCode.LeftArrow) && !isRotation) || (gpState.Left && !isRotation))
                 {
                     Sound.PlaySe("select");
                     choseStage--;
                     if ((StageType)choseStage < StageType.Stage1)
                     {
                         choseStage = (int)StageType.Stage4;
+                    }
+                    //GlobalCoroutine.Go(RotationModel(modelTrans, stageSelectRotationSpeed, true));
+                    GlobalCoroutine.Go(testRotationModel(modelTrans, stageSelectRotationSpeed, true));
+                }
+                if ((Input.GetKeyDown(KeyCode.RightArrow) && !isRotation) || (gpState.Right && !isRotation))
+                {
+                    Sound.PlaySe("select");
+                    choseStage++;
+                    if ((StageType)choseStage > StageType.Stage4)
+                    {
+                        choseStage = (int)StageType.Stage1;
                     }
                     //GlobalCoroutine.Go(RotationModel(modelTrans, stageSelectRotationSpeed, false));
                     GlobalCoroutine.Go(testRotationModel(modelTrans, stageSelectRotationSpeed, false));
@@ -353,12 +351,11 @@ public class SceneTransitionManager : MonoBehaviour
         isRotation = true;
 
         float nowTime = 0.0f;
-        float startRotY = 0.0f;
-        float endRotY = 0.0f;
         float tmpRotY = 0.0f;
         float rotAngle = 0.0f;
 
-        Debug.Log(leftRot);
+        float startRotY = 0.0f;
+        float endRotY = 0.0f;
 
         switch (choseStage)
         {
@@ -430,9 +427,10 @@ public class SceneTransitionManager : MonoBehaviour
         isRotation = false;
     }
 
+    [SerializeField]
+    float test;
     private IEnumerator testRotationModel(Transform trans, float rotTime, bool leftRot)
     {
-
         // 排他制御
         if (isRotation)
         {
@@ -441,12 +439,66 @@ public class SceneTransitionManager : MonoBehaviour
 
         isRotation = true;
 
-        Debug.Log("A");
-
         float speed = rotTime;
         float rotAngle = 90f;
         float variation;
         float rot;
+
+        float startRotY = 0.0f;
+        float endRotY = 0.0f;
+
+        switch (trans.localEulerAngles.y.ToString())
+        {
+            case "90":
+                if (leftRot)
+                {
+                    startRotY = 90;
+                    endRotY = 0;
+                }
+                else
+                {
+                    startRotY = 90;
+                    endRotY = 180;
+                }
+                break;
+            case "180":
+                if (leftRot)
+                {
+                    startRotY = 180;
+                    endRotY = 90;
+                }
+                else
+                {
+                    startRotY = 180;
+                    endRotY = 270;
+                }
+                break;
+            case "270":
+                if (leftRot)
+                {
+                    startRotY = 270;
+                    endRotY = 180;
+                }
+                else
+                {
+                    startRotY = 270;
+                    endRotY = 0;
+                }
+                break;
+            case "0":
+                if (leftRot)
+                {
+                    startRotY = 0;
+                    endRotY = 270;
+                }
+                else
+                {
+                    startRotY = 0;
+                    endRotY = 90;
+                }
+                break;
+        }
+
 
         if (leftRot)
         {
@@ -460,8 +512,8 @@ public class SceneTransitionManager : MonoBehaviour
         rot = 0f;
         //trans.transform.localRotation = Quaternion.Euler(0, 0, 0);
 
-        float startRotY = trans.transform.rotation.y;
-        float endRotY;
+        //float startRotY = trans.transform.rotation.y;
+        //float endRotY;
 
         //while (rot <= rotAngle)
         while (leftRot ? rot >= -rotAngle : rot <= rotAngle)
@@ -482,12 +534,18 @@ public class SceneTransitionManager : MonoBehaviour
 
         }
 
-        rot = Mathf.Floor(rot);
-        //  Debug.Log("")
-        rot = Mathf.Round(rot / 10);
-        rot = Mathf.Floor(rot);
-        rot = rot * 10;
+        rot = Mathf.Round(rot / 10) * 10;
+        //test = rot;
+        test = Mathf.Round(trans.transform.localEulerAngles.y / 10) * 10;
 
+        float tmp = Mathf.Round(trans.transform.localEulerAngles.y / 10) * 10;
+
+        trans.transform.rotation = Quaternion.Euler(0.0f, endRotY, 0.0f);
+
+        //trans.transform.rotation = Quaternion.Euler(0.0f, Mathf.Round(trans.transform.localEulerAngles.y / 10) * 10, 0.0f);
+
+
+        Debug.Log("3" + trans.transform.localEulerAngles);
 
         //rot = Mathf.Floor((trans.transform.rotation.y / 10) * 10);
 
@@ -601,7 +659,8 @@ public class SceneTransitionManager : MonoBehaviour
     {
         oneTimeFadeOut = false;
 
-        NowScene = SceneTransitionManager.SceneType.Title;
+        //NowScene = SceneTransitionManager.SceneType.Title;
+        NowScene = (SceneType)SceneManager.GetActiveScene().buildIndex;
         titleUI.SetActive(true);
         modeSelectUI.SetActive(false);
         stageSelectUI.SetActive(false);
