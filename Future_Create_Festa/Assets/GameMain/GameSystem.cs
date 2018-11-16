@@ -30,6 +30,10 @@ public class GameSystem : MonoBehaviour {
     void Start() {
      //   Init();
         TotalManager = GameObject.Find("TotalManager").GetComponent<TotalGameManager>();
+        if (TotalManager.Red_WinCount > 1 || TotalManager.Blue_WinCount > 1)
+        {
+            GameSet = true;
+        }
     }
 
     // Update is called once per frame
@@ -51,6 +55,26 @@ public class GameSystem : MonoBehaviour {
         if (Input.GetKey(KeyCode.F2))
         {
             scene_mana.choseMode = SceneTransitionManager.ModeType.TwoToTwo;
+            SceneManager.LoadScene("Main");
+        }
+        if (Input.GetKey(KeyCode.F3))
+        {
+            scene_mana.choseStage = 1;
+            SceneManager.LoadScene("Main");
+        }
+        if (Input.GetKey(KeyCode.F4))
+        {
+            scene_mana.choseStage = 2;
+            SceneManager.LoadScene("Main");
+        }
+        if (Input.GetKey(KeyCode.F5))
+        {
+            scene_mana.choseStage = 3;
+            SceneManager.LoadScene("Main");
+        }
+        if (Input.GetKey(KeyCode.F6))
+        {
+            scene_mana.choseStage = 4;
             SceneManager.LoadScene("Main");
         }
     }
@@ -136,22 +160,22 @@ public class GameSystem : MonoBehaviour {
                 stage2.name = "Stage";
                 break;
             case 3:
-                blue_1.GetComponent<PL>().SetUp(6, 12);
-                blue_2.GetComponent<PL>().SetUp(2, 12);
-                red_1.GetComponent<PL>().SetUp(6, 2);
-                red_2.GetComponent<PL>().SetUp(2, 2);
-                GameObject.Find("Red_Couple").GetComponent<Couple>().SetUp(4, 0);
-                GameObject.Find("Blue_Couple").GetComponent<Couple>().SetUp(4, 14);
+                blue_1.GetComponent<PL>().SetUp(5, 10);
+                blue_2.GetComponent<PL>().SetUp(3, 10);
+                red_1.GetComponent<PL>().SetUp(5, 4);
+                red_2.GetComponent<PL>().SetUp(3, 4);
+                GameObject.Find("Red_Couple").GetComponent<Couple>().SetUp(4, 4);
+                GameObject.Find("Blue_Couple").GetComponent<Couple>().SetUp(4, 10);
                 GameObject stage3 = Instantiate(Stage3, new Vector3(0, 0, -4.5f), Quaternion.identity);
                 stage3.name = "Stage";
                 break;
             case 4:
-                blue_1.GetComponent<PL>().SetUp(6, 12);
-                blue_2.GetComponent<PL>().SetUp(2, 12);
-                red_1.GetComponent<PL>().SetUp(6, 2);
-                red_2.GetComponent<PL>().SetUp(2, 2);
-                GameObject.Find("Red_Couple").GetComponent<Couple>().SetUp(4, 0);
-                GameObject.Find("Blue_Couple").GetComponent<Couple>().SetUp(4, 14);
+                blue_1.GetComponent<PL>().SetUp(1, 14);
+                blue_2.GetComponent<PL>().SetUp(0, 13);
+                red_1.GetComponent<PL>().SetUp(8, 1);
+                red_2.GetComponent<PL>().SetUp(7, 0);
+                GameObject.Find("Red_Couple").GetComponent<Couple>().SetUp(7, 1);
+                GameObject.Find("Blue_Couple").GetComponent<Couple>().SetUp(1, 13);
                 GameObject stage4 = Instantiate(Stage4, new Vector3(0, 0, -4.5f), Quaternion.identity);
                 stage4.name = "Stage";
                 break;                

@@ -49,16 +49,20 @@ public class Couple : MonoBehaviour {
     Animator Couple_Anm;
     GameObject Couple_Model;
     Sound test;
+    public SceneTransitionManager stage_No;
     // Use this for initialization
     void Start () {
-        CreateStage();
         GameSystemManager = GameObject.Find("GameSystemManager").GetComponent<GameSystem>();
         Set_bar = GameObject.Find("GameSystemManager").GetComponent<Couple_Bar>();
+        stage_No = GameObject.Find("SceneTransitionManager").GetComponent<SceneTransitionManager>();
+        CreateStage();
+
         Couple_Model = transform.GetChild(0).gameObject;
         Couple_Anm = Couple_Model.GetComponent<Animator>();
         flash_mesh = GetComponent<Renderer>();
         start_pos = transform.position;
-        //Sound.LoadSe("start", "SE/name");
+        Sound.LoadSe("Hit_Item", "SE/Couple_Hit_Item");
+        Sound.LoadSe("Hit_Trap", "SE/Couple_Hit_Trap");
         //Sound.PlaySe("start");
         //Sound.SetVolumeSe()
         //Sound.StopBgm();
@@ -261,8 +265,204 @@ public class Couple : MonoBehaviour {
 
     void CreateStage()
     {
-        if (false)
+        for (int i = 0; i < 9; i++)
         {
+            for (int j = 0; j < 15; j++)
+            {
+                teststage[i, j].x = (j * 1.5f);
+                teststage[i, j].z = (i * -1.5f);
+                teststage[i, j].status = 0;
+                teststage[i, j].jitucost = 0;
+                teststage[i, j].parent_x = 0;
+                teststage[i, j].parent_y = 0;
+                teststage[i, j].score = 0;
+                teststage[i, j].suiteicost = 0;
+            }
+        }
+        switch ((int)stage_No.choseStage)
+        { case 1:
+
+                    teststage[0, 5].status = 2;
+                    teststage[0, 6].status = 2;
+                    teststage[0, 7].status = 2;
+                    teststage[0, 8].status = 2;
+                    teststage[0, 9].status = 2;
+
+                    teststage[1, 1].status = 2;
+                    teststage[1, 2].status = 2;
+                    teststage[1, 5].status = 2;
+                    teststage[1, 6].status = 2;
+                    teststage[1, 7].status = 2;
+
+                    teststage[1, 8].status = 2;
+                    teststage[1, 9].status = 2;
+                    teststage[1, 12].status = 2;
+                    teststage[1, 13].status = 2;
+                    teststage[2, 1].status = 2;
+
+                    teststage[2, 13].status = 2;
+                    teststage[4, 3].status = 2;
+                    teststage[4, 4].status = 2;
+                    teststage[4, 5].status = 2;
+                    teststage[4, 6].status = 2;
+
+                    // teststage[4, 7].status = 2;
+                    teststage[4, 8].status = 2;
+                    teststage[4, 9].status = 2;
+                    teststage[4, 10].status = 2;
+                    teststage[4, 11].status = 2;
+
+                    teststage[6, 1].status = 2;
+                    teststage[6, 13].status = 2;
+                    teststage[7, 1].status = 2;
+                    teststage[7, 2].status = 2;
+                    teststage[7, 5].status = 2;
+
+                    teststage[7, 6].status = 2;
+                    teststage[7, 7].status = 2;
+                    teststage[7, 8].status = 2;
+                    teststage[7, 9].status = 2;
+                    teststage[7, 12].status = 2;
+
+                    teststage[7, 13].status = 2;
+                    teststage[8, 5].status = 2;
+                    teststage[8, 6].status = 2;
+                    teststage[8, 7].status = 2;
+                    teststage[8, 8].status = 2;
+
+                    teststage[8, 9].status = 2;
+
+                break;
+            case 2:
+
+                teststage[2, 1].status = 2;
+                teststage[2, 5].status = 2;
+                teststage[2, 6].status = 2;
+                teststage[2, 7].status = 2;
+                teststage[2, 8].status = 2;
+
+                teststage[2, 9].status = 2;
+                teststage[2, 13].status = 2;
+                teststage[3, 1].status = 2;
+                teststage[3, 2].status = 2;
+                teststage[3, 12].status = 2;
+
+                teststage[3, 13].status = 2;
+                teststage[4, 7].status = 2;
+                teststage[5, 1].status = 2;
+                teststage[5, 2].status = 2;
+                teststage[5, 12].status = 2;
+
+                teststage[5, 13].status = 2;
+                teststage[6, 1].status = 2;
+                teststage[6, 5].status = 2;
+                teststage[6, 6].status = 2;
+                teststage[6, 7].status = 2;
+
+                // teststage[4, 7].status = 2;
+                teststage[6, 8].status = 2;
+                teststage[6, 9].status = 2;
+                teststage[6, 13].status = 2;
+
+                break;
+            case 3:
+                teststage[2, 2].status = 2;
+                teststage[2, 3].status = 2;
+                teststage[2, 4].status = 2;
+                teststage[2, 5].status = 2;
+                teststage[2, 6].status = 2;
+
+                teststage[2, 7].status = 2;
+                teststage[2, 8].status = 2;
+                teststage[2, 9].status = 2;
+                teststage[2, 10].status = 2;
+                teststage[2, 11].status = 2;
+
+                teststage[2, 12].status = 2;
+                teststage[3, 7].status = 2;
+                teststage[4, 5].status = 2;
+                teststage[4, 6].status = 2;
+                teststage[4, 7].status = 2;
+
+                teststage[4, 8].status = 2;
+                teststage[4, 9].status = 2;
+                teststage[5, 7].status = 2;
+                teststage[6, 2].status = 2;
+                teststage[6, 3].status = 2;
+            
+                teststage[6, 4].status = 2;
+                teststage[6, 5].status = 2;
+                teststage[6, 6].status = 2;
+                teststage[6, 7].status = 2;
+
+                teststage[6, 8].status = 2;
+                teststage[6, 9].status = 2;
+                teststage[6, 10].status = 2;
+                teststage[6, 11].status = 2;
+                teststage[6, 12].status = 2;
+
+                break;
+            case 4:
+                teststage[0, 0].status = 2;
+                teststage[0, 1].status = 2;
+                teststage[0, 2].status = 2;
+                teststage[0, 3].status = 2;
+                teststage[0, 4].status = 2;
+
+                teststage[1, 0].status = 2;
+                teststage[1, 1].status = 2;
+                teststage[1, 2].status = 2;
+                teststage[1, 3].status = 2;
+                teststage[1, 4].status = 2;
+
+                teststage[1, 6].status = 2;
+                teststage[1, 7].status = 2;
+                teststage[1, 8].status = 2;
+                teststage[1, 9].status = 2;
+                teststage[1, 10].status = 2;
+
+                teststage[1, 11].status = 2;
+                teststage[2, 0].status = 2;
+                teststage[2, 1].status = 2;
+                teststage[3, 4].status = 2;
+                teststage[3, 5].status = 2;
+
+                teststage[3, 6].status = 2;
+                teststage[3, 13].status = 2;
+                teststage[4, 1].status = 2;
+                teststage[4, 13].status = 2;
+
+                teststage[5, 1].status = 2;
+                teststage[5, 8].status = 2;
+                teststage[5, 9].status = 2;
+                teststage[5, 10].status = 2;
+                teststage[6, 13].status = 2;
+
+                teststage[6, 14].status = 2;
+                teststage[7, 3].status = 2;
+                teststage[7, 4].status = 2;
+                teststage[7, 5].status = 2;
+                teststage[7, 6].status = 2;
+
+                teststage[7, 7].status = 2;
+                teststage[7, 8].status = 2;
+                teststage[7, 10].status = 2;
+                teststage[7, 11].status = 2;
+                teststage[7, 12].status = 2;
+
+                teststage[7, 13].status = 2;
+                teststage[7, 14].status = 2;
+                teststage[8, 10].status = 2;
+                teststage[8, 11].status = 2;
+                teststage[8, 12].status = 2;
+
+                teststage[8, 13].status = 2;
+                teststage[8, 14].status = 2;
+
+
+
+                break;
+            default:
             for (int i = 0; i < 6; i++)
             {
                 for (int j = 0; j < 11; j++)
@@ -297,60 +497,7 @@ public class Couple : MonoBehaviour {
                 teststage[5, 0].status = 2;
                 teststage[5, 5].status = 2;
                 teststage[5, 10].status = 2;
-        }else
-        {
-            for (int i = 0; i < 9; i++)
-            {
-                for (int j = 0; j < 15; j++)
-                {
-                    teststage[i, j].x = (j * 1.5f);
-                    teststage[i, j].z = (i * -1.5f);
-                    teststage[i, j].status = 0;
-                    teststage[i, j].jitucost = 0;
-                    teststage[i, j].parent_x = 0;
-                    teststage[i, j].parent_y = 0;
-                    teststage[i, j].score = 0;
-                    teststage[i, j].suiteicost = 0;
-                }
-            }
-            teststage[1, 1].status = 2;
-            teststage[1, 2].status = 2;
-            teststage[1, 5].status = 2;
-            teststage[1, 6].status = 2;
-            teststage[1, 7].status = 2;
-
-            teststage[1, 8].status = 2;
-            teststage[1, 9].status = 2;
-            teststage[1, 12].status = 2;
-            teststage[1, 13].status = 2;
-            teststage[2, 1].status = 2;
-
-            teststage[2, 13].status = 2;
-            teststage[4, 3].status = 2;
-            teststage[4, 4].status = 2;
-            teststage[4, 5].status = 2;
-            teststage[4, 6].status = 2;
-
-            teststage[4, 7].status = 2;
-            teststage[4, 8].status = 2;
-            teststage[4, 9].status = 2;
-            teststage[4, 10].status = 2;
-            teststage[4, 11].status = 2;
-
-            teststage[6, 1].status = 2;
-            teststage[6, 13].status = 2;
-            teststage[7, 1].status = 2;
-            teststage[7, 2].status = 2;
-            teststage[7, 5].status = 2;
-
-            teststage[7, 6].status = 2;
-            teststage[7, 7].status = 2;
-            teststage[7, 8].status = 2;
-            teststage[7, 9].status = 2;
-            teststage[7, 12].status = 2;
-
-            teststage[7, 13].status = 2;
-
+                break;
         }
 
 
@@ -365,17 +512,6 @@ public class Couple : MonoBehaviour {
             walk_flg = true;
 
         }
-        //if (transform.position == Goal_Point.transform.position)
-        //{
-        //    if (Red_Player == true)
-        //    {
-        //        GameSystemManager.RedWin();
-        //    }
-        //    else
-        //    {
-        //        GameSystemManager.BlueWin();
-        //    }
-        //}
         if (walk_flg == true)
         {
             int x = (int)((transform.position.z) / -1.5f);
@@ -383,17 +519,6 @@ public class Couple : MonoBehaviour {
 
             if (teststage[x, z].parent_x == 99)
             {
-                //if (x == (int)(Goal_Point.transform.position.z/-1.5f)&& z == (int)(Goal_Point.transform.position.x / 1.5f))
-                //{
-                //    if (Red_Player == true)
-                //    {
-                //        GameSystemManager.RedWin();
-                //    }
-                //    else
-                //    {
-                //        GameSystemManager.BlueWin();
-                //    }
-                //}
                 coal_flg = false;
                 return;
             }
@@ -426,15 +551,12 @@ public class Couple : MonoBehaviour {
     //何かにぶつかったとき
     void OnTriggerEnter(Collider it)
     {
-        // Debug.Log("hit");
-        // Debug.Log(it.transform.tag);
-        // Debug.Log(it.transform.gameObject.layer);
-        //Re_Start();
         //トラップ
         if (it.transform.tag == "Trap")
         {
             if (it.transform.gameObject.layer == 12 && Red_Player == true)
             {
+                Sound.PlaySe("Hit_Trap");
                 Stan_flg = true;
                 coal_flg = false;
                 CreateStage();
@@ -443,6 +565,7 @@ public class Couple : MonoBehaviour {
             }
             else if (it.transform.gameObject.layer == 13 && Red_Player == false)
             {
+                Sound.PlaySe("Hit_Trap");
                 Stan_flg = true;
                 coal_flg = false;
                 CreateStage();
@@ -452,19 +575,18 @@ public class Couple : MonoBehaviour {
         }
         else if (it.transform.gameObject.layer == 8 && Red_Player == false && Stan_flg)
         {
-            Debug.Log("test");
             it.GetComponent<PL>().Set_Time(120);
 
         }
         else if (it.transform.gameObject.layer == 9 && Red_Player == true && Stan_flg)
         {
-            Debug.Log("test");
             it.GetComponent<PL>().Set_Time(120);
 
         }
 
         if (it.transform.tag == "Restart_Shot")
         {
+            Sound.PlaySe("Hit_Item");
             Re_Start();
             Destroy(it.gameObject);
         }
