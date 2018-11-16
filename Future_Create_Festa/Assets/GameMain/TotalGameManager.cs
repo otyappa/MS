@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TotalGameManager : MonoBehaviour {
-    int Round_Count = 0;
-    int Red_WinCount = 0;
-    int Blue_WinCount = 0;
+    public int Round_Count = 0;
+    public int Red_WinCount = 0;
+    public int Blue_WinCount = 0;
     Result WinCountUI1;
     Result WinCountUI2;
     // 現在存在しているオブジェクト実体の記憶領域
@@ -32,6 +32,8 @@ public class TotalGameManager : MonoBehaviour {
         // 以降破棄しない
         DontDestroyOnLoad(gameObject);
 
+
+
     }
 
     void OnDestroy()
@@ -48,9 +50,6 @@ public class TotalGameManager : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        WinCountUI1 = GameObject.Find("Blue_Canvas").GetComponent<Result>();
-        WinCountUI2 = GameObject.Find("Red_Canvas").GetComponent<Result>();
-
     }
 
     // Update is called once per frame
@@ -69,8 +68,10 @@ public class TotalGameManager : MonoBehaviour {
             Blue_WinCount++;
         }
         Round_Count++;
-        WinCountUI1.Set_Win(Red_WinCount, Blue_WinCount);
-        WinCountUI2.Set_Win(Red_WinCount, Blue_WinCount);
     }
 
+    public void GetWinCount()
+    {
+
+    }
 }

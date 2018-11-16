@@ -47,7 +47,14 @@ public class PL : MonoBehaviour {
         Player_Model = transform.GetChild(2).gameObject;
         Player_Anm = Player_Model.GetComponent<Animator>();
         GameSystemManager = GameObject.Find("GameSystemManager").GetComponent<GameSystem>();
-   }
+        Sound.LoadSe("Get_Item", "SE/Get_Item");
+        Sound.LoadSe("PHit_Item", "SE/Player_Hit_Item");
+        Sound.LoadSe("Use_Item", "SE/shot1");
+        Sound.LoadSe("Coll", "SE/Couple_Coll");
+        Sound.LoadSe("walk", "SE/Player_Walk");
+        Sound.LoadSe("PHit_Trap", "SE/Player_Hit_Trap");
+        Sound.LoadSe("Set_Trap", "SE/Set_Trap");
+    }
 
     // Update is called once per frame
     void Update()
@@ -106,6 +113,7 @@ public class PL : MonoBehaviour {
                 //罠を仕掛ける
                 if (GamePad.GetButtonDown(GamePad.Button.B, GamePad.Index.Three) && trap_count < max_trap && (int)Make_Trap_Time <= 60)
                 {
+                    Sound.PlaySe("Set_Trap");
                     Player_Anm.SetBool("trap", true);
                     TimeBar.Set_Pasent(1);
                     //敵に見える
@@ -137,6 +145,7 @@ public class PL : MonoBehaviour {
                     //左右移動
                     if (state.dPadAxis.x > 0.2f)
                     {
+                        Sound.PlaySe("Player_Walk");
                         Player_Anm.SetBool("walk", true);
                         now = Vec.right;
                         Move_Transform += Move_LR;
@@ -144,6 +153,7 @@ public class PL : MonoBehaviour {
                     }
                     else if (state.dPadAxis.x < -0.2f)
                     {
+                        Sound.PlaySe("Player_Walk");
                         Player_Anm.SetBool("walk", true);
                         now = Vec.left;
                         Move_Transform -= Move_LR;
@@ -153,6 +163,7 @@ public class PL : MonoBehaviour {
                     //上下移動
                     if (state.dPadAxis.y > 0.2f)
                     {
+                        Sound.PlaySe("Player_Walk");
                         Player_Anm.SetBool("walk", true);
                         now = Vec.top;
                         Move_Transform += Move_UD;
@@ -160,6 +171,7 @@ public class PL : MonoBehaviour {
                     }
                     else if (state.dPadAxis.y < -0.2f)
                     {
+                        Sound.PlaySe("Player_Walk");
                         Player_Anm.SetBool("walk", true);
                         now = Vec.buttom;
                         Move_Transform -= Move_UD;
@@ -173,7 +185,7 @@ public class PL : MonoBehaviour {
                 //カップルを呼ぶ
                 if (state.A)
                 {
-
+                    Sound.PlaySe("Coll");
                     Coll_Couple();
                 }
 
@@ -185,6 +197,7 @@ public class PL : MonoBehaviour {
                 //罠を仕掛ける
                 if (GamePad.GetButtonDown(GamePad.Button.B, GamePad.Index.One) && trap_count < max_trap && (int)Make_Trap_Time <= 1)
                 {
+                    Sound.PlaySe("Set_Trap");
                     Player_Anm.SetBool("trap", true);
                     TimeBar.Set_Pasent(1);
                     //敵に見える
@@ -215,7 +228,7 @@ public class PL : MonoBehaviour {
                     //左右移動
                     if (state.dPadAxis.x > 0.2f)
                     {
-                        
+                        Sound.PlaySe("Player_Walk");
                         Player_Anm.SetBool("walk", true);
                         now = Vec.right;
                         Move_Transform += Move_LR;
@@ -223,6 +236,7 @@ public class PL : MonoBehaviour {
                     }
                     else if (state.dPadAxis.x < -0.2f)
                     {
+                        Sound.PlaySe("Player_Walk");
                         Player_Anm.SetBool("walk", true);
                         now = Vec.left;
                         Move_Transform -= Move_LR;
@@ -232,6 +246,7 @@ public class PL : MonoBehaviour {
                     //上下移動
                     if (state.dPadAxis.y > 0.2f)
                     {
+                        Sound.PlaySe("Player_Walk");
                         Player_Anm.SetBool("walk", true);
                         now = Vec.top;
                         Move_Transform += Move_UD;
@@ -239,6 +254,7 @@ public class PL : MonoBehaviour {
                     }
                     else if (state.dPadAxis.y < -0.2f)
                     {
+                        Sound.PlaySe("Player_Walk");
                         Player_Anm.SetBool("walk", true);
                         now = Vec.buttom;
                         Move_Transform -= Move_UD;
@@ -252,7 +268,7 @@ public class PL : MonoBehaviour {
                 //カップルを呼ぶ
                 if (state.A)
                 {
-
+                    Sound.PlaySe("Coll");
                     Coll_Couple();
                 }
 
@@ -279,6 +295,7 @@ public class PL : MonoBehaviour {
                 //罠を仕掛ける
                 if (GamePad.GetButtonDown(GamePad.Button.B, GamePad.Index.Four) && trap_count < max_trap && (int)Make_Trap_Time <= 1 || (Input.GetKeyDown(KeyCode.E) && trap_count < max_trap && (int)Make_Trap_Time <= 1))
                 {
+                    Sound.PlaySe("Set_Trap");
                     Player_Anm.SetBool("trap", true);
                     TimeBar.Set_Pasent(1);
                     //敵に見える
@@ -311,6 +328,7 @@ public class PL : MonoBehaviour {
                     //左右移動
                     if (Input.GetKey(KeyCode.D) || state.dPadAxis.x>0.2f)
                     {
+                        Sound.PlaySe("Player_Walk");
                         Player_Anm.SetBool("walk",true);
                         now = Vec.right;
                         Move_Transform += Move_LR;
@@ -318,6 +336,7 @@ public class PL : MonoBehaviour {
                     }
                     else if (Input.GetKey(KeyCode.A) || state.dPadAxis.x < -0.2f)
                     {
+                        Sound.PlaySe("Player_Walk");
                         Player_Anm.SetBool("walk", true);
                         now = Vec.left;
                         Move_Transform -= Move_LR;
@@ -327,6 +346,7 @@ public class PL : MonoBehaviour {
                     //上下移動
                     if (Input.GetKey(KeyCode.W) || state.dPadAxis.y > 0.2f)
                     {
+                        Sound.PlaySe("Player_Walk");
                         Player_Anm.SetBool("walk", true);
                         now = Vec.top;
                         Move_Transform += Move_UD;
@@ -334,6 +354,7 @@ public class PL : MonoBehaviour {
                     }
                     else if (Input.GetKey(KeyCode.S) || state.dPadAxis.y < -0.2f)
                     {
+                        Sound.PlaySe("Player_Walk");
                         Player_Anm.SetBool("walk", true);
                         now = Vec.buttom;
                         Move_Transform -= Move_UD;
@@ -347,7 +368,7 @@ public class PL : MonoBehaviour {
                 //カップルを呼ぶ
                 if (Input.GetKeyUp(KeyCode.Q) || state.A)
                 {
-
+                    Sound.PlaySe("Coll");
                     Coll_Couple();
                 }
 
@@ -359,6 +380,7 @@ public class PL : MonoBehaviour {
                 //罠を仕掛ける
                 if (GamePad.GetButtonDown(GamePad.Button.B, GamePad.Index.Two) && trap_count < max_trap && (int)Make_Trap_Time <= 1 )
                 {
+                    Sound.PlaySe("Set_Trap");
                     Player_Anm.SetBool("trap", true);
                     TimeBar.Set_Pasent(1);
                     //敵に見える
@@ -389,6 +411,7 @@ public class PL : MonoBehaviour {
                     //左右移動
                     if (state.dPadAxis.x > 0.2f)
                     {
+                        Sound.PlaySe("Player_Walk");
                         Player_Anm.SetBool("walk", true);
                         now = Vec.right;
                         Move_Transform += Move_LR;
@@ -396,6 +419,7 @@ public class PL : MonoBehaviour {
                     }
                     else if (state.dPadAxis.x < -0.2f)
                     {
+                        Sound.PlaySe("Player_Walk");
                         Player_Anm.SetBool("walk", true);
                         now = Vec.left;
                         Move_Transform -= Move_LR;
@@ -405,6 +429,7 @@ public class PL : MonoBehaviour {
                     //上下移動
                     if (state.dPadAxis.y > 0.2f)
                     {
+                        Sound.PlaySe("Player_Walk");
                         Player_Anm.SetBool("walk", true);
                         now = Vec.top;
                         Move_Transform += Move_UD;
@@ -412,6 +437,7 @@ public class PL : MonoBehaviour {
                     }
                     else if (state.dPadAxis.y < -0.2f)
                     {
+                        Sound.PlaySe("Player_Walk");
                         Player_Anm.SetBool("walk", true);
                         now = Vec.buttom;
                         Move_Transform -= Move_UD;
@@ -425,7 +451,7 @@ public class PL : MonoBehaviour {
                 //カップルを呼ぶ
                 if (state.A)
                 {
-
+                    Sound.PlaySe("Coll");
                     Coll_Couple();
                 }
             }

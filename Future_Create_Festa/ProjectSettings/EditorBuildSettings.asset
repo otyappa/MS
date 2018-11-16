@@ -5,16 +5,16 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Title.unity
     guid: b0eee7fd75ea9784db5d757a229db3c7
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/ModeSelect.unity
     guid: e8ba8f9d0e8e050488b9b3cc7b6ef689
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/StageSelect.unity
     guid: 8512e8618ad633940b526ccd264d3881
-  - enabled: 0
+  - enabled: 1
     path: Assets/GamePadInput/Demo/Demo.unity
     guid: 7b6e520eb497da44f8359f8d8dc9c1e0
   - enabled: 1
