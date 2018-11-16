@@ -28,7 +28,7 @@ public class SceneTransitionManager : MonoBehaviour
         Stage2,
         Stage3,
         Stage4,
-
+        VALUE_MAX
     }
 
     [Tooltip("タイトルUI")]
@@ -72,6 +72,10 @@ public class SceneTransitionManager : MonoBehaviour
     public Animator Disp1_rightDoorAnim;
     public Animator Disp2_leftDoorAnim;
     public Animator Disp2_rightDoorAnim;
+
+    [Tooltip("ステージ名のマテリアル")]
+    public Material[] stageNameMaterial;
+    public Renderer stageNameRenderer;
 
     // 現在存在しているオブジェクト実体の記憶領域
     static SceneTransitionManager _instance = null;
@@ -148,8 +152,11 @@ public class SceneTransitionManager : MonoBehaviour
                     GlobalCoroutine.Go(titleCamera.fadeImage.MaterialFadeOut(titleCamera.rend, titleCamera.fadeTime));
                     oneTimeFadeOut = true;
                 }
-                CheckTransition();
-                SceneTransition();
+                else
+                {
+                    CheckTransition();
+                    SceneTransition();
+                }
                 break;
 
             case SceneType.ModeSelect:
@@ -171,8 +178,11 @@ public class SceneTransitionManager : MonoBehaviour
                     GlobalCoroutine.Go(titleCamera.fadeImage.MaterialFadeOut(titleCamera.rend, titleCamera.fadeTime));
                     oneTimeFadeOut = true;
                 }
-                CheckTransition();
-                SceneTransition();
+                else
+                {
+                    CheckTransition();
+                    SceneTransition();
+                }
                 break;
 
             case SceneType.StageSelect:
@@ -194,8 +204,11 @@ public class SceneTransitionManager : MonoBehaviour
                     GlobalCoroutine.Go(titleCamera.fadeImage.MaterialFadeOut(titleCamera.rend, titleCamera.fadeTime));
                     oneTimeFadeOut = true;
                 }
-                CheckTransition();
-                SceneTransition();
+                else
+                {
+                    CheckTransition();
+                    SceneTransition();
+                }
                 break;
 
             case SceneType.Main:
@@ -223,7 +236,7 @@ public class SceneTransitionManager : MonoBehaviour
     // シーンの遷移
     void SceneTransition()
     {
-        if (NowScene != SceneType.StageSelect && isTransition && !titleCamera.fadeImage.GetIsFadingIn())
+        if (isTransition && !titleCamera.fadeImage.GetIsFadingIn())
         {
             oneTimeFadeOut = false;
             isTransition = false;
@@ -249,7 +262,7 @@ public class SceneTransitionManager : MonoBehaviour
         switch (NowScene)
         {
             case SceneType.Title:
-                if (Input.GetKeyDown(KeyCode.Return) || IsInputGp_ABXY())
+                if ((Input.GetKeyDown(KeyCode.Return) || IsInputGp_ABXY()) && !isTransition && !titleCamera.fadeImage.GetIsFadingOut())
                 {
                     NextScene = SceneType.ModeSelect;
                     //Sound.StopBgm();
@@ -260,7 +273,7 @@ public class SceneTransitionManager : MonoBehaviour
                 break;
 
             case SceneType.ModeSelect:
-                if (Input.GetKeyDown(KeyCode.Return) || GamePad.GetButtonDown(GamePad.Button.X, GamePad.Index.One))
+                if ((Input.GetKeyDown(KeyCode.Return) || GamePad.GetButtonDown(GamePad.Button.X, GamePad.Index.One)) && !isTransition && !titleCamera.fadeImage.GetIsFadingOut())
                 {
                     NextScene = SceneType.StageSelect;
                     //Sound.StopBgm();
@@ -268,14 +281,14 @@ public class SceneTransitionManager : MonoBehaviour
                     isTransition = true;
                     GlobalCoroutine.Go(titleCamera.fadeImage.MaterialFadeIn(titleCamera.rend, titleCamera.fadeTime));
                 }
-                if (Input.GetKeyDown(KeyCode.LeftArrow) || GamePad.GetButtonDown(GamePad.Button.Left, GamePad.Index.One) || GamePad.GetButtonDown(GamePad.Button.Up, GamePad.Index.One))
+                if ((Input.GetKeyDown(KeyCode.LeftArrow) || GamePad.GetButtonDown(GamePad.Button.Left, GamePad.Index.One) || GamePad.GetButtonDown(GamePad.Button.Up, GamePad.Index.One)) && !isTransition && !titleCamera.fadeImage.GetIsFadingOut())
                 {
                     Sound.PlaySe("select");
                     modeSelectFrameObj[0].SetActive(true);
                     modeSelectFrameObj[1].SetActive(false);
                     choseMode = ModeType.OneToOne;
                 }
-                if (Input.GetKeyDown(KeyCode.RightArrow) || GamePad.GetButtonDown(GamePad.Button.Right, GamePad.Index.One) || GamePad.GetButtonDown(GamePad.Button.Down, GamePad.Index.One))
+                if ((Input.GetKeyDown(KeyCode.RightArrow) || GamePad.GetButtonDown(GamePad.Button.Right, GamePad.Index.One) || GamePad.GetButtonDown(GamePad.Button.Down, GamePad.Index.One)) && !isTransition && !titleCamera.fadeImage.GetIsFadingOut())
                 {
                     Sound.PlaySe("select");
                     modeSelectFrameObj[0].SetActive(false);
@@ -287,7 +300,7 @@ public class SceneTransitionManager : MonoBehaviour
             case SceneType.StageSelect:
 
                 // モード選択に戻る
-                if(Input.GetKeyDown(KeyCode.Backspace) || GamePad.GetButtonDown(GamePad.Button.B, GamePad.Index.One))
+                if((Input.GetKeyDown(KeyCode.Backspace) || GamePad.GetButtonDown(GamePad.Button.B, GamePad.Index.One)) && !isTransition && !titleCamera.fadeImage.GetIsFadingOut())
                 {
                     //Sound.StopBgm();
                     Sound.PlaySe("cancel");
@@ -297,7 +310,7 @@ public class SceneTransitionManager : MonoBehaviour
 
                 }
 
-                if (Input.GetKeyDown(KeyCode.Return) || GamePad.GetButtonDown(GamePad.Button.X, GamePad.Index.One))
+                if ((Input.GetKeyDown(KeyCode.Return) || GamePad.GetButtonDown(GamePad.Button.X, GamePad.Index.One)) && !isTransition && !titleCamera.fadeImage.GetIsFadingOut())
                 {
                     NextScene = SceneType.Main;
                     Sound.StopBgm();
@@ -306,7 +319,7 @@ public class SceneTransitionManager : MonoBehaviour
                     //GlobalCoroutine.Go(titleCamera.fadeImage.MaterialFadeIn(titleCamera.rend, titleCamera.fadeTime));
                     CloseDoorAnim();
                 }
-                if ((Input.GetKeyDown(KeyCode.LeftArrow) && !isRotation) || (gpState.Left && !isRotation))
+                if ((Input.GetKeyDown(KeyCode.LeftArrow) && !isRotation) || (gpState.Left && !isRotation) && !isTransition && !titleCamera.fadeImage.GetIsFadingOut())
                 {
                     Sound.PlaySe("select");
                     choseStage--;
@@ -314,10 +327,11 @@ public class SceneTransitionManager : MonoBehaviour
                     {
                         choseStage = (int)StageType.Stage4;
                     }
+                    stageNameRenderer.material = stageNameMaterial[choseStage - 1];
                     //GlobalCoroutine.Go(RotationModel(modelTrans, stageSelectRotationSpeed, true));
                     GlobalCoroutine.Go(testRotationModel(modelTrans, stageSelectRotationSpeed, true));
                 }
-                if ((Input.GetKeyDown(KeyCode.RightArrow) && !isRotation) || (gpState.Right && !isRotation))
+                if ((Input.GetKeyDown(KeyCode.RightArrow) && !isRotation) || (gpState.Right && !isRotation) && !isTransition && !titleCamera.fadeImage.GetIsFadingOut())
                 {
                     Sound.PlaySe("select");
                     choseStage++;
@@ -325,6 +339,7 @@ public class SceneTransitionManager : MonoBehaviour
                     {
                         choseStage = (int)StageType.Stage1;
                     }
+                    stageNameRenderer.material = stageNameMaterial[choseStage - 1];
                     //GlobalCoroutine.Go(RotationModel(modelTrans, stageSelectRotationSpeed, false));
                     GlobalCoroutine.Go(testRotationModel(modelTrans, stageSelectRotationSpeed, false));
                 }
@@ -628,6 +643,8 @@ public class SceneTransitionManager : MonoBehaviour
 
         InitProperty();
 
+        InitMaterial();
+
         InitSound();
 
     }
@@ -652,7 +669,6 @@ public class SceneTransitionManager : MonoBehaviour
         Disp2_leftDoorAnim = GameObject.Find("door_left_disp2").GetComponent<Animator>();
         Disp2_rightDoorAnim = GameObject.Find("door_right_disp2").GetComponent<Animator>();
 
-
     }
 
     private void InitProperty()
@@ -667,8 +683,19 @@ public class SceneTransitionManager : MonoBehaviour
 
         choseMode = ModeType.VALUE_MAX;
         choseStage = 1;
+
+        //stageNameMaterial = new Material[(int)StageType.VALUE_MAX];
     }
 
+    private void InitMaterial()
+    {
+        //stageNameRenderer = GameObject.Find("StageName").GetComponent<Renderer>();
+
+        //stageNameMaterial[0] = Resources.Load("Materials/StageSelect_StageName_1") as Material;
+        //stageNameMaterial[1] = Resources.Load("Materials/StageSelect_StageName_2") as Material;
+        //stageNameMaterial[2] = Resources.Load("Materials/StageSelect_StageName_3") as Material;
+        //stageNameMaterial[3] = Resources.Load("Materials/StageSelect_StageName_4") as Material;
+    }
 
     private void InitSound()
     {
@@ -678,4 +705,7 @@ public class SceneTransitionManager : MonoBehaviour
         Sound.LoadSe("cancel", "SE/SE_Cancel");
         Sound.LoadSe("modeSelectIn", "SE/SE_ModeSelect_Start");
     }
+
+    
+    // Todo : ステージセレクトパネルの初期化処理
 }

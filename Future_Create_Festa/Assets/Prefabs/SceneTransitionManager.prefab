@@ -66,6 +66,14 @@ MonoBehaviour:
   modelTrans: {fileID: 0}
   titleCamera: {fileID: 0}
   oneTimeFadeOut: 0
-  leftDoorAnim: {fileID: 0}
-  rightDoorAnim: {fileID: 0}
+  Disp1_leftDoorAnim: {fileID: 0}
+  Disp1_rightDoorAnim: {fileID: 0}
+  Disp2_leftDoorAnim: {fileID: 0}
+  Disp2_rightDoorAnim: {fileID: 0}
+  stageNameMaterial:
+  - {fileID: 2100000, guid: df0cb9aeac59fb54bbb32b1cd5406d2f, type: 2}
+  - {fileID: 2100000, guid: f2c233dd525991d4badf80a2faab0bb5, type: 2}
+  - {fileID: 2100000, guid: 7138debef6818544bbbd560d3b3f6ff9, type: 2}
+  - {fileID: 2100000, guid: bdce368ca97bd2f4b8af8665c0e97086, type: 2}
+  stageNameRenderer: {fileID: 0}
   test: 0
