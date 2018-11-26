@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using GamepadInput;
+using UnityEditor;
 
 public class SceneTransitionManager : MonoBehaviour
 {
@@ -46,6 +47,8 @@ public class SceneTransitionManager : MonoBehaviour
     public SceneType NextScene;
     [Tooltip("シーン遷移フラグ")]
     public bool isTransition;
+    [Tooltip("タイトル移動")]
+    public bool goTitle;
 
     [Tooltip("モード選択結果")]
     public ModeType choseMode;
@@ -134,9 +137,17 @@ public class SceneTransitionManager : MonoBehaviour
         //Debug.Log(modelTrans);
         //NowScene = (SceneType)SceneManager.GetActiveScene().rootCount;
         gpState = GamePad.GetState(GamePad.Index.One);
-        testinput();
 
-        switch (NowScene)
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            #if UNITY_EDITOR
+                EditorApplication.isPlaying = false;
+            #elif UNITY_STANDALONE
+                Application.Quit();
+            #endif
+        }
+
+            switch (NowScene)
         {
             case SceneType.Title:
                 if (!oneTimeFadeOut)
@@ -192,15 +203,19 @@ public class SceneTransitionManager : MonoBehaviour
                     //Sound.LoadSe("StageSelectSe", "StageSelect_TestSe");
                     //Sound.PlayBgm("StageSelectBgm");
                     InitAnim();
-
+                    
                     titleUI.SetActive(false);
                     modeSelectUI.SetActive(false);
                     stageSelectUI.SetActive(true);
+
                     if (modelTrans == null)
                     {
                         modelTrans = GameObject.Find("SelectPanelParent").transform;
                     }
+                    choseStage = 1;
                     modelTrans.transform.rotation = Quaternion.Euler(0.0f, modelTrans.localEulerAngles.y, 0.0f);
+                    stageNameRenderer.material = stageNameMaterial[choseStage - 1];
+
                     GlobalCoroutine.Go(titleCamera.fadeImage.MaterialFadeOut(titleCamera.rend, titleCamera.fadeTime));
                     oneTimeFadeOut = true;
                 }
@@ -241,6 +256,15 @@ public class SceneTransitionManager : MonoBehaviour
     // シーンの遷移
     void SceneTransition()
     {
+        if (goTitle && !titleCamera.fadeImage.GetIsFadingIn())
+        {
+            oneTimeFadeOut = false;
+            isTransition = false;
+            goTitle = false;
+            NowScene = SceneType.Title;
+            SceneManager.LoadScene(SceneType.Title.ToString());
+        }
+
         if (isTransition && !titleCamera.fadeImage.GetIsFadingIn())
         {
             oneTimeFadeOut = false;
@@ -264,6 +288,15 @@ public class SceneTransitionManager : MonoBehaviour
     // 遷移する条件
     public void CheckTransition()
     {
+        if (Input.GetKeyDown(KeyCode.T) && !isTransition && !titleCamera.fadeImage.GetIsFadingOut())
+        {
+            NextScene = SceneType.ModeSelect;
+            Sound.StopBgm();
+            goTitle = true;
+            GlobalCoroutine.Go(titleCamera.fadeImage.MaterialFadeIn(titleCamera.rend, titleCamera.fadeTime));
+        }
+
+
         switch (NowScene)
         {
             case SceneType.Title:
@@ -679,6 +712,8 @@ public class SceneTransitionManager : MonoBehaviour
     private void InitProperty()
     {
         oneTimeFadeOut = false;
+        isTransition = false;
+        goTitle = false;
 
         //NowScene = SceneTransitionManager.SceneType.Title;
         NowScene = (SceneType)SceneManager.GetActiveScene().buildIndex;
