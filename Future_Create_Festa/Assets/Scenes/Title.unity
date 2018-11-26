@@ -155,7 +155,7 @@ Light:
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -322,11 +322,6 @@ Prefab:
       propertyPath: lookObj
       value: 
       objectReference: {fileID: 646202946}
-    - target: {fileID: 114265452903326482, guid: 003ce35ed2caaa8478c5f30f43f1a03c,
-        type: 2}
-      propertyPath: displayNum
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 003ce35ed2caaa8478c5f30f43f1a03c, type: 2}
   m_IsPrefabParent: 0
