@@ -118,7 +118,7 @@ NavMeshSettings:
 GameObject:
   m_PrefabParentObject: {fileID: 1719009158909296, guid: 39ae87b33cc308843948789e57fcadfb,
     type: 2}
-  m_PrefabInternal: {fileID: 1432576214}
+  m_PrefabInternal: {fileID: 1438033620}
 --- !u!23 &716622736 stripped
 MeshRenderer:
   m_PrefabParentObject: {fileID: 23931317874301106, guid: 003ce35ed2caaa8478c5f30f43f1a03c,
@@ -236,7 +236,7 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2ac14ed82f5469f4485e4fd86bdd8c0f, type: 2}
   m_IsPrefabParent: 0
---- !u!1001 &1432576214
+--- !u!1001 &1438033620
 Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -249,7 +249,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4894091426912870, guid: 39ae87b33cc308843948789e57fcadfb, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -2
+      value: -2.5
       objectReference: {fileID: 0}
     - target: {fileID: 4894091426912870, guid: 39ae87b33cc308843948789e57fcadfb, type: 2}
       propertyPath: m_LocalPosition.z
