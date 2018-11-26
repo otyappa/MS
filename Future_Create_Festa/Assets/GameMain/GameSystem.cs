@@ -35,10 +35,12 @@ public class GameSystem : MonoBehaviour {
         if (TotalManager.Red_WinCount > 1 || TotalManager.Blue_WinCount > 1)
         {
             GameSet = true;
+            Sound.StopBgm();
+           // Sound.PlayBgm("Result");
         }
         else
         {
-            Sound.LoadBgm("GameMain", "BGM/Stage_BGM");
+
             Sound.PlayBgm("GameMain");
 
         }
@@ -90,7 +92,7 @@ public class GameSystem : MonoBehaviour {
             SceneManager.LoadScene("Main");
         }
 
-        if (Input.GetKey(KeyCode.F11))
+        if (Input.GetKey(KeyCode.F11)) 
         {
            // scene_mana.choseStage = 4;
             TotalManager.Reset();
@@ -102,9 +104,10 @@ public class GameSystem : MonoBehaviour {
                 {
                 if (TotalManager.Red_WinCount > 1 || TotalManager.Blue_WinCount > 1)
                 {
+                    
                     //タイトルシーンに遷移
                     scene_mana.isTransition = true;
-                    SceneManager.LoadScene("Title");
+                   // SceneManager.LoadScene("Title");
 
                 }
                 else
@@ -175,6 +178,9 @@ public class GameSystem : MonoBehaviour {
         blue_2 = GameObject.Find("Blue_Player2");
         red_1 = GameObject.Find("Red_Player");
         red_2 = GameObject.Find("Red_Player2");
+        Sound.LoadBgm("GameMain", "BGM/Stage_BGM");
+       // Sound.LoadBgm("Result", "BGM/Result");
+
         switch ((int)scene_mana.choseStage)
         {
             case 1:

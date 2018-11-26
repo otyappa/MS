@@ -4,7 +4,7 @@ using UnityEngine;
 using GamepadInput;
 public class PL : MonoBehaviour {
     float cool_time;
-    Vector3 Start_Player_Position;
+    Vector3 Start_Player_Position;//プレイヤーの初期位置
     Create_SpecialItem C_Manager;
     public bool Red_Player;
     public GameObject ReSporn_Point;
@@ -14,6 +14,7 @@ public class PL : MonoBehaviour {
     public GameObject SPECIAL_SHOT;
     public float Move_Speed=1;
    public  GameObject Player_Model;
+    public GameObject Player_Hint_Model;
     Animator Player_Anm;
     public bool TonT; 
     GameObject Player_HintModel;
@@ -901,6 +902,8 @@ public class PL : MonoBehaviour {
         float step = 5 * Time.deltaTime;
         //Debug.Log((float)now);
         Player_Model.transform.rotation = Quaternion.Slerp(Player_Model.transform.rotation, Quaternion.Euler(0, (float)now*90.0f, 0), step);
+        Player_Hint_Model.transform.rotation = Quaternion.Slerp(Player_Hint_Model.transform.rotation, Quaternion.Euler(0, (float)now * 90.0f, 0), step);
+
     }
 
     public void Set_MaxTrap(int setter)

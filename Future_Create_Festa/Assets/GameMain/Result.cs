@@ -6,17 +6,29 @@ public class Result : MonoBehaviour {
     GameSystem End_Manager;
     TotalGameManager TotalManager;
     public bool Red=false;
-
-	// Use this for initialization
-	void Start () {
+    GameObject Blue_Win_IMage;
+    GameObject Red_Win_Image;
+    GameObject hert1;
+    GameObject hert2;
+    GameObject hert3;
+    GameObject hert4;
+    // Use this for initialization
+    void Start () {
+        Sound.LoadBgm("Result", "BGM/Result");
         End_Manager = GameObject.Find("GameSystemManager").GetComponent<GameSystem>();
       TotalManager = GameObject.Find("TotalManager").GetComponent<TotalGameManager>();
-        transform.GetChild(0).gameObject.SetActive(false);
-        transform.GetChild(1).gameObject.SetActive(false);
-        transform.GetChild(5).gameObject.SetActive(false);
-        transform.GetChild(6).gameObject.SetActive(false);
-        transform.GetChild(7).gameObject.SetActive(false);
-        transform.GetChild(8).gameObject.SetActive(false);
+        Red_Win_Image = transform.GetChild(0).gameObject;
+        Blue_Win_IMage = transform.GetChild(1).gameObject;
+        hert1 = transform.GetChild(9).gameObject;
+        hert2 = transform.GetChild(10).gameObject;
+        hert3 = transform.GetChild(11).gameObject;
+        hert4 = transform.GetChild(12).gameObject;
+        Red_Win_Image.SetActive(false);
+        Blue_Win_IMage.SetActive(false);
+        hert1.SetActive(false);
+        hert2.SetActive(false);
+        hert3.SetActive(false);
+        hert4.SetActive(false);
         Set_Win(TotalManager.Red_WinCount, TotalManager.Blue_WinCount);
     }
 
@@ -26,15 +38,17 @@ public class Result : MonoBehaviour {
         {
             if (Red == !End_Manager.Get_WINNER())
             {
-                transform.GetChild(0).gameObject.SetActive(true);
-                Set_Win(TotalManager.Red_WinCount, TotalManager.Blue_WinCount);
-
-                }
-            else
-            {  
-                transform.GetChild(1).gameObject.SetActive(true);
+                if (Red_Win_Image.activeSelf == false)
+                {
+                    Red_Win_Image.SetActive(true);
                     Set_Win(TotalManager.Red_WinCount, TotalManager.Blue_WinCount);
-                    }
+                }
+            }
+            else if (Blue_Win_IMage.activeSelf == false)
+            {
+                Blue_Win_IMage.SetActive(true);
+                Set_Win(TotalManager.Red_WinCount, TotalManager.Blue_WinCount);
+            }
         }
     }
 
@@ -42,22 +56,26 @@ public class Result : MonoBehaviour {
     {
         if (red > 1)
         {
-            transform.GetChild(5).gameObject.SetActive(true);
-            transform.GetChild(6).gameObject.SetActive(true);
+            hert1.SetActive(true);
+            hert2.SetActive(true);
+            Sound.StopBgm();
+            Sound.PlayBgm("Result");
         }
         else if(red >0)
         {
-            transform.GetChild(5).gameObject.SetActive(true);
+            hert1.SetActive(true);
 
         }
         if (blue > 1)
         {
-            transform.GetChild(7).gameObject.SetActive(true);
-            transform.GetChild(8).gameObject.SetActive(true);
+            hert3.SetActive(true);
+            hert4.SetActive(true);
+            Sound.StopBgm();
+            Sound.PlayBgm("Result");
         }
         else if (blue > 0)
         {
-            transform.GetChild(7).gameObject.SetActive(true);
+            hert3.SetActive(true);
 
         }
     }
