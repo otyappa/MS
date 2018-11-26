@@ -70,8 +70,10 @@ public class TotalGameManager : MonoBehaviour {
         Round_Count++;
     }
 
-    public void GetWinCount()
+    public void Reset()
     {
-
+        Blue_WinCount = 0;
+        Red_WinCount = 0;
+        Round_Count = 0;
     }
 }
