@@ -532,8 +532,6 @@ GameObject:
   - component: {fileID: 1619279160}
   - component: {fileID: 1619279161}
   - component: {fileID: 1619279162}
-  - component: {fileID: 1619279163}
-  - component: {fileID: 1619279164}
   m_Layer: 0
   m_Name: Demo
   m_TagString: Untagged
@@ -577,29 +575,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gamepadnum: 00000000000000000000000000000000
---- !u!114 &1619279163
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1619279159}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3713051e420a70149b44e3a74f9e56e0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_useDisplayCount: 3
---- !u!114 &1619279164
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1619279159}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cdc240fed907a9641a64a3402b5730c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1719135469
 GameObject:
   m_ObjectHideFlags: 0
