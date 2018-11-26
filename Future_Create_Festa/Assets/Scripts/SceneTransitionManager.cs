@@ -165,7 +165,8 @@ public class SceneTransitionManager : MonoBehaviour
                     titleUI.SetActive(true);
                     modeSelectUI.SetActive(false);
                     stageSelectUI.SetActive(false);
-                    GlobalCoroutine.Go(titleCamera.fadeImage.MaterialFadeOut(titleCamera.rend, titleCamera.fadeTime));
+                    titleCamera.fadeImage.SetMaterialAlpha(0);
+                    //GlobalCoroutine.Go(titleCamera.fadeImage.MaterialFadeOut(titleCamera.rend, titleCamera.fadeTime));
                     oneTimeFadeOut = true;
                 }
                 else
