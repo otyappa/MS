@@ -253,6 +253,11 @@ public class SceneTransitionManager : MonoBehaviour
         }
     }
 
+    public void GoTitle()
+    {
+        goTitle = true;
+    }
+
     // シーンの遷移
     void SceneTransition()
     {
