@@ -32,6 +32,11 @@ public class SceneTransitionManager : MonoBehaviour
         VALUE_MAX
     }
 
+    [Tooltip("タイトルカメラオブジェ")]
+    public GameObject titleCameraObj;
+    [Tooltip("タイトルステージオブジェ")]
+    public GameObject titleStageObj;
+
     [Tooltip("タイトルUI")]
     public GameObject titleUI;
     [Tooltip("モードセレクトUI")]
@@ -140,14 +145,14 @@ public class SceneTransitionManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            #if UNITY_EDITOR
-                EditorApplication.isPlaying = false;
-            #elif UNITY_STANDALONE
-                Application.Quit();
-            #endif
+#if UNITY_EDITOR
+            EditorApplication.isPlaying = false;
+#elif UNITY_STANDALONE
+            Application.Quit();
+#endif
         }
 
-            switch (NowScene)
+        switch (NowScene)
         {
             case SceneType.Title:
                 if (!oneTimeFadeOut)
@@ -203,7 +208,7 @@ public class SceneTransitionManager : MonoBehaviour
                     //Sound.LoadSe("StageSelectSe", "StageSelect_TestSe");
                     //Sound.PlayBgm("StageSelectBgm");
                     InitAnim();
-                    
+
                     titleUI.SetActive(false);
                     modeSelectUI.SetActive(false);
                     stageSelectUI.SetActive(true);
@@ -263,7 +268,8 @@ public class SceneTransitionManager : MonoBehaviour
     {
         if (goTitle && !titleCamera.fadeImage.GetIsFadingIn())
         {
-
+            titleCameraObj.SetActive(true);
+            titleStageObj.SetActive(true);
             titleUI.SetActive(true);
             modeSelectUI.SetActive(false);
             stageSelectUI.SetActive(false);
@@ -348,7 +354,7 @@ public class SceneTransitionManager : MonoBehaviour
             case SceneType.StageSelect:
 
                 // モード選択に戻る
-                if((Input.GetKeyDown(KeyCode.Backspace) || GamePad.GetButtonDown(GamePad.Button.B, GamePad.Index.One)) && !isTransition && !titleCamera.fadeImage.GetIsFadingOut())
+                if ((Input.GetKeyDown(KeyCode.Backspace) || GamePad.GetButtonDown(GamePad.Button.B, GamePad.Index.One)) && !isTransition && !titleCamera.fadeImage.GetIsFadingOut())
                 {
                     //Sound.StopBgm();
                     Sound.PlaySe("cancel");
@@ -652,12 +658,12 @@ public class SceneTransitionManager : MonoBehaviour
         switch (str)
         {
             case "stop":
-                if(Disp1_leftDoorAnim.GetCurrentAnimatorClipInfo(0)[0].clip.name == "door_stop_left" && 
+                if (Disp1_leftDoorAnim.GetCurrentAnimatorClipInfo(0)[0].clip.name == "door_stop_left" &&
                    Disp1_rightDoorAnim.GetCurrentAnimatorClipInfo(0)[0].clip.name == "door_stop_right" &&
                    Disp2_leftDoorAnim.GetCurrentAnimatorClipInfo(0)[0].clip.name == "door_stop_left" &&
-                   Disp2_rightDoorAnim.GetCurrentAnimatorClipInfo(0)[0].clip.name == "door_stop_right" )
+                   Disp2_rightDoorAnim.GetCurrentAnimatorClipInfo(0)[0].clip.name == "door_stop_right")
                 {
-                    flg = true;   
+                    flg = true;
                 }
                 break;
         }
@@ -699,6 +705,8 @@ public class SceneTransitionManager : MonoBehaviour
 
     private void InitObject()
     {
+        titleCameraObj = GameObject.Find("TitleCamera");
+        titleStageObj = GameObject.Find("TitleStage");
         titleUI = GameObject.Find("TitleUI");
         modeSelectUI = GameObject.Find("ModeSelectUI");
         stageSelectUI = GameObject.Find("StageSelectUI");
@@ -707,7 +715,7 @@ public class SceneTransitionManager : MonoBehaviour
         modeSelectFrameObj = new GameObject[2];
         modeSelectFrameObj[0] = GameObject.Find("selectFrame_1v1");
         modeSelectFrameObj[1] = GameObject.Find("selectFrame_2v2");
-                
+
     }
 
     private void InitAnim()
@@ -756,6 +764,6 @@ public class SceneTransitionManager : MonoBehaviour
         Sound.LoadSe("modeSelectIn", "SE/SE_ModeSelect_Start");
     }
 
-    
+
     // Todo : ステージセレクトパネルの初期化処理
 }
