@@ -104,9 +104,9 @@ public class GameSystem : MonoBehaviour {
                 {
                 if (TotalManager.Red_WinCount > 1 || TotalManager.Blue_WinCount > 1)
                 {
-                    
+
                     //タイトルシーンに遷移
-                    scene_mana.isTransition = true;
+                    scene_mana.GoTitle();
                    // SceneManager.LoadScene("Title");
 
                 }
