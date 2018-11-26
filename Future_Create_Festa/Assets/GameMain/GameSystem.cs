@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using GamepadInput;
+
 public class GameSystem : MonoBehaviour {
 
     bool GameSet = false;
@@ -34,6 +36,12 @@ public class GameSystem : MonoBehaviour {
         {
             GameSet = true;
         }
+        else
+        {
+            Sound.LoadBgm("GameMain", "BGM/Stage_BGM");
+            Sound.PlayBgm("GameMain");
+
+        }
     }
 
     // Update is called once per frame
@@ -60,22 +68,52 @@ public class GameSystem : MonoBehaviour {
         if (Input.GetKey(KeyCode.F3))
         {
             scene_mana.choseStage = 1;
+            TotalManager.Reset();
             SceneManager.LoadScene("Main");
         }
         if (Input.GetKey(KeyCode.F4))
         {
             scene_mana.choseStage = 2;
+            TotalManager.Reset();
             SceneManager.LoadScene("Main");
         }
         if (Input.GetKey(KeyCode.F5))
         {
             scene_mana.choseStage = 3;
+            TotalManager.Reset();
             SceneManager.LoadScene("Main");
         }
         if (Input.GetKey(KeyCode.F6))
         {
             scene_mana.choseStage = 4;
+            TotalManager.Reset();
             SceneManager.LoadScene("Main");
+        }
+
+        if (Input.GetKey(KeyCode.F11))
+        {
+           // scene_mana.choseStage = 4;
+            TotalManager.Reset();
+            SceneManager.LoadScene("Title");
+        }
+        if (GameSet)
+        {
+          if(Input.GetKey(KeyCode.Return)|| GamePad.GetButtonDown(GamePad.Button.X, GamePad.Index.One))
+                {
+                if (TotalManager.Red_WinCount > 1 || TotalManager.Blue_WinCount > 1)
+                {
+                    //タイトルシーンに遷移
+                    scene_mana.isTransition = true;
+                    SceneManager.LoadScene("Title");
+
+                }
+                else
+                {
+                    SceneManager.LoadScene("Main");
+
+                }
+
+            }
         }
     }
 
@@ -86,6 +124,7 @@ public class GameSystem : MonoBehaviour {
             GameSet = true;
             Blue_Win = true;
             TotalManager.AddWin(false);
+            Sound.StopBgm();
         }
     }
     public void RedWin()
@@ -118,10 +157,10 @@ public class GameSystem : MonoBehaviour {
         switch (TimeUpWinner.RedWin())
         {
             case 0:
-                RedWin();
+                BlueWin();
                 break;
             case 1:
-                BlueWin();
+                RedWin();
                 break;
             case 2:
                 Draw();

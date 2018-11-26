@@ -143,7 +143,7 @@ public class PL : MonoBehaviour {
                         Make_Trap_Time = 0;
                     }
                     //左右移動
-                    if (state.dPadAxis.x > 0.2f)
+                    if (state.dPadAxis.x > 0.2f||state.LeftStickAxis.x>0.2f)
                     {
                         Sound.PlaySe("Player_Walk");
                         Player_Anm.SetBool("walk", true);
@@ -151,7 +151,7 @@ public class PL : MonoBehaviour {
                         Move_Transform += Move_LR;
                         Rotate_Model();
                     }
-                    else if (state.dPadAxis.x < -0.2f)
+                    else if (state.dPadAxis.x < -0.2f || state.LeftStickAxis.x < -0.2f)
                     {
                         Sound.PlaySe("Player_Walk");
                         Player_Anm.SetBool("walk", true);
@@ -161,7 +161,7 @@ public class PL : MonoBehaviour {
                     }//end_if
 
                     //上下移動
-                    if (state.dPadAxis.y > 0.2f)
+                    if (state.dPadAxis.y > 0.2f || state.LeftStickAxis.y > 0.2f)
                     {
                         Sound.PlaySe("Player_Walk");
                         Player_Anm.SetBool("walk", true);
@@ -169,7 +169,7 @@ public class PL : MonoBehaviour {
                         Move_Transform += Move_UD;
                         Rotate_Model();
                     }
-                    else if (state.dPadAxis.y < -0.2f)
+                    else if (state.dPadAxis.y < -0.2f || state.LeftStickAxis.y < -0.2f)
                     {
                         Sound.PlaySe("Player_Walk");
                         Player_Anm.SetBool("walk", true);
@@ -226,7 +226,7 @@ public class PL : MonoBehaviour {
                         Make_Trap_Time = 0;
                     }
                     //左右移動
-                    if (state.dPadAxis.x > 0.2f)
+                    if (state.dPadAxis.x > 0.2f || state.LeftStickAxis.x > 0.2f)
                     {
                         Sound.PlaySe("Player_Walk");
                         Player_Anm.SetBool("walk", true);
@@ -234,7 +234,7 @@ public class PL : MonoBehaviour {
                         Move_Transform += Move_LR;
                         Rotate_Model();
                     }
-                    else if (state.dPadAxis.x < -0.2f)
+                    else if (state.dPadAxis.x < -0.2f || state.LeftStickAxis.x < -0.2f)
                     {
                         Sound.PlaySe("Player_Walk");
                         Player_Anm.SetBool("walk", true);
@@ -244,7 +244,7 @@ public class PL : MonoBehaviour {
                     }//end_if
 
                     //上下移動
-                    if (state.dPadAxis.y > 0.2f)
+                    if (state.dPadAxis.y > 0.2f || state.LeftStickAxis.y > 0.2f)
                     {
                         Sound.PlaySe("Player_Walk");
                         Player_Anm.SetBool("walk", true);
@@ -252,7 +252,7 @@ public class PL : MonoBehaviour {
                         Move_Transform += Move_UD;
                         Rotate_Model();
                     }
-                    else if (state.dPadAxis.y < -0.2f)
+                    else if (state.dPadAxis.y < -0.2f || state.LeftStickAxis.y < -0.2f)
                     {
                         Sound.PlaySe("Player_Walk");
                         Player_Anm.SetBool("walk", true);
@@ -306,7 +306,6 @@ public class PL : MonoBehaviour {
                     TimeBar.Bar_Update();
                     if ((int)Make_Trap_Time == 1)
                     {
-                        Debug.Log("gogogo");
                         Set_Trap();
                     }
                     else
@@ -326,7 +325,7 @@ public class PL : MonoBehaviour {
                     }
                     Player_Anm.SetBool("walk", false);
                     //左右移動
-                    if (Input.GetKey(KeyCode.D) || state.dPadAxis.x>0.2f)
+                    if (Input.GetKey(KeyCode.D) || state.dPadAxis.x>0.2f || state.LeftStickAxis.x > 0.2f)
                     {
                         Sound.PlaySe("Player_Walk");
                         Player_Anm.SetBool("walk",true);
@@ -334,7 +333,7 @@ public class PL : MonoBehaviour {
                         Move_Transform += Move_LR;
                         Rotate_Model();
                     }
-                    else if (Input.GetKey(KeyCode.A) || state.dPadAxis.x < -0.2f)
+                    else if (Input.GetKey(KeyCode.A) || state.dPadAxis.x < -0.2f || state.LeftStickAxis.x < -0.2f)
                     {
                         Sound.PlaySe("Player_Walk");
                         Player_Anm.SetBool("walk", true);
@@ -344,7 +343,7 @@ public class PL : MonoBehaviour {
                     }//左右移動ここまで
 
                     //上下移動
-                    if (Input.GetKey(KeyCode.W) || state.dPadAxis.y > 0.2f)
+                    if (Input.GetKey(KeyCode.W) || state.dPadAxis.y > 0.2f || state.LeftStickAxis.y > 0.2f)
                     {
                         Sound.PlaySe("Player_Walk");
                         Player_Anm.SetBool("walk", true);
@@ -352,7 +351,7 @@ public class PL : MonoBehaviour {
                         Move_Transform += Move_UD;
                         Rotate_Model();
                     }
-                    else if (Input.GetKey(KeyCode.S) || state.dPadAxis.y < -0.2f)
+                    else if (Input.GetKey(KeyCode.S) || state.dPadAxis.y < -0.2f || state.LeftStickAxis.y < -0.2f)
                     {
                         Sound.PlaySe("Player_Walk");
                         Player_Anm.SetBool("walk", true);
@@ -409,7 +408,7 @@ public class PL : MonoBehaviour {
                         Make_Trap_Time = 0;
                     }
                     //左右移動
-                    if (state.dPadAxis.x > 0.2f)
+                    if (state.dPadAxis.x > 0.2f || state.LeftStickAxis.x > 0.2f)
                     {
                         Sound.PlaySe("Player_Walk");
                         Player_Anm.SetBool("walk", true);
@@ -417,7 +416,7 @@ public class PL : MonoBehaviour {
                         Move_Transform += Move_LR;
                         Rotate_Model();
                     }
-                    else if (state.dPadAxis.x < -0.2f)
+                    else if (state.dPadAxis.x < -0.2f || state.LeftStickAxis.x < -0.2f)
                     {
                         Sound.PlaySe("Player_Walk");
                         Player_Anm.SetBool("walk", true);
@@ -427,7 +426,7 @@ public class PL : MonoBehaviour {
                     }//左右移動ここまで
 
                     //上下移動
-                    if (state.dPadAxis.y > 0.2f)
+                    if (state.dPadAxis.y > 0.2f || state.LeftStickAxis.y > 0.2f)
                     {
                         Sound.PlaySe("Player_Walk");
                         Player_Anm.SetBool("walk", true);
@@ -435,7 +434,7 @@ public class PL : MonoBehaviour {
                         Move_Transform += Move_UD;
                         Rotate_Model();
                     }
-                    else if (state.dPadAxis.y < -0.2f)
+                    else if (state.dPadAxis.y < -0.2f || state.LeftStickAxis.y < -0.2f)
                     {
                         Sound.PlaySe("Player_Walk");
                         Player_Anm.SetBool("walk", true);
@@ -481,7 +480,8 @@ public class PL : MonoBehaviour {
         Make_Trap_Time++;
         trap_count++;
         //落とし穴作成
-        GameObject trap= Instantiate(Trap_Point, this.transform.position, Quaternion.identity);
+        
+        GameObject trap= Instantiate(Trap_Point, new Vector3(transform.position.x,-0.05f,transform.position.z), Quaternion.identity);
         trap.GetComponent<Trap>().Set_Creater(this.gameObject);
 
     }
@@ -501,6 +501,7 @@ public class PL : MonoBehaviour {
             
             it.GetComponent<Trap>().Delete_Function();
             Destroy(it.gameObject);
+            Sound.PlaySe("PHit_Trap");
         }
         if (it.transform.tag == "Player")
         {
@@ -511,13 +512,13 @@ public class PL : MonoBehaviour {
         {
             SP_MODE = true;
             C_Manager.Delete_Item();
-
-
+            Sound.PlaySe("Get_Item");
             Destroy(it.gameObject);
         }
         
         if (it.transform.tag == "Restart_Shot")
         {
+            Sound.PlaySe("PHit_Item");
             Re_Start();
             Destroy(it.gameObject);
         }
@@ -596,15 +597,17 @@ public class PL : MonoBehaviour {
                 Player_Anm.SetBool("walk",false);
 
                 //左右移動
-                if (state.dPadAxis.x > 0.2f)
+                if (state.dPadAxis.x > 0.2f || state.LeftStickAxis.x > 0.2f)
                 {
+                    Sound.PlaySe("Player_Walk");
                     Player_Anm.SetBool("walk", true);
                     now = Vec.right;
                     Move_Transform += Move_LR;
                     Rotate_Model();
                 }
-                else if (state.dPadAxis.x < -0.2f)
+                else if (state.dPadAxis.x < -0.2f || state.LeftStickAxis.x < -0.2f)
                 {
+                    Sound.PlaySe("Player_Walk");
                     Player_Anm.SetBool("walk", true);
                     now = Vec.left;
                     Move_Transform -= Move_LR;
@@ -612,15 +615,17 @@ public class PL : MonoBehaviour {
                 }//end_if
 
                 //上下移動
-                if (state.dPadAxis.y > 0.2f)
+                if (state.dPadAxis.y > 0.2f || state.LeftStickAxis.y > 0.2f)
                 {
+                    Sound.PlaySe("Player_Walk");
                     Player_Anm.SetBool("walk", true);
                     now = Vec.top;
                     Move_Transform += Move_UD;
                     Rotate_Model();
                 }
-                else if (state.dPadAxis.y < -0.2f)
+                else if (state.dPadAxis.y < -0.2f || state.LeftStickAxis.y < -0.2f)
                 {
+                    Sound.PlaySe("Player_Walk");
                     Player_Anm.SetBool("walk", true);
                     now = Vec.buttom;
                     Move_Transform -= Move_UD;
@@ -634,7 +639,7 @@ public class PL : MonoBehaviour {
             //カップルを呼ぶ
             if (state.A)
             {
-
+                Sound.PlaySe("Coll");
                 Coll_Couple();
             }
 
@@ -670,15 +675,17 @@ public class PL : MonoBehaviour {
                 Player_Anm.SetBool("walk", false);
 
                 //左右移動
-                if (state.dPadAxis.x > 0.2f)
+                if (state.dPadAxis.x > 0.2f || state.LeftStickAxis.x > 0.2f)
                 {
+                    Sound.PlaySe("Player_Walk");
                     Player_Anm.SetBool("walk", true);
                     now = Vec.right;
                     Move_Transform += Move_LR;
                     Rotate_Model();
                 }
-                else if (state.dPadAxis.x < -0.2f)
+                else if (state.dPadAxis.x < -0.2f || state.LeftStickAxis.x < -0.2f)
                 {
+                    Sound.PlaySe("Player_Walk");
                     Player_Anm.SetBool("walk", true);
                     now = Vec.left;
                     Move_Transform -= Move_LR;
@@ -686,15 +693,17 @@ public class PL : MonoBehaviour {
                 }//end_if
 
                 //上下移動
-                if (state.dPadAxis.y > 0.2f)
+                if (state.dPadAxis.y > 0.2f || state.LeftStickAxis.y > 0.2f)
                 {
+                    Sound.PlaySe("Player_Walk");
                     Player_Anm.SetBool("walk", true);
                     now = Vec.top;
                     Move_Transform += Move_UD;
                     Rotate_Model();
                 }
-                else if (state.dPadAxis.y < -0.2f)
+                else if (state.dPadAxis.y < -0.2f || state.LeftStickAxis.y < -0.2f)
                 {
+                    Sound.PlaySe("Player_Walk");
                     Player_Anm.SetBool("walk", true);
                     now = Vec.buttom;
                     Move_Transform -= Move_UD;
@@ -708,7 +717,7 @@ public class PL : MonoBehaviour {
             //カップルを呼ぶ
             if (state.A)
             {
-
+                Sound.PlaySe("Coll");
                 Coll_Couple();
             }
         }
@@ -751,15 +760,17 @@ public class PL : MonoBehaviour {
                 Player_Anm.SetBool("walk", false);
 
                 //左右移動
-                if (Input.GetKey(KeyCode.D) || state.dPadAxis.x > 0.2f)
+                if (Input.GetKey(KeyCode.D) || state.dPadAxis.x > 0.2f || state.LeftStickAxis.x > 0.2f)
                 {
+                    Sound.PlaySe("Player_Walk");
                     Player_Anm.SetBool("walk", true);
                     now = Vec.right;
                     Move_Transform += Move_LR;
                     Rotate_Model();
                 }
-                else if (Input.GetKey(KeyCode.A) || state.dPadAxis.x < -0.2f)
+                else if (Input.GetKey(KeyCode.A) || state.dPadAxis.x < -0.2f || state.LeftStickAxis.x < -0.2f)
                 {
+                    Sound.PlaySe("Player_Walk");
                     Player_Anm.SetBool("walk", true);
                     now = Vec.left;
                     Move_Transform -= Move_LR;
@@ -767,15 +778,17 @@ public class PL : MonoBehaviour {
                 }//左右移動ここまで
 
                 //上下移動
-                if (Input.GetKey(KeyCode.W) || state.dPadAxis.y > 0.2f)
+                if (Input.GetKey(KeyCode.W) || state.dPadAxis.y > 0.2f || state.LeftStickAxis.y > 0.2f)
                 {
+                    Sound.PlaySe("Player_Walk");
                     Player_Anm.SetBool("walk", true);
                     now = Vec.top;
                     Move_Transform += Move_UD;
                     Rotate_Model();
                 }
-                else if (Input.GetKey(KeyCode.S) || state.dPadAxis.y < -0.2f)
+                else if (Input.GetKey(KeyCode.S) || state.dPadAxis.y < -0.2f || state.LeftStickAxis.y < -0.2f)
                 {
+                    Sound.PlaySe("Player_Walk");
                     Player_Anm.SetBool("walk", true);
                     now = Vec.buttom;
                     Move_Transform -= Move_UD;
@@ -790,7 +803,7 @@ public class PL : MonoBehaviour {
             //カップルを呼ぶ
             if (state.A||Input.GetKey(KeyCode.Q))
             {
-
+                Sound.PlaySe("Coll");
                 Coll_Couple();
             }
 
@@ -833,15 +846,17 @@ public class PL : MonoBehaviour {
                 //    Make_Trap_Time = 0;
                 //}
                 //左右移動
-                if (state.dPadAxis.x > 0.2f)
+                if (state.dPadAxis.x > 0.2f || state.LeftStickAxis.x > 0.2f)
                 {
+                    Sound.PlaySe("Player_Walk");
                     Player_Anm.SetBool("walk", true);
                     now = Vec.right;
                     Move_Transform += Move_LR;
                     Rotate_Model();
                 }
-                else if (state.dPadAxis.x < -0.2f)
+                else if (state.dPadAxis.x < -0.2f || state.LeftStickAxis.x < -0.2f)
                 {
+                    Sound.PlaySe("Player_Walk");
                     Player_Anm.SetBool("walk", true);
                     now = Vec.left;
                     Move_Transform -= Move_LR;
@@ -849,15 +864,17 @@ public class PL : MonoBehaviour {
                 }//左右移動ここまで
 
                 //上下移動
-                if (state.dPadAxis.y > 0.2f)
+                if (state.dPadAxis.y > 0.2f || state.LeftStickAxis.y > 0.2f)
                 {
+                    Sound.PlaySe("Player_Walk");
                     Player_Anm.SetBool("walk", true);
                     now = Vec.top;
                     Move_Transform += Move_UD;
                     Rotate_Model();
                 }
-                else if (state.dPadAxis.y< -0.2f)
+                else if (state.dPadAxis.y< -0.2f || state.LeftStickAxis.y < -0.2f)
                 {
+                    Sound.PlaySe("Player_Walk");
                     Player_Anm.SetBool("walk", true);
                     now = Vec.buttom;
                     Move_Transform -= Move_UD;
@@ -872,7 +889,7 @@ public class PL : MonoBehaviour {
             //カップルを呼ぶ
             if (state.A)
             {
-
+                Sound.PlaySe("oll");
                 Coll_Couple();
             }
         }

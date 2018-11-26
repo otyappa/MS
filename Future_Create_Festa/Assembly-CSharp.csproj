@@ -79,6 +79,7 @@
      <Compile Include="Assets\Scripts\Sound.cs" />
      <Compile Include="Assets\Scripts\StageSelectPanel.cs" />
      <Compile Include="Assets\Scripts\TitleCamera.cs" />
+     <Compile Include="Assets\sinogi.cs" />
      <None Include="Assets\GameMain\Translucent.shader" />
  <Reference Include="UnityEditor.StandardEvents">
  <HintPath>C:/Users/ohs50220/Documents/MS/Future_Create_Festa/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
