@@ -227,6 +227,11 @@ public class SceneTransitionManager : MonoBehaviour
                     //GlobalCoroutine.Go(titleCamera.fadeImage.MaterialFadeOut(titleCamera.rend, titleCamera.fadeTime));
 
                 }
+                else
+                {
+                    CheckTransition();
+                    SceneTransition();
+                }
 
                 break;
 
