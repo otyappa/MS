@@ -263,6 +263,11 @@ public class SceneTransitionManager : MonoBehaviour
     {
         if (goTitle && !titleCamera.fadeImage.GetIsFadingIn())
         {
+
+            titleUI.SetActive(true);
+            modeSelectUI.SetActive(false);
+            stageSelectUI.SetActive(false);
+
             oneTimeFadeOut = false;
             isTransition = false;
             goTitle = false;
