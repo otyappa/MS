@@ -5,7 +5,6 @@ SceneListBegin?
 Assets/Scenes/Title.unity
 Assets/Scenes/ModeSelect.unity
 Assets/Scenes/StageSelect.unity
-Assets/GamePadInput/Demo/Demo.unity
 Assets/Main.unity
 SceneListEnd?
 a48e692ecf8b94257ab68a315748dc94 Assembly-CSharp.dll:.BackgroundStage
@@ -56,7 +55,7 @@ c63db43c730fa2cbb8ca07de15898cb6 UnityEngine.UI.dll:UnityEngine.UI.Toggle
 f61c0793411f10cf5fbfa1473fef5ef2 UnityEngine.UI.dll:UnityEngine.UI.ToggleGroup
 86d36c43c53541d667100dc90b89cfba UnityEngine.UI.dll:UnityEngine.EventSystems.TouchInputModule
 1b8c02d0aa82fbf036a2b9b2d713eec3 UnityEngine.UI.dll:UnityEngine.UI.VerticalLayoutGroup
-cd52387429bc242e5a09abdda8bb6106 Assembly-CSharp.dll:.PL
+6d6b03ad845331a893c7b9c05f3ba1ec Assembly-CSharp.dll:.PL
 a35dc9cca2faebc5f5f1aeb9e8e47bbe UnityEngine.UI.dll:UnityEngine.UI.AspectRatioFitter
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.UI.dll:UnityEngine.EventSystems.BaseInput
 49cd62a578efc0a599b810a2b66cd49c UnityEngine.UI.dll:UnityEngine.UI.Button
@@ -130,6 +129,7 @@ e1a027bf948ea7b00afaa701b5cbb1c0 Assembly-CSharp.dll:.Hint
 a4e08f99180f48f8ada30af7bddf1700 Assembly-CSharp.dll:.Result
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.DemoScript
 1561a1b29346a2a2fdc2d89ca4f77eaa Assembly-CSharp.dll:.TotalGameManager
+05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.sinogi
 491cbeb7e1dc5f95a49a775239c3c1c0 Assembly-CSharp.dll:.TitleCamera
 d253a4581c0220d19767107fac4f0d86 Assembly-CSharp.dll:.SceneTransitionManager
 fc1e0f4d8439d9928083474691511a13 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkAnimator
@@ -173,4 +173,3 @@ f66456e39f8e7a836008fe31f4c9c2dd Assembly-CSharp.dll:.Trance
 6558851798ff7e4790a9d7879898f335 Assembly-CSharp.dll:.GameSystem
 2075b2b3158aa072d931c1babb0373be Assembly-CSharp.dll:.Couple_Bar
 ccf6171f3c54a7fdef27eac4b7d6433d Assembly-CSharp.dll:.Couple
-05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.sinogi
