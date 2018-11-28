@@ -106,6 +106,7 @@ public class GameSystem : MonoBehaviour {
                 {
 
                     //タイトルシーンに遷移
+                    Destroy(TotalManager.gameObject);
                     scene_mana.GoTitle();
                    // SceneManager.LoadScene("Title");
 

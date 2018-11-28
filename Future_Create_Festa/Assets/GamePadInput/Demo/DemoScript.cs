@@ -12,16 +12,13 @@ public class DemoScript : MonoBehaviour
 
     void Examples()
     {
-        GamePad.GetButtonDown(GamePad.Button.A, GamePad.Index.One);
+        GamePad.GetButtonDown (GamePad.Button.A, GamePad.Index.One);
         GamePad.GetAxis(GamePad.Axis.LeftStick, GamePad.Index.One);
         GamePad.GetTrigger(GamePad.Trigger.RightTrigger, GamePad.Index.One);
 
         GamepadState state = GamePad.GetState(GamePad.Index.One);
 
         print("A: " + state.A);
- 
-        //if()
-
     }
 
     void OnGUI()
@@ -41,43 +38,6 @@ public class DemoScript : MonoBehaviour
         GUILayout.EndHorizontal();
 
         GUILayout.EndArea();
-        var playerNo = GamePad.Index.One;
-        Debug.Log(playerNo);
-        //var keyState = GamePad.GetState(playerNo, false);
-        if (Input.GetKey(KeyCode.Joystick2Button0))
-        {
-            Debug.Log("D");
-        }
-        if (Input.GetKey(KeyCode.Joystick2Button1))
-        {
-            Debug.Log("x");
-        }
-        if (Input.GetKey(KeyCode.Joystick2Button2))
-        {
-            Debug.Log("o");
-        }
-        if (Input.GetKey(KeyCode.Joystick2Button3))
-        {
-            Debug.Log("A");
-        }
-        if (Input.GetButtonDown("Square_1"))
-        {
-            Debug.Log("1");
-        }
-        if (Input.GetButtonDown("Square_2"))
-        {
-            Debug.Log("2");
-        }
-        if (Input.GetButtonDown("Square_3"))
-        {
-            Debug.Log("3");
-        }
-        if (Input.GetButtonDown("Square"))
-        {
-            Debug.Log("4");
-        }
-
-
 
     }
 

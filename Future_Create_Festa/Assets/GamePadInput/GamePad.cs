@@ -11,7 +11,7 @@ namespace GamepadInput
     public static class GamePad
     {
 
-        public enum Button { A, B, Y, X, RightShoulder, LeftShoulder, RightStick, LeftStick, Back, Start, Up, Down, Left, Right }
+        public enum Button { A, B, Y, X, RightShoulder, LeftShoulder, RightStick, LeftStick, Back, Start }
         public enum Trigger { LeftTrigger, RightTrigger }
         public enum Axis { LeftStick, RightStick, Dpad }
         public enum Index { Any, One, Two, Three, Four }
@@ -30,7 +30,6 @@ namespace GamepadInput
 
         public static bool GetButton(Button button, Index controlIndex)
         {
-            //Debug.Log(controlIndex);
             KeyCode code = GetKeycode(button, controlIndex);
             return Input.GetKey(code);
         }
@@ -200,7 +199,7 @@ namespace GamepadInput
         public static GamepadState GetState(Index controlIndex, bool raw = false)
         {
             GamepadState state = new GamepadState();
-            
+
             state.A = GetButton(Button.A, controlIndex);
             state.B = GetButton(Button.B, controlIndex);
             state.Y = GetButton(Button.Y, controlIndex);

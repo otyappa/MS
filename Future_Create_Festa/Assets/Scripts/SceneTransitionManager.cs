@@ -336,14 +336,14 @@ public class SceneTransitionManager : MonoBehaviour
                     isTransition = true;
                     GlobalCoroutine.Go(titleCamera.fadeImage.MaterialFadeIn(titleCamera.rend, titleCamera.fadeTime));
                 }
-                if ((Input.GetKeyDown(KeyCode.LeftArrow) || GamePad.GetButtonDown(GamePad.Button.Left, GamePad.Index.One) || GamePad.GetButtonDown(GamePad.Button.Up, GamePad.Index.One)) && !isTransition && !titleCamera.fadeImage.GetIsFadingOut())
+                if ((Input.GetKeyDown(KeyCode.LeftArrow) /*|| GamePad.GetButtonDown(GamePad.Button.Left, GamePad.Index.One) || GamePad.GetButtonDown(GamePad.Button.Up, GamePad.Index.One)*/) && !isTransition && !titleCamera.fadeImage.GetIsFadingOut())
                 {
                     Sound.PlaySe("select");
                     modeSelectFrameObj[0].SetActive(true);
                     modeSelectFrameObj[1].SetActive(false);
                     choseMode = ModeType.OneToOne;
                 }
-                if ((Input.GetKeyDown(KeyCode.RightArrow) || GamePad.GetButtonDown(GamePad.Button.Right, GamePad.Index.One) || GamePad.GetButtonDown(GamePad.Button.Down, GamePad.Index.One)) && !isTransition && !titleCamera.fadeImage.GetIsFadingOut())
+                if ((Input.GetKeyDown(KeyCode.RightArrow) /*|| GamePad.GetButtonDown(GamePad.Button.Right, GamePad.Index.One) || GamePad.GetButtonDown(GamePad.Button.Down, GamePad.Index.One)*/) && !isTransition && !titleCamera.fadeImage.GetIsFadingOut())
                 {
                     Sound.PlaySe("select");
                     modeSelectFrameObj[0].SetActive(false);

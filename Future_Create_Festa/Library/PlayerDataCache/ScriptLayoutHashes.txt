@@ -131,7 +131,7 @@ a4e08f99180f48f8ada30af7bddf1700 Assembly-CSharp.dll:.Result
 1561a1b29346a2a2fdc2d89ca4f77eaa Assembly-CSharp.dll:.TotalGameManager
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.sinogi
 491cbeb7e1dc5f95a49a775239c3c1c0 Assembly-CSharp.dll:.TitleCamera
-0ace46f6653fa067406c05a4a2573df5 Assembly-CSharp.dll:.SceneTransitionManager
+e1ae293bc60b376e0168497c37a8c2d2 Assembly-CSharp.dll:.SceneTransitionManager
 fc1e0f4d8439d9928083474691511a13 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkAnimator
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Networking.dll:UnityEngine.Networking.NetworkBehaviour
 60b2bb652410a5867a5ab9a01cd38461 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkDiscovery
@@ -166,7 +166,7 @@ c2275a8bfbb9f9942cad75ecdfded41d UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.Spa
 13c8106deaf4fdebfa9f2a3653628fcb Assembly-CSharp.dll:.Timer
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.FadeImage
 9de3a22eca9aefadba2d10d5987cefe3 UnityEngine.SpatialTracking.dll:UnityEngine.SpatialTracking.TrackedPoseDriver
-fca37c27521d49faadad56ca8c1afdf3 Assembly-CSharp.dll:.SceneInput
+095034e9580407956ea02e80e7c76155 Assembly-CSharp.dll:.SceneInput
 8518e9ab62cc1b1d4cf4611182ca5484 Assembly-CSharp.dll:.Create_SpecialItem
 7a93b5c911281eb62dd05c17dbdd4119 Assembly-CSharp.dll:.Dual_Display
 f66456e39f8e7a836008fe31f4c9c2dd Assembly-CSharp.dll:.Trance
