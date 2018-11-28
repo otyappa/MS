@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4245216153538326}
   - component: {fileID: 114113821612216426}
+  - component: {fileID: 114468933597810872}
   m_Layer: 0
   m_Name: SceneTransitionManager
   m_TagString: Untagged
@@ -51,6 +52,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72c2b949c000e6a4da2a7f8391cf268d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  titleCameraObj: {fileID: 0}
+  titleStageObj: {fileID: 0}
   titleUI: {fileID: 0}
   modeSelectUI: {fileID: 0}
   stageSelectUI: {fileID: 0}
@@ -58,6 +61,7 @@ MonoBehaviour:
   NowScene: 0
   NextScene: 0
   isTransition: 0
+  goTitle: 0
   choseMode: 0
   choseStage: 0
   stageSelectRotationSpeed: 0.5
@@ -76,4 +80,24 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 7138debef6818544bbbd560d3b3f6ff9, type: 2}
   - {fileID: 2100000, guid: bdce368ca97bd2f4b8af8665c0e97086, type: 2}
   stageNameRenderer: {fileID: 0}
+  gpAxis: {fileID: 0}
   test: 0
+--- !u!114 &114468933597810872
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1675728907099474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 275487c5627aa8b4eb41936b5897e364, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DpadLeftTrigger: 0
+  DpadRightTrigger: 0
+  DpadTriggerFlg: 0
+  LeftStickLeftTrigger: 0
+  LeftStickRightTrigger: 0
+  LeftStickTriggerFlg: 0
+  Dpad: {x: 0, y: 0}
+  LeftStick: {x: 0, y: 0}
