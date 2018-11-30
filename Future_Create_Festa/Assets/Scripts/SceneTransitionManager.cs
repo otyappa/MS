@@ -249,6 +249,7 @@ public class SceneTransitionManager : MonoBehaviour
                     titleStage.SetActive(false);
                     titleCamera.gameObject.SetActive(false);
                     //GlobalCoroutine.Go(titleCamera.fadeImage.MaterialFadeOut(titleCamera.rend, titleCamera.fadeTime));
+                    OpenDoorAnim();
 
                 }
                 else
@@ -285,13 +286,6 @@ public class SceneTransitionManager : MonoBehaviour
             SceneManager.LoadScene(SceneType.Title.ToString());
         }
 
-        if (isTransition && !titleCamera.fadeImage.GetIsFadingIn())
-        {
-            oneTimeFadeOut = false;
-            isTransition = false;
-            NowScene = NextScene;
-            SceneManager.LoadScene(NextScene.ToString());
-        }
         if (NowScene == SceneType.StageSelect && NextScene == SceneType.Main && isTransition && !titleCamera.fadeImage.GetIsFadingIn())
         {
             // 扉が閉まっている状態
@@ -302,6 +296,13 @@ public class SceneTransitionManager : MonoBehaviour
                 NowScene = NextScene;
                 SceneManager.LoadScene(NextScene.ToString());
             }
+        }
+        else if (isTransition && !titleCamera.fadeImage.GetIsFadingIn())
+        {
+            oneTimeFadeOut = false;
+            isTransition = false;
+            NowScene = NextScene;
+            SceneManager.LoadScene(NextScene.ToString());
         }
     }
 
@@ -671,7 +672,19 @@ public class SceneTransitionManager : MonoBehaviour
                     flg = true;
                 }
                 break;
+            case "open":
+                if (Disp1_leftDoorAnim.GetCurrentAnimatorClipInfo(0)[0].clip.name == "Exit" &&
+                   Disp1_rightDoorAnim.GetCurrentAnimatorClipInfo(0)[0].clip.name == "Exit" &&
+                   Disp2_leftDoorAnim.GetCurrentAnimatorClipInfo(0)[0].clip.name == "Exit" &&
+                   Disp2_rightDoorAnim.GetCurrentAnimatorClipInfo(0)[0].clip.name == "Exit")
+                {
+                    flg = true;
+                    Destroy(GameObject.Find("Display1_UI"));
+                    Destroy(GameObject.Find("Display1_UI"));
+                }
+                break;
         }
+
         return flg;
     }
 
@@ -732,6 +745,8 @@ public class SceneTransitionManager : MonoBehaviour
         Disp2_leftDoorAnim = GameObject.Find("door_left_disp2").GetComponent<Animator>();
         Disp2_rightDoorAnim = GameObject.Find("door_right_disp2").GetComponent<Animator>();
 
+        DontDestroyOnLoad(GameObject.Find("Display1_UI"));
+        DontDestroyOnLoad(GameObject.Find("Display2_UI"));
     }
 
     private void InitProperty()
