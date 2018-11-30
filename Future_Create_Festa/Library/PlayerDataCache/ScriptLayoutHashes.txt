@@ -55,7 +55,7 @@ c63db43c730fa2cbb8ca07de15898cb6 UnityEngine.UI.dll:UnityEngine.UI.Toggle
 f61c0793411f10cf5fbfa1473fef5ef2 UnityEngine.UI.dll:UnityEngine.UI.ToggleGroup
 86d36c43c53541d667100dc90b89cfba UnityEngine.UI.dll:UnityEngine.EventSystems.TouchInputModule
 1b8c02d0aa82fbf036a2b9b2d713eec3 UnityEngine.UI.dll:UnityEngine.UI.VerticalLayoutGroup
-6d6b03ad845331a893c7b9c05f3ba1ec Assembly-CSharp.dll:.PL
+8de7c315a5848a7e001b1871dc88a73d Assembly-CSharp.dll:.PL
 a35dc9cca2faebc5f5f1aeb9e8e47bbe UnityEngine.UI.dll:UnityEngine.UI.AspectRatioFitter
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.UI.dll:UnityEngine.EventSystems.BaseInput
 49cd62a578efc0a599b810a2b66cd49c UnityEngine.UI.dll:UnityEngine.UI.Button
@@ -88,7 +88,7 @@ c63db43c730fa2cbb8ca07de15898cb6 UnityEngine.UI.dll:UnityEngine.UI.Toggle
 f61c0793411f10cf5fbfa1473fef5ef2 UnityEngine.UI.dll:UnityEngine.UI.ToggleGroup
 86d36c43c53541d667100dc90b89cfba UnityEngine.UI.dll:UnityEngine.EventSystems.TouchInputModule
 1b8c02d0aa82fbf036a2b9b2d713eec3 UnityEngine.UI.dll:UnityEngine.UI.VerticalLayoutGroup
-05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.Special_Item
+056f2b77ac65ac88e2516e64e1c40e72 Assembly-CSharp.dll:.Special_Item
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Timeline.dll:UnityEngine.Timeline.ActivationPlayableAsset
 cf455f7a806648c6ed4c7d3e3f8a0e03 UnityEngine.Timeline.dll:UnityEngine.Timeline.ActivationTrack
 13bdb7c23815c33a33b37b0ba8dd39be UnityEngine.Timeline.dll:UnityEngine.Timeline.AnimationPlayableAsset
@@ -117,7 +117,7 @@ e9bdabf9265d758d56f01bb188916fa8 UnityEngine.Networking.dll:UnityEngine.Networki
 73843688b51256aed059f049c540bca8 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkTransformChild
 528ea1fd7c01796fc60c4e2f172ea229 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkTransformVisualizer
 9de3a22eca9aefadba2d10d5987cefe3 UnityEngine.SpatialTracking.dll:UnityEngine.SpatialTracking.TrackedPoseDriver
-0b793d4492aa0479a8546e14a3fc41c2 Assembly-CSharp.dll:.TimeCtl
+1f2c8313a98aca222f19e60f6b6c68a5 Assembly-CSharp.dll:.TimeCtl
 322cb40e1e282f28af980cbef7922a90 UnityEngine.Analytics.dll:UnityEngine.Analytics.AnalyticsEventTracker
 dc07d7ad69b399a46e92c483bf1c04ca UnityEngine.Analytics.dll:UnityEngine.Analytics.AnalyticsTracker
 bc68edb0af574bf79f9550ead8ebae5c UnityEngine.HoloLens.dll:UnityEngine.Audio.AudioSpatializerMicrosoft
@@ -126,12 +126,13 @@ bc68edb0af574bf79f9550ead8ebae5c UnityEngine.HoloLens.dll:UnityEngine.Audio.Audi
 c2275a8bfbb9f9942cad75ecdfded41d UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.SpatialMappingCollider
 45f3431f0103c41611e8d4eec3d439df UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.SpatialMappingRenderer
 e1a027bf948ea7b00afaa701b5cbb1c0 Assembly-CSharp.dll:.Hint
+cec88ecbea022e98dc206954237689b0 Assembly-CSharp.dll:.GamepadAxis
 a4e08f99180f48f8ada30af7bddf1700 Assembly-CSharp.dll:.Result
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.DemoScript
 1561a1b29346a2a2fdc2d89ca4f77eaa Assembly-CSharp.dll:.TotalGameManager
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.sinogi
 491cbeb7e1dc5f95a49a775239c3c1c0 Assembly-CSharp.dll:.TitleCamera
-e1ae293bc60b376e0168497c37a8c2d2 Assembly-CSharp.dll:.SceneTransitionManager
+e7207e3018e665831f5b390b05a21c5b Assembly-CSharp.dll:.SceneTransitionManager
 fc1e0f4d8439d9928083474691511a13 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkAnimator
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Networking.dll:UnityEngine.Networking.NetworkBehaviour
 60b2bb652410a5867a5ab9a01cd38461 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkDiscovery
@@ -166,10 +167,10 @@ c2275a8bfbb9f9942cad75ecdfded41d UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.Spa
 13c8106deaf4fdebfa9f2a3653628fcb Assembly-CSharp.dll:.Timer
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.FadeImage
 9de3a22eca9aefadba2d10d5987cefe3 UnityEngine.SpatialTracking.dll:UnityEngine.SpatialTracking.TrackedPoseDriver
-095034e9580407956ea02e80e7c76155 Assembly-CSharp.dll:.SceneInput
+b30215e03a09fe2e5ba0dd4300cb2d90 Assembly-CSharp.dll:.SceneInput
 8518e9ab62cc1b1d4cf4611182ca5484 Assembly-CSharp.dll:.Create_SpecialItem
 7a93b5c911281eb62dd05c17dbdd4119 Assembly-CSharp.dll:.Dual_Display
 f66456e39f8e7a836008fe31f4c9c2dd Assembly-CSharp.dll:.Trance
 6558851798ff7e4790a9d7879898f335 Assembly-CSharp.dll:.GameSystem
 2075b2b3158aa072d931c1babb0373be Assembly-CSharp.dll:.Couple_Bar
-ccf6171f3c54a7fdef27eac4b7d6433d Assembly-CSharp.dll:.Couple
+8cf263e6663c6c91e167c58cab6c8bae Assembly-CSharp.dll:.Couple

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Special_Item : MonoBehaviour {
     Vector3 shot_vec;
+    public float shot_speed;
 	// Use this for initialization
 	void Start () {
 		
@@ -22,18 +23,18 @@ public class Special_Item : MonoBehaviour {
         switch (vec)
         {
             case 0:
-                muki = new Vector3(0, 0, 0.15f);
+                muki = new Vector3(0, 0, shot_speed * 0.15f);
                 break;
             case 1:
-                muki = new Vector3(0.15f, 0, 0);
+                muki = new Vector3(shot_speed * 0.15f, 0, 0);
 
                 break;
             case 2:
-                muki = new Vector3(0, 0, -0.15f);
+                muki = new Vector3(0, 0, -shot_speed * 0.15f);
 
                 break;
             case 3:
-                muki = new Vector3( -0.15f, 0, 0);
+                muki = new Vector3( -shot_speed*0.15f, 0, 0);
                 break;
         }
         shot_vec = muki;

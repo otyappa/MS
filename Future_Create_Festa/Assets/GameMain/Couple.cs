@@ -23,10 +23,11 @@ public class Couple : MonoBehaviour {
     [SerializeField]
     public float move_speed=1;
     [SerializeField]
-    int heal_Time=0;
+    float heal_Time=0;
     [SerializeField]
     Vector3 start_pos;
     Couple_Bar Set_bar;
+    public float Resque_Time;
     public struct stage
     {
       public  float x;
@@ -59,7 +60,7 @@ public class Couple : MonoBehaviour {
 
         Couple_Model = transform.GetChild(0).gameObject;
         Couple_Anm = Couple_Model.GetComponent<Animator>();
-        flash_mesh = GetComponent<Renderer>();
+       // flash_mesh = Couple_Model.GetComponent<Renderer>();
         start_pos = transform.position;
         Sound.LoadSe("Hit_Item", "SE/Couple_Hit_Item");
         Sound.LoadSe("Hit_Trap", "SE/Couple_Hit_Trap");
@@ -77,7 +78,7 @@ public class Couple : MonoBehaviour {
                 if (flash_now > 15)
                 {
                     //this.renderer.
-                    flash_mesh.enabled = !flash_mesh.enabled;
+                    Couple_Model.SetActive(!Couple_Model.activeSelf);
                     flash_now = 0;
                     Flash_Time++;
                 }
@@ -551,6 +552,7 @@ public class Couple : MonoBehaviour {
     //何かにぶつかったとき
     void OnTriggerEnter(Collider it)
     {
+        Debug.Log(it.transform.tag);
         //トラップ
         if (it.transform.tag == "Trap")
         {
@@ -575,12 +577,12 @@ public class Couple : MonoBehaviour {
         }
         else if (it.transform.gameObject.layer == 8 && Red_Player == false && Stan_flg)
         {
-            it.GetComponent<PL>().Set_Time(120);
+            it.GetComponent<PL>().Set_Time(Resque_Time);
 
         }
         else if (it.transform.gameObject.layer == 9 && Red_Player == true && Stan_flg)
         {
-            it.GetComponent<PL>().Set_Time(120);
+            it.GetComponent<PL>().Set_Time(Resque_Time);
 
         }
 
@@ -609,31 +611,34 @@ public class Couple : MonoBehaviour {
 
         if (it.transform.gameObject.layer == 8 && Red_Player == false && Stan_flg)
         {
-            if (heal_Time == 120)
+            if (heal_Time >= Resque_Time)
             {
                 Stan_flg = false;
                 heal_Time = 0;
                 it.GetComponent<PL>().End_Time();
+                Couple_Model.SetActive(true);
             }
             else
             {
                 it.GetComponent<PL>().Update_Time();
-                heal_Time++;
+                heal_Time += Time.deltaTime;
             }
         }
         else if (it.transform.gameObject.layer == 9 && Red_Player == true && Stan_flg)
         {
-            if (heal_Time == 120)
+            if (heal_Time >= Resque_Time)
             {
                 Stan_flg = false;
                 flash_mesh.enabled = true;
                 heal_Time = 0;
                 it.GetComponent<PL>().End_Time();
+                Couple_Model.SetActive(true);
+
             }
             else
             {
                 it.GetComponent<PL>().Update_Time();
-                heal_Time++;
+                heal_Time+=Time.deltaTime;
             }
         }
     }

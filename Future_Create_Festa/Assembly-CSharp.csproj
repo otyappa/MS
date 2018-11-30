@@ -73,6 +73,7 @@
      <Compile Include="Assets\Scripts\BackgroundStage.cs" />
      <Compile Include="Assets\Scripts\BillBoard.cs" />
      <Compile Include="Assets\Scripts\FadeImage.cs" />
+     <Compile Include="Assets\Scripts\GamepadAxis.cs" />
      <Compile Include="Assets\Scripts\GlobalCoroutine.cs" />
      <Compile Include="Assets\Scripts\SceneInput.cs" />
      <Compile Include="Assets\Scripts\SceneTransitionManager.cs" />

@@ -18,18 +18,19 @@ public class PL : MonoBehaviour {
     Animator Player_Anm;
     public bool TonT; 
     GameObject Player_HintModel;
-    float Make_Trap_Time = 0;
+    public float Make_Trap_Time = 0;
     bool SP_MODE = false;
     TimeCtl TimeBar;
     [SerializeField]
     [Range(1, 10)]
     int max_trap = 1;
-    int trap_count;
+   public int trap_count;
     bool Trap_now=false;
     int Flash_Time;
     float flash_now;
     GameSystem GameSystemManager;
-
+    public float Trap_Time;
+    public bool trap_deray;
    public enum Vec{
         top=0,
         right,
@@ -55,6 +56,7 @@ public class PL : MonoBehaviour {
         Sound.LoadSe("walk", "SE/Player_Walk");
         Sound.LoadSe("PHit_Trap", "SE/Player_Hit_Trap");
         Sound.LoadSe("Set_Trap", "SE/Set_Trap");
+        trap_deray = true;
     }
 
     // Update is called once per frame
@@ -68,6 +70,7 @@ public class PL : MonoBehaviour {
                 if (flash_now > 0.25)
                 {
                     Player_Model.SetActive(!Player_Model.activeSelf);
+                    Player_Hint_Model.SetActive(!Player_Model.activeSelf);
                     flash_now = 0;
                     Flash_Time++;
                 }
@@ -77,6 +80,8 @@ public class PL : MonoBehaviour {
                     Flash_Time = 0;
                     Trap_now = false;
                     Player_Model.SetActive(true);
+                    Player_Hint_Model.SetActive(true);
+
                 }
                 flash_now += Time.deltaTime;
             }
@@ -112,17 +117,17 @@ public class PL : MonoBehaviour {
                 GamepadState state = GamePad.GetState(GamePad.Index.Three);
 
                 //罠を仕掛ける
-                if (GamePad.GetButtonDown(GamePad.Button.B, GamePad.Index.Three) && trap_count < max_trap && (int)Make_Trap_Time <= 60)
+                if (GamePad.GetButtonDown(GamePad.Button.B, GamePad.Index.Three) && trap_count < max_trap && Make_Trap_Time <= Trap_Time)
                 {
                     Sound.PlaySe("Set_Trap");
                     Player_Anm.SetBool("trap", true);
-                    TimeBar.Set_Pasent(1);
+                    TimeBar.Set_Pasent(Trap_Time);
                     //敵に見える
                     transform.GetChild(0).GetComponent<Hint>().Set_Active();
                 }
-                if (GamePad.GetButton(GamePad.Button.B, GamePad.Index.Three) && trap_count < max_trap && (int)Make_Trap_Time <= 1)
+                if (GamePad.GetButton(GamePad.Button.B, GamePad.Index.Three) && trap_count < max_trap /*&& Make_Trap_Time <= Trap_Time*/)
                 {
-                    if ((int)Make_Trap_Time == 1)
+                    if (Make_Trap_Time >= Trap_Time)
                     {
 
                         Set_Trap();
@@ -142,6 +147,7 @@ public class PL : MonoBehaviour {
                         Player_Anm.SetBool("trap", false);
                         TimeBar.Reset();
                         Make_Trap_Time = 0;
+                        trap_deray = true;
                     }
                     //左右移動
                     if (state.dPadAxis.x > 0.2f||state.LeftStickAxis.x>0.2f)
@@ -196,17 +202,17 @@ public class PL : MonoBehaviour {
                 GamepadState state = GamePad.GetState(GamePad.Index.One);
 
                 //罠を仕掛ける
-                if (GamePad.GetButtonDown(GamePad.Button.B, GamePad.Index.One) && trap_count < max_trap && (int)Make_Trap_Time <= 1)
+                if (GamePad.GetButtonDown(GamePad.Button.B, GamePad.Index.One) && trap_count < max_trap && Make_Trap_Time <= Trap_Time)
                 {
                     Sound.PlaySe("Set_Trap");
                     Player_Anm.SetBool("trap", true);
-                    TimeBar.Set_Pasent(1);
+                    TimeBar.Set_Pasent(Trap_Time);
                     //敵に見える
                     transform.GetChild(0).GetComponent<Hint>().Set_Active();
                 }
-                if (GamePad.GetButton(GamePad.Button.B, GamePad.Index.One) && trap_count < max_trap && (int)Make_Trap_Time <= 1)
+                if (GamePad.GetButton(GamePad.Button.B, GamePad.Index.One) && trap_count < max_trap /*&& Make_Trap_Time <= Trap_Time*/)
                 {
-                    if ((int)Make_Trap_Time ==1)
+                    if (Make_Trap_Time >=Trap_Time)
                     {
                         Set_Trap();
                     }
@@ -225,6 +231,7 @@ public class PL : MonoBehaviour {
                         Player_Anm.SetBool("trap", false);
                         TimeBar.Reset();
                         Make_Trap_Time = 0;
+                        trap_deray = true;
                     }
                     //左右移動
                     if (state.dPadAxis.x > 0.2f || state.LeftStickAxis.x > 0.2f)
@@ -294,26 +301,24 @@ public class PL : MonoBehaviour {
                
 
                 //罠を仕掛ける
-                if (GamePad.GetButtonDown(GamePad.Button.B, GamePad.Index.Four) && trap_count < max_trap && (int)Make_Trap_Time <= 1 || (Input.GetKeyDown(KeyCode.E) && trap_count < max_trap && (int)Make_Trap_Time <= 1))
+                if (GamePad.GetButtonDown(GamePad.Button.B, GamePad.Index.Four) && trap_count < max_trap && Make_Trap_Time <= Trap_Time || (Input.GetKeyDown(KeyCode.E) && trap_count < max_trap && Make_Trap_Time <= Trap_Time))
                 {
                     Sound.PlaySe("Set_Trap");
                     Player_Anm.SetBool("trap", true);
-                    TimeBar.Set_Pasent(1);
+                    TimeBar.Set_Pasent(Trap_Time);
                     //敵に見える
                     transform.GetChild(0).GetComponent<Hint>().Set_Active();
                 }
-                if ((GamePad.GetButton(GamePad.Button.B, GamePad.Index.Four) && trap_count < max_trap && (int)Make_Trap_Time <= 1) || (Input.GetKey(KeyCode.E) && trap_count < max_trap && (int)Make_Trap_Time <= 1))
+                if ((GamePad.GetButton(GamePad.Button.B, GamePad.Index.Four) && trap_count < max_trap /*&& Make_Trap_Time <= Trap_Time*/) || (Input.GetKey(KeyCode.E) && trap_count < max_trap /*&& Make_Trap_Time <= Trap_Time*/))
                 {
-                    TimeBar.Bar_Update();
-                    if ((int)Make_Trap_Time == 1)
+                    if (Make_Trap_Time >= Trap_Time)
                     {
                         Set_Trap();
                     }
                     else
                     {
-                        Make_Trap_Time+=Time.deltaTime;
-                        Debug.Log(Make_Trap_Time);
-                        Debug.Log((int)Make_Trap_Time);
+                        TimeBar.Bar_Update();
+                        Make_Trap_Time += Time.deltaTime;
                     }
                 }
                 else
@@ -323,6 +328,7 @@ public class PL : MonoBehaviour {
                         Player_Anm.SetBool("trap", false);
                         TimeBar.Reset();
                         Make_Trap_Time = 0;
+                        trap_deray = true;
                     }
                     Player_Anm.SetBool("walk", false);
                     //左右移動
@@ -378,24 +384,25 @@ public class PL : MonoBehaviour {
                 GamepadState state = GamePad.GetState(GamePad.Index.Two);
 
                 //罠を仕掛ける
-                if (GamePad.GetButtonDown(GamePad.Button.B, GamePad.Index.Two) && trap_count < max_trap && (int)Make_Trap_Time <= 1 )
+                if (GamePad.GetButtonDown(GamePad.Button.B, GamePad.Index.Two) && trap_count < max_trap && Make_Trap_Time <= Trap_Time)
                 {
                     Sound.PlaySe("Set_Trap");
                     Player_Anm.SetBool("trap", true);
-                    TimeBar.Set_Pasent(1);
+                    TimeBar.Set_Pasent(Trap_Time);
                     //敵に見える
                     transform.GetChild(0).GetComponent<Hint>().Set_Active();
                 }
-                if ((GamePad.GetButton(GamePad.Button.B, GamePad.Index.Two) && trap_count < max_trap && (int)Make_Trap_Time <= 1))
+                if ((GamePad.GetButton(GamePad.Button.B, GamePad.Index.Two) && trap_count < max_trap/* && Make_Trap_Time <= Trap_Time*/))
                 {
-                    TimeBar.Bar_Update();
-                    if ((int)Make_Trap_Time == 1)
+                    if (Make_Trap_Time>= Trap_Time)
                     {
                         Set_Trap();
                     }
                     else
                     {
-                        Make_Trap_Time+=Time.deltaTime;
+                        TimeBar.Bar_Update();
+
+                        Make_Trap_Time += Time.deltaTime;
                     }
                 }
                 else
@@ -407,6 +414,7 @@ public class PL : MonoBehaviour {
                         Player_Anm.SetBool("trap", false);
                         TimeBar.Reset();
                         Make_Trap_Time = 0;
+                        trap_deray = true;
                     }
                     //左右移動
                     if (state.dPadAxis.x > 0.2f || state.LeftStickAxis.x > 0.2f)
@@ -477,14 +485,17 @@ public class PL : MonoBehaviour {
     //罠を仕掛ける
     void Set_Trap()
     {
-        Player_Anm.SetBool("trap", false);
+        if (trap_deray)
+        {
+            Player_Anm.SetBool("trap", false);
         Make_Trap_Time++;
         trap_count++;
         //落とし穴作成
-        
-        GameObject trap= Instantiate(Trap_Point, new Vector3(transform.position.x,-0.05f,transform.position.z), Quaternion.identity);
-        trap.GetComponent<Trap>().Set_Creater(this.gameObject);
-
+  
+            GameObject trap = Instantiate(Trap_Point, new Vector3(transform.position.x, -0.05f, transform.position.z), Quaternion.identity);
+            trap.GetComponent<Trap>().Set_Creater(this.gameObject);
+            trap_deray = false;
+        }
     }
 
     //何かにぶつかったとき
@@ -503,6 +514,9 @@ public class PL : MonoBehaviour {
             it.GetComponent<Trap>().Delete_Function();
             Destroy(it.gameObject);
             Sound.PlaySe("PHit_Trap");
+            //敵に見える
+            transform.GetChild(0).GetComponent<Hint>().Set_Active();
+
         }
         if (it.transform.tag == "Player")
         {
@@ -589,8 +603,11 @@ public class PL : MonoBehaviour {
                         create_pos.x -= 1.5f;
                         break;
                 }
-                GameObject shot = Instantiate(SPECIAL_SHOT, create_pos, Quaternion.identity);
+                Quaternion now_rotate;
+                now_rotate = Quaternion.identity;
+                GameObject shot = Instantiate(SPECIAL_SHOT, create_pos, now_rotate);
                 shot.GetComponent<Special_Item>().Set_vector((int)now);
+                shot.transform.Rotate(new Vector3(75, 0, 0));
                 SP_MODE = false;
             }
             else
@@ -667,8 +684,11 @@ public class PL : MonoBehaviour {
                         create_pos.x -= 1.5f;
                         break;
                 }
-                GameObject shot = Instantiate(SPECIAL_SHOT, create_pos, Quaternion.identity);
+                Quaternion now_rotate;
+                now_rotate = Quaternion.identity;
+                GameObject shot = Instantiate(SPECIAL_SHOT, create_pos, now_rotate);
                 shot.GetComponent<Special_Item>().Set_vector((int)now);
+                shot.transform.Rotate(new Vector3(75, 0, 0));
                 SP_MODE = false;
             }
             else
@@ -751,8 +771,13 @@ public class PL : MonoBehaviour {
                         create_pos.x -= 1.5f;
                         break;
                 }
-                GameObject shot = Instantiate(SPECIAL_SHOT, create_pos, Quaternion.identity);
+                Quaternion now_rotate;
+                now_rotate = Quaternion.identity;
+              //  now_rotate.x = 20;
+                GameObject shot = Instantiate(SPECIAL_SHOT, create_pos, now_rotate);
                 shot.GetComponent<Special_Item>().Set_vector((int)now);
+                shot.transform.Rotate(new Vector3(75, 0, 0));
+
                 SP_MODE = false;
             }
             else
@@ -832,8 +857,11 @@ public class PL : MonoBehaviour {
                         create_pos.x -= 1.5f;
                         break;
                 }
-                GameObject shot = Instantiate(SPECIAL_SHOT, create_pos, Quaternion.identity);
+                Quaternion now_rotate;
+                now_rotate = Quaternion.identity;
+                GameObject shot = Instantiate(SPECIAL_SHOT, create_pos, now_rotate);
                 shot.GetComponent<Special_Item>().Set_vector((int)now);
+                shot.transform.Rotate(new Vector3(75, 0, 0));
                 SP_MODE = false;
             }
             else
